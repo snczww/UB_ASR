@@ -49,7 +49,7 @@ def load_sample_data():
 
 # Calculate audio duration using librosa
 def calculate_audio_duration(audio):
-    y, sr = librosa.load(audio['path'], sr=None)
+    y, sr = librosa.load(audio, sr=None)
     duration = librosa.get_duration(y=y, sr=sr)
     return duration
 
@@ -111,6 +111,7 @@ def calculate_per_sentence_errors(candidate, ground_truth):
 def process_audio(model_configs, audio_path, dictionary, ground_truth):
     results = []
 
+
     duration = calculate_audio_duration(audio_path)
     
     for name, config in model_configs.items():
@@ -139,7 +140,7 @@ def process_audio(model_configs, audio_path, dictionary, ground_truth):
         wer_list, cer_list, word_errors_list, character_errors_list = calculate_per_sentence_errors(transcribed_text, ground_truth)
         
         results.append([
-            audio_path['path'], config["model_path"],
+            audio_path, config["model_path"],
             num_sentences, sentences_per_second,
             num_words, words_per_second,
             num_verbs, verbs_per_second,
@@ -152,13 +153,15 @@ def process_audio(model_configs, audio_path, dictionary, ground_truth):
 
 # Example usage
 def main():
-    audio_path = load_sample_data()
+    # audio_path = load_sample_data()
+    audio_path = r"audio_files/sample_0.wav"
+
     dictionary = ["example", "word", "list"]  # Replace with your dictionary words
     ground_truth = "Ground truth text corresponding to the sample audio."  # Replace with actual ground truth
 
     model_configs = {
         "whisper_large_v3": {
-            "model_path": "openai/whisper-large-v3",
+            "model_path": "openai/whisper-base",
             "local": False,  # Whether the model is local
             "task": "automatic-speech-recognition",
             "chunk_length_s": 25,
@@ -166,8 +169,8 @@ def main():
             "max_new_tokens": 128
         },
         "local_whisper_large_v3": {
-            "model_path": "./local_model",
-            "local": True,  # Whether the model is local
+            "model_path": "openai/whisper-base",
+            "local": False,  # Whether the model is local
             "task": "automatic-speech-recognition",
             "chunk_length_s": 25,
             "batch_size": 16,
