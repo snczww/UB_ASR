@@ -5,6 +5,7 @@ from datasets import load_dataset
 import librosa
 import nltk
 import pandas as pd
+import argparse
 
 # Ensure the required NLTK data files are downloaded
 nltk.download('punkt')
@@ -32,7 +33,7 @@ def create_pipeline(model, processor, config):
     pipe = pipeline(
         config["task"],
         model=model,
-        tokenizer=processor.tokenizer,
+        tokenizer=config["tokenizer"],
         feature_extractor=processor.feature_extractor,
         max_new_tokens=config["max_new_tokens"],
         chunk_length_s=config["chunk_length_s"],
@@ -156,17 +157,30 @@ def process_audio(model_configs, audio_path, dictionary, ground_truth, unit='sec
 
     return results
 
-# Example usage
-def main():
-    # audio_path = load_sample_data()
-    audio_path = r"audio_files/sample_0.wav"
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Process audio files and analyze transcriptions.')
+    parser.add_argument('--audio_path', type=str, required=True, help='Path to the audio file.')
+    parser.add_argument('--dictionary_path', type=str, required=True, help='Path to the dictionary text file.')
+    parser.add_argument('--ground_truth_path', type=str, required=True, help='Path to the ground truth text file.')
+    parser.add_argument('--unit', type=str, choices=['second', 'minute'], default='second', help='Time unit for calculating metrics.')
 
-    dictionary = ["example", "word", "list"]  # Replace with your dictionary words
-    ground_truth = "Ground truth text corresponding to the sample audio."  # Replace with actual ground truth
+    return parser.parse_args()
+
+def read_file(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        content = file.read().splitlines()
+    return content
+
+def main():
+    args = parse_arguments()
+
+    dictionary = read_file(args.dictionary_path)
+    ground_truth = ' '.join(read_file(args.ground_truth_path))
 
     model_configs = {
         "whisper_large_v3": {
             "model_path": "openai/whisper-base",
+            "tokenizer": "openai/whisper-base",  # Specify the tokenizer here
             "local": False,  # Whether the model is local
             "task": "automatic-speech-recognition",
             "chunk_length_s": 25,
@@ -175,6 +189,7 @@ def main():
         },
         "local_whisper_large_v3": {
             "model_path": "local_model",
+            "tokenizer": "local_tokenizer",  # Specify the tokenizer here
             "local": True,  # Whether the model is local
             "task": "automatic-speech-recognition",
             "chunk_length_s": 25,
@@ -184,18 +199,16 @@ def main():
         # Add other model configurations as needed
     }
 
-    unit = 'minute'  # Change to 'second' if you want per-second metrics
-
-    results = process_audio(model_configs, audio_path, dictionary, ground_truth, unit=unit)
+    results = process_audio(model_configs, args.audio_path, dictionary, ground_truth, unit=args.unit)
     
     # Define columns based on the unit
     columns = [
         "Audio Path", "Model Path",
-        f"# Sentences", f"Sentences/{unit}",
-        f"# Words", f"Words/{unit}",
-        f"# Verbs", f"Verbs/{unit}",
-        f"# Nouns", f"Nouns/{unit}",
-        f"# Dictionary Words", f"Dictionary Words/{unit}",
+        f"# Sentences", f"Sentences/{args.unit}",
+        f"# Words", f"Words/{args.unit}",
+        f"# Verbs", f"Verbs/{args.unit}",
+        f"# Nouns", f"Nouns/{args.unit}",
+        f"# Dictionary Words", f"Dictionary Words/{args.unit}",
         "WER List", "CER List", "Word Errors List", "Character Errors List"
     ]
     
