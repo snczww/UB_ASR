@@ -107,13 +107,18 @@ def calculate_per_sentence_errors(candidate, ground_truth):
 
     return wer_list, cer_list, word_errors_list, character_errors_list
 
+# Utility function to calculate per-second and per-minute metrics
+def calculate_per_time_unit(count, duration, unit='second'):
+    if unit == 'minute':
+        duration /= 60  # Convert seconds to minutes
+    return count / duration
+
 # Main function to process audio and get results
-def process_audio(model_configs, audio_path, dictionary, ground_truth):
+def process_audio(model_configs, audio_path, dictionary, ground_truth, unit='second'):
     results = []
 
-
     duration = calculate_audio_duration(audio_path)
-    
+
     for name, config in model_configs.items():
         print(f"Processing with {name}...")
 
@@ -127,25 +132,25 @@ def process_audio(model_configs, audio_path, dictionary, ground_truth):
         print(transcribed_text)
 
         num_sentences = count_sentences(transcribed_text)
-        sentences_per_second = num_sentences / duration
+        sentences_per_unit = calculate_per_time_unit(num_sentences, duration, unit=unit)
         
         num_words, num_verbs, num_nouns = count_words_verbs_nouns(transcribed_text)
-        words_per_second = num_words / duration
-        verbs_per_second = num_verbs / duration
-        nouns_per_second = num_nouns / duration
+        words_per_unit = calculate_per_time_unit(num_words, duration, unit=unit)
+        verbs_per_unit = calculate_per_time_unit(num_verbs, duration, unit=unit)
+        nouns_per_unit = calculate_per_time_unit(num_nouns, duration, unit=unit)
         
         dictionary_count = count_words_from_dictionary(transcribed_text, dictionary)
-        dictionary_words_per_second = dictionary_count / duration
+        dictionary_words_per_unit = calculate_per_time_unit(dictionary_count, duration, unit=unit)
         
         wer_list, cer_list, word_errors_list, character_errors_list = calculate_per_sentence_errors(transcribed_text, ground_truth)
         
         results.append([
             audio_path, config["model_path"],
-            num_sentences, sentences_per_second,
-            num_words, words_per_second,
-            num_verbs, verbs_per_second,
-            num_nouns, nouns_per_second,
-            dictionary_count, dictionary_words_per_second,
+            num_sentences, sentences_per_unit,
+            num_words, words_per_unit,
+            num_verbs, verbs_per_unit,
+            num_nouns, nouns_per_unit,
+            dictionary_count, dictionary_words_per_unit,
             wer_list, cer_list, word_errors_list, character_errors_list
         ])
 
@@ -169,7 +174,7 @@ def main():
             "max_new_tokens": 128
         },
         "local_whisper_large_v3": {
-            "model_path": "openai/whisper-base",
+            "model_path": "openai/whisper-tiny",
             "local": False,  # Whether the model is local
             "task": "automatic-speech-recognition",
             "chunk_length_s": 25,
@@ -179,18 +184,22 @@ def main():
         # Add other model configurations as needed
     }
 
-    results = process_audio(model_configs, audio_path, dictionary, ground_truth)
+    unit = 'minute'  # Change to 'second' if you want per-second metrics
+
+    results = process_audio(model_configs, audio_path, dictionary, ground_truth, unit=unit)
     
-    # Convert results to DataFrame
+    # Define columns based on the unit
     columns = [
         "Audio Path", "Model Path",
-        "# Sentences", "Sentences/sec",
-        "# Words", "Words/sec",
-        "# Verbs", "Verbs/sec",
-        "# Nouns", "Nouns/sec",
-        "# Dictionary Words", "Dictionary Words/sec",
+        f"# Sentences", f"Sentences/{unit}",
+        f"# Words", f"Words/{unit}",
+        f"# Verbs", f"Verbs/{unit}",
+        f"# Nouns", f"Nouns/{unit}",
+        f"# Dictionary Words", f"Dictionary Words/{unit}",
         "WER List", "CER List", "Word Errors List", "Character Errors List"
     ]
+    
+    # Convert results to DataFrame
     df = pd.DataFrame(results, columns=columns)
     
     # Print the DataFrame
