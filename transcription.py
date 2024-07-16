@@ -6,6 +6,7 @@ import librosa
 import nltk
 import pandas as pd
 import argparse
+import json
 
 # Ensure the required NLTK data files are downloaded
 nltk.download('punkt')
@@ -18,14 +19,14 @@ torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
 # Load model
 def load_model(config):
     model = AutoModelForSpeechSeq2Seq.from_pretrained(
-        config["model_path"], torch_dtype=torch_dtype, low_cpu_mem_usage=True, use_safetensors=True
+        config["model_path"], torch_dtype=torch_dtype, low_cpu_mem_usage=True
     )
     model.to(device)
     return model
 
 # Load processor
 def load_processor(config):
-    processor = AutoProcessor.from_pretrained(config["model_path"])
+    processor = AutoProcessor.from_pretrained(config["processor_path"])
     return processor
 
 # Create pipeline
@@ -33,7 +34,7 @@ def create_pipeline(model, processor, config):
     pipe = pipeline(
         config["task"],
         model=model,
-        tokenizer=config["tokenizer"],
+        tokenizer=config["tokenizer"],  # Use the tokenizer from the configuration
         feature_extractor=processor.feature_extractor,
         max_new_tokens=config["max_new_tokens"],
         chunk_length_s=config["chunk_length_s"],
@@ -71,8 +72,8 @@ def count_sentences(text):
 
 # Count words, verbs, and nouns in the transcribed text
 def count_words_verbs_nouns(text):
-    words = nltk.word_tokenize(text)
-    pos_tags = nltk.pos_tag(words)
+    words = nltk.word_tokenize(text)  # Tokenization
+    pos_tags = nltk.pos_tag(words)  # POS Tagging
     num_words = len(words)
     num_verbs = sum(1 for word, pos in pos_tags if pos.startswith('VB'))
     num_nouns = sum(1 for word, pos in pos_tags if pos.startswith('NN'))
@@ -80,7 +81,7 @@ def count_words_verbs_nouns(text):
 
 # Count occurrences of words from a given dictionary in the text
 def count_words_from_dictionary(text, dictionary):
-    words = nltk.word_tokenize(text.lower())
+    words = nltk.word_tokenize(text.lower())  # Tokenization
     dictionary_set = set(dictionary)
     dictionary_count = sum(1 for word in words if word in dictionary_set)
     return dictionary_count
@@ -162,13 +163,19 @@ def parse_arguments():
     parser.add_argument('--audio_path', type=str, required=True, help='Path to the audio file.')
     parser.add_argument('--dictionary_path', type=str, required=True, help='Path to the dictionary text file.')
     parser.add_argument('--ground_truth_path', type=str, required=True, help='Path to the ground truth text file.')
+    parser.add_argument('--model_configs_path', type=str, required=True, help='Path to the model configurations JSON file.')
     parser.add_argument('--unit', type=str, choices=['second', 'minute'], default='second', help='Time unit for calculating metrics.')
 
     return parser.parse_args()
 
 def read_file(file_path):
-    with open(file_path, 'r', encoding='utf-8') as file:
+    with open(file_path, 'r', encoding='utf-8') as file):
         content = file.read().splitlines()
+    return content
+
+def read_json(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file):
+        content = json.load(file)
     return content
 
 def main():
@@ -176,28 +183,7 @@ def main():
 
     dictionary = read_file(args.dictionary_path)
     ground_truth = ' '.join(read_file(args.ground_truth_path))
-
-    model_configs = {
-        "whisper_large_v3": {
-            "model_path": "openai/whisper-base",
-            "tokenizer": "openai/whisper-base",  # Specify the tokenizer here
-            "local": False,  # Whether the model is local
-            "task": "automatic-speech-recognition",
-            "chunk_length_s": 25,
-            "batch_size": 16,
-            "max_new_tokens": 128
-        },
-        "local_whisper_large_v3": {
-            "model_path": "local_model",
-            "tokenizer": "local_tokenizer",  # Specify the tokenizer here
-            "local": True,  # Whether the model is local
-            "task": "automatic-speech-recognition",
-            "chunk_length_s": 25,
-            "batch_size": 16,
-            "max_new_tokens": 128
-        },
-        # Add other model configurations as needed
-    }
+    model_configs = read_json(args.model_configs_path)
 
     results = process_audio(model_configs, args.audio_path, dictionary, ground_truth, unit=args.unit)
     
