@@ -1,6 +1,6 @@
 import torch
 import jiwer
-from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
+from transformers import WhisperTokenizer, WhisperForConditionalGeneration, WhisperProcessor, pipeline
 from datasets import load_dataset
 import librosa
 import nltk
@@ -18,23 +18,21 @@ torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
 
 # Load model
 def load_model(config):
-    model = AutoModelForSpeechSeq2Seq.from_pretrained(
-        config["model_path"], torch_dtype=torch_dtype, low_cpu_mem_usage=True
-    )
-    model.to(device)
+    model = WhisperForConditionalGeneration.from_pretrained(config["model_path"], torch_dtype=torch_dtype).to(device)
     return model
 
 # Load processor
 def load_processor(config):
-    processor = AutoProcessor.from_pretrained(config["processor_path"])
+    processor = WhisperProcessor.from_pretrained(config["processor_path"])
     return processor
 
 # Create pipeline
 def create_pipeline(model, processor, config):
+    tokenizer = WhisperTokenizer.from_pretrained(config["tokenizer"])
     pipe = pipeline(
         config["task"],
         model=model,
-        tokenizer=config["tokenizer"],  # Use the tokenizer from the configuration
+        tokenizer=tokenizer,
         feature_extractor=processor.feature_extractor,
         max_new_tokens=config["max_new_tokens"],
         chunk_length_s=config["chunk_length_s"],
@@ -169,7 +167,7 @@ def parse_arguments():
     return parser.parse_args()
 
 def read_file(file_path):
-    with open(file_path, 'r', encoding='utf-8') as file):
+    with open(file_path, 'r', encoding='utf-8') as file:
         content = file.read().splitlines()
     return content
 
