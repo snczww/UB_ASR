@@ -7,6 +7,8 @@ import nltk
 import pandas as pd
 import argparse
 import json
+from tokenizers import normalizers
+from tokenizers.normalizers import Lowercase, NFC, StripAccents, Replace
 
 # Ensure the required NLTK data files are downloaded
 nltk.download('punkt')
@@ -113,11 +115,31 @@ def calculate_per_time_unit(count, duration, unit='second'):
         duration /= 60  # Convert seconds to minutes
     return count / duration
 
+# Function to create a normalizer based on the normalizer configuration
+def create_normalizer(normalizer_config):
+    normalizer_list = []
+
+    if normalizer_config.get("lowercase", False):
+        normalizer_list.append(Lowercase())
+
+    if normalizer_config.get("nfc", False):
+        normalizer_list.append(NFC())
+
+    if normalizer_config.get("strip_accents", False):
+        normalizer_list.append(StripAccents())
+
+    replace_dict = normalizer_config.get("replace", {})
+    for target, replacement in replace_dict.items():
+        normalizer_list.append(Replace(target, replacement))
+
+    return normalizers.Sequence(normalizer_list)
+
 # Main function to process audio and get results
-def process_audio(model_configs, audio_path, dictionary, ground_truth, unit='second'):
+def process_audio(model_configs, audio_path, dictionary, ground_truth, normalizer_config, unit='second'):
     results = []
 
     duration = calculate_audio_duration(audio_path)
+    normalizer = create_normalizer(normalizer_config)
 
     for name, config in model_configs.items():
         print(f"Processing with {name}...")
@@ -130,6 +152,9 @@ def process_audio(model_configs, audio_path, dictionary, ground_truth, unit='sec
         transcribed_text = result["text"]
         print(f'Results for {name}:')
         print(transcribed_text)
+
+        # Apply normalization to the transcribed text
+        transcribed_text = normalizer.normalize_str(transcribed_text)
 
         num_sentences = count_sentences(transcribed_text)
         sentences_per_unit = calculate_per_time_unit(num_sentences, duration, unit=unit)
@@ -162,6 +187,7 @@ def parse_arguments():
     parser.add_argument('--dictionary_path', type=str, required=True, help='Path to the dictionary text file.')
     parser.add_argument('--ground_truth_path', type=str, required=True, help='Path to the ground truth text file.')
     parser.add_argument('--model_configs_path', type=str, required=True, help='Path to the model configurations JSON file.')
+    parser.add_argument('--normalizer_path', type=str, required=True, help='Path to the normalizer JSON file.')
     parser.add_argument('--unit', type=str, choices=['second', 'minute'], default='second', help='Time unit for calculating metrics.')
 
     return parser.parse_args()
@@ -172,7 +198,7 @@ def read_file(file_path):
     return content
 
 def read_json(file_path):
-    with open(file_path, 'r', encoding='utf-8') as file):
+    with open(file_path, 'r', encoding='utf-8') as file:
         content = json.load(file)
     return content
 
@@ -182,8 +208,9 @@ def main():
     dictionary = read_file(args.dictionary_path)
     ground_truth = ' '.join(read_file(args.ground_truth_path))
     model_configs = read_json(args.model_configs_path)
+    normalizer_config = read_json(args.normalizer_path)
 
-    results = process_audio(model_configs, args.audio_path, dictionary, ground_truth, unit=args.unit)
+    results = process_audio(model_configs, args.audio_path, dictionary, ground_truth, normalizer_config, unit=args.unit)
     
     # Define columns based on the unit
     columns = [

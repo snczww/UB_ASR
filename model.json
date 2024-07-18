@@ -2,7 +2,7 @@
     "whisper_large_v3": {
         "model_path": "openai/whisper-base",
         "processor_path": "openai/whisper-base-processor",
-        "tokenizer": "openai/whisper-base-tokenizer",
+        "tokenizer": "openai/whisper-tiny",
         "local": false,
         "task": "automatic-speech-recognition",
         "chunk_length_s": 25,

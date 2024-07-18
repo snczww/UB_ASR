@@ -4,7 +4,7 @@ import json
 import tempfile
 import os
 import pandas as pd
-from transcription import process_audio, read_file, read_json
+from transcription import process_audio, read_file, read_json, create_normalizer
 
 class TestAudioProcessing(unittest.TestCase):
 
@@ -30,12 +30,26 @@ class TestAudioProcessing(unittest.TestCase):
             with open(ground_truth_path, 'w') as f:
                 f.write('This is a ground truth sentence.')
 
+            # Create temporary normalizer configuration file
+            normalizer_path = os.path.join(tmpdirname, 'normalizer.json')
+            normalizer_config = {
+                "lowercase": True,
+                "replace": {
+                    "ain't": "is not",
+                    "can't": "cannot",
+                    "won't": "will not"
+                }
+            }
+            with open(normalizer_path, 'w') as f:
+                json.dump(normalizer_config, f)
+
             # Sample model configuration
+            model_configs_path = os.path.join(tmpdirname, 'model_configs.json')
             model_configs = {
                 "test_model": {
-                    "model_path": "openai/whisper-base",
-                    "processor_path": "openai/whisper-base-processor",
-                    "tokenizer": "openai/whisper-base-tokenizer",
+                    "model_path": "openai/whisper-large-v2",
+                    "processor_path": "openai/whisper-large-v2",
+                    "tokenizer": "openai/whisper-large-v2",
                     "local": False,
                     "task": "automatic-speech-recognition",
                     "chunk_length_s": 25,
@@ -43,6 +57,8 @@ class TestAudioProcessing(unittest.TestCase):
                     "max_new_tokens": 128
                 }
             }
+            with open(model_configs_path, 'w') as f:
+                json.dump(model_configs, f)
 
             audio_path = os.path.join(tmpdirname, 'audio.wav')
             # Create a temporary audio file (empty for mock purposes)
@@ -51,9 +67,11 @@ class TestAudioProcessing(unittest.TestCase):
 
             dictionary = read_file(dictionary_path)
             ground_truth = ' '.join(read_file(ground_truth_path))
+            normalizer_config = read_json(normalizer_path)
+            model_configs = read_json(model_configs_path)
 
             # Process the audio
-            results = process_audio(model_configs, audio_path, dictionary, ground_truth, unit='second')
+            results = process_audio(model_configs, audio_path, dictionary, ground_truth, normalizer_config, unit='second')
 
             # Convert results to DataFrame for assertion
             columns = [
