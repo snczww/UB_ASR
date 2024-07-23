@@ -73,6 +73,13 @@ You can also process a single audio file by setting the parameters directly in t
 ```
 python ASR_main_no_args.py
 ```
+### 4. Process Multiple Audio Files in a Directory without Arguments
+
+You can also process multiple audio files by setting the parameters directly in the script:
+
+```
+python ASR_main_path_input_no_args.py
+```
 
 ## File Structure
 
