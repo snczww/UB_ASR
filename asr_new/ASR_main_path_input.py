@@ -3,7 +3,7 @@ from ASR_utils import read_file, read_json
 from ASR_process import process_mul_bypath, save_results
 
 # Define your parameters here
-audios_truth_path = "path/to/your/directory"
+audios_truth_path = "/home/jovyan/work/asr_new/audio_files/out"
 dictionary_path = "dictionary.txt"
 model_configs_path = "model.json"
 normalizer_path = "normalizer.json"
