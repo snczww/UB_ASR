@@ -1,0 +1,22 @@
+{
+    "whisper_large_v3": {
+        "model_path": "openai/whisper-base",
+        "processor_path": "openai/whisper-base-processor",
+        "tokenizer": "openai/whisper-tiny",
+        "local": false,
+        "task": "automatic-speech-recognition",
+        "chunk_length_s": 25,
+        "batch_size": 16,
+        "max_new_tokens": 128
+    },
+    "local_whisper_large_v3": {
+        "model_path": "openai/whisper-tiny",
+        "processor_path": "openai/whisper-base-processor",
+        "tokenizer": "openai/whisper-tiny",
+        "local": true,
+        "task": "automatic-speech-recognition",
+        "chunk_length_s": 25,
+        "batch_size": 16,
+        "max_new_tokens": 128
+    }
+}
