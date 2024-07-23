@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 from ASR_utils import read_file, read_json, parse_arguments
 from ASR_model_process import process_audio
 from datasets import load_dataset
@@ -11,21 +12,10 @@ def main():
     ground_truth = ' '.join(read_file(args.ground_truth_path)) if args.ground_truth_path else ""
 
     # Load model configurations
-    model_configs = read_json(args.model_configs_path) if args.model_configs_path else {
-        "default_model": {
-            "model_path": "openai/whisper-large-v3",
-            "processor_path": "openai/whisper-large-v3",
-            "tokenizer": "openai/whisper-large-v3",
-            "local": False,
-            "task": "automatic-speech-recognition",
-            "chunk_length_s": 30,
-            "batch_size": 16,
-            "max_new_tokens": 128
-        }
-    }
+    model_configs = read_json(args.model_configs_path)
 
-    # Load normalizer configuration if provided
-    normalizer_config = read_json(args.normalizer_path) if args.normalizer_path else read_json("normalizer.json")
+    # Load normalizer configuration
+    normalizer_config = read_json(args.normalizer_path)
 
     # Use sample data if audio path is not provided
     if not args.audio_path:
@@ -50,8 +40,15 @@ def main():
     # Convert results to DataFrame
     df = pd.DataFrame(results, columns=columns)
     
-    # Print the DataFrame
-    print(df)
+    # Define output path
+    output_path = args.output_path if args.output_path else os.path.join('output', 'transcription_results.csv')
+
+    # Ensure the output directory exists
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    
+    # Save the DataFrame as a CSV file
+    df.to_csv(output_path, index=False)
+    print(f'Results saved to {output_path}')
 
 if __name__ == "__main__":
     main()

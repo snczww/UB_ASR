@@ -15,3 +15,9 @@ transcription_V0.2.py
 test_transcription.py
 transcription.py
 model.json
+asr_new/audio_files/2227922522300497034/
+
+asr_new/__pycache__
+__pycache__/
+._.DS_Store
+._audio_files
