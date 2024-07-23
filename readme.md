@@ -22,20 +22,20 @@ This project provides a comprehensive Automatic Speech Recognition (ASR) system 
 ## Installation
 
 1. Clone the repository:
-'''
+```
     git clone https://github.com/yourusername/your-repo.git
     cd your-repo
-'''
+```
 
 2. Install the required Python packages:
-'''
+```
     pip install torch transformers datasets pandas nltk librosa
-'''
+```
 
 3. Download required NLTK data:
-'''
+```
     python -c "import nltk; nltk.download('punkt'); nltk.download('averaged_perceptron_tagger')"
-'''
+```
 
 ## Usage
 
@@ -43,7 +43,7 @@ This project provides a comprehensive Automatic Speech Recognition (ASR) system 
 
 To process a single audio file and generate the transcription results, use the following command:
 
-'''
+```
 python ASR_main.py --audio_path path/to/your/audio/file.wav \\
                    --dictionary_path path/to/dictionary.txt \\
                    --ground_truth_path path/to/ground_truth.txt \\
@@ -51,28 +51,28 @@ python ASR_main.py --audio_path path/to/your/audio/file.wav \\
                    --normalizer_path path/to/normalizer.json \\
                    --unit minute \\
                    --output_path path/to/output/transcription_results.csv
-'''
+```
 
 ### 2. Process Multiple Audio Files in a Directory
 
 To process all `.mp3` audio files in a directory along with their corresponding ground truth `.txt` files, use the following command:
 
-'''
+```
 python ASR_main_path_input.py --audios_truth_path path/to/your/directory \\
                               --dictionary_path path/to/dictionary.txt \\
                               --model_configs_path path/to/model.json \\
                               --normalizer_path path/to/normalizer.json \\
                               --unit minute \\
                               --output_path path/to/output/transcription_results.csv
-'''
+```
 
 ### 3. Process Single Audio File without Arguments
 
 You can also process a single audio file by setting the parameters directly in the script:
 
-'''
+```
 python ASR_main_no_args.py
-'''
+```
 
 ## File Structure
 
@@ -89,7 +89,7 @@ python ASR_main_no_args.py
 ## Examples
 
 ### `dictionary.txt`
-'''plaintext
+```plaintext
 hello
 world
 example
@@ -115,10 +115,10 @@ processing
 language
 model
 algorithm
-'''
+```
 
 ### `model.json`
-'''json
+```json
 {
     "whisper_large_v3": {
         "model_path": "openai/whisper-large-v3",
@@ -141,10 +141,10 @@ algorithm
         "max_new_tokens": 128
     }
 }
-'''
+```
 
 ### `normalizer.json`
-'''json
+```json
 {
     "lowercase": true,
     "nfc": true,
@@ -154,7 +154,7 @@ algorithm
         "favourite": "favorite"
     }
 }
-'''
+```
 
 ## License
 
