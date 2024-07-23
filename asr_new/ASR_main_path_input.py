@@ -3,7 +3,7 @@ from ASR_utils import read_file, read_json
 from ASR_process import process_mul_bypath, save_results
 
 # Define your parameters here
-audios_truth_path = "audio_files/2227922522300497034"
+audios_truth_path = "path/to/your/directory"
 dictionary_path = "dictionary.txt"
 model_configs_path = "model.json"
 normalizer_path = "normalizer.json"

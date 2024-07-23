@@ -24,10 +24,10 @@ def read_json(file_path):
         content = json.load(file)
     return content
 
-def find_files(directory, extension):
+def find_files(audios_path, extension):
     """Recursively find all files with the given extension in the directory."""
     files = []
-    for root, _, filenames in os.walk(directory):
+    for root, _, filenames in os.walk(audios_path):
         for filename in filenames:
             if filename.endswith(extension):
                 files.append(os.path.join(root, filename))
