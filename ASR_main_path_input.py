@@ -1,6 +1,6 @@
 import os
-from ASR_utils import parse_arguments, read_file, read_json
-from ASR_process import process_mul_bypath, save_results
+from utils.ASR_utils import parse_arguments, read_file, read_json
+from utils.ASR_process import process_mul_bypath, save_results
 
 def main():
     args = parse_arguments()

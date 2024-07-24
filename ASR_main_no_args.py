@@ -1,5 +1,5 @@
-from ASR_utils import read_file, read_json
-from ASR_process import process_single_audio, save_results
+from utils.ASR_utils import read_file, read_json
+from utils.ASR_process import process_single_audio, save_results
 from datasets import load_dataset
 
 # Define your parameters here

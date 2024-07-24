@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
-        "./asr_new"
+        "./asr_new",
+        "./utils"
     ]
 }

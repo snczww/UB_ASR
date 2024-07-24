@@ -1,6 +1,6 @@
 import os
-from ASR_utils import read_file, read_json
-from ASR_process import process_mul_bypath, save_results
+from utils.ASR_utils import read_file, read_json
+from utils.ASR_process import process_mul_bypath, save_results
 
 # Define your parameters here
 audios_truth_path = "/home/jovyan/work/asr_new/audio_files/out"
