@@ -10,6 +10,7 @@ model_configs_path = "model.json"
 normalizer_path = "normalizer.json"
 unit = "minute"
 output_path = "output/transcription_results.csv"
+max_workers = 6
 
 def process_pair(audio_file, ground_truth_file, dictionary, model_configs, normalizer_config, unit):
     try:
@@ -52,7 +53,7 @@ def main():
     normalizer_config = read_json(normalizer_path)
 
     cpu_count = os.cpu_count()
-    max_workers = 6
+    
     print(f"Using {max_workers} workers based on {cpu_count} CPU cores.")
 
     results = process_mul_bypath(audios_truth_path, dictionary, model_configs, normalizer_config, unit, max_workers=max_workers)

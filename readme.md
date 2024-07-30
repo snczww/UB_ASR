@@ -50,7 +50,7 @@ python ASR_main.py --audio_path path/to/your/audio/file.wav \\
                    --model_configs_path path/to/model.json \\
                    --normalizer_path path/to/normalizer.json \\
                    --unit minute \\
-                   --output_path path/to/output/transcription_results.csv
+                   --output_path path/to/<Output file>
 ```
 
 ### 2. Process Multiple Audio Files in a Directory
@@ -63,7 +63,7 @@ python ASR_main_path_input.py --audios_truth_path path/to/your/directory \\
                               --model_configs_path path/to/model.json \\
                               --normalizer_path path/to/normalizer.json \\
                               --unit minute \\
-                              --output_path path/to/output/transcription_results.csv
+                              --output_path path/to/<Output file>
 ```
 
 ### 3. Process Single Audio File without Arguments
@@ -73,12 +73,51 @@ You can also process a single audio file by setting the parameters directly in t
 ```
 python ASR_main_no_args.py
 ```
+Modify parameters before run script
+```
+# Define your parameters here
+audio_path = "audio_files/758.mp3"
+dictionary_path = "dictionary.txt"
+ground_truth_path = "audio_files/758.txt"
+model_configs_path = "model.json"
+normalizer_path = "normalizer.json"
+unit = "minute"
+output_path = "<Output file>"
+```
 ### 4. Process Multiple Audio Files in a Directory without Arguments
 
 You can also process multiple audio files by setting the parameters directly in the script:
 
 ```
 python ASR_main_path_input_no_args.py
+```
+Modify parameters before run script
+```
+# Define your parameters here
+audios_truth_path = "<Your audios files & ground_truth files dir>"
+dictionary_path = "dictionary.txt"
+model_configs_path = "model.json"
+normalizer_path = "normalizer.json"
+unit = "minute"
+output_path = "<Output file>"
+```
+### 5. Using ProcessPoolExecutor process Multiple Audio Files in a Directory without Arguments
+
+You can also process multiple audio files with multiple Executor by setting the parameters directly in the script:
+```
+python ASR_main_path_input_no_args_mul.py
+```
+Modify parameters before run script
+```
+# Define your parameters here
+
+audios_truth_path = "<Your audios files & ground_truth files dir>"
+dictionary_path = "dictionary.txt"
+model_configs_path = "model.json"
+normalizer_path = "normalizer.json"
+unit = "minute"
+output_path = "<Output file>"
+max_workers = 6
 ```
 
 ## File Structure
