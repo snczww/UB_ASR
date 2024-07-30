@@ -1,0 +1,6 @@
+torch
+transformers
+librosa
+jiwer
+nltk
+datasets
