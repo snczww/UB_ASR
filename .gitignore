@@ -21,3 +21,6 @@ __pycache__/
 ._.DS_Store
 ._audio_files
 old_codes/
+.vscode/
+.gitignore
+.DS_Store
