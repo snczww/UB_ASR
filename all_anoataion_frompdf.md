@@ -20,48 +20,75 @@ brackets is the same as the material immediately following the [/] symbol.
 ``` python
 import re
 
-def identify_markers(text):
-    # Patterns for different markers
-    trailing_off_pattern = r'\+\.\.\.'
-    trailing_off_question_pattern = r'\+\.\.\?'
-    interruption_pattern = r'\+\./\.'
-    self_interruption_pattern = r'\+\./\.'
+import re
+
+def find_retracing_markers(text):
+    # Define patterns for different types of retracing markers
+    retracing_with_brackets_pattern = r'(<[^>]+> \[//\])|(<[^>]+> \[/\])'
+    retracing_single_word_pattern = r'(\b\w+\b \[/\])'
+    retracing_with_fillers_pattern = r'(<[^>]+> \[/\] \(.*?\) &-[a-z]+ \[.*?\])'
 
     # Finding all occurrences of each pattern
-    trailing_off_matches = re.findall(trailing_off_pattern, text)
-    trailing_off_question_matches = re.findall(trailing_off_question_pattern, text)
-    interruption_matches = re.findall(interruption_pattern, text)
-    self_interruption_matches = re.findall(self_interruption_pattern, text)
+    retracing_with_brackets_matches = re.findall(retracing_with_brackets_pattern, text)
+    retracing_single_word_matches = re.findall(retracing_single_word_pattern, text)
+    retracing_with_fillers_matches = re.findall(retracing_with_fillers_pattern, text)
 
-    # Count occurrences
-    trailing_off_count = len(trailing_off_matches)
-    trailing_off_question_count = len(trailing_off_question_matches)
-    interruption_count = len(interruption_matches)
-    self_interruption_count = len(self_interruption_matches)
+    # Extract only the matched group that is not empty (re.findall with multiple groups can return tuples with empty strings)
+    retracing_with_brackets_matches = [match[0] if match[0] else match[1] for match in retracing_with_brackets_matches]
 
     # Display the results
-    print(f'Trailing Off (+...): {trailing_off_count}')
-    print(f'Trailing Off Question (+..?): {trailing_off_question_count}')
-    print(f'Interruption (+/.): {interruption_count}')
-    print(f'Self Interruption (+//.): {self_interruption_count}')
+    print('Retracing with brackets:')
+    for match in retracing_with_brackets_matches:
+        print(match)
+''' don't need
+
+    print('\nSingle word retracing:')
+    for match in retracing_single_word_matches:
+        print(match)
+    
+    print('\nRetracing with fillers:')
+    for match in retracing_with_fillers_matches:
+        print(match)
+'''
+# Example transcript text
+transcript_text = """
+*CHI: <I wanted> [/] I wanted to invite Margie .
+*CHI: it's [/] (.) &-um (.) it's [/] it's (.) a &-um (.) dog .
+*CHI: apple [/] apple is good.
+"""
+
+# Find retracing markers in the transcript
+find_retracing_markers(transcript_text)
+
+
+```
+- Retracing with Correction [//]
+
+``` python
+import re
+
+def find_bracketed_phrases(text):
+    # Define the pattern to match phrases inside <>
+    bracketed_pattern = r'<[^>]+>'
+
+    # Find all occurrences of the pattern
+    matches = re.findall(bracketed_pattern, text)
+
+    # Display the results
+    print('Bracketed phrases:')
+    for match in matches:
+        print(match)
 
 # Example transcript text
 transcript_text = """
-*CHI: smells good enough for +...
-*MOT: what were you saying ?
-*EXP: so do you have any of these toys at home or +..?
-*EXP: what did you do +/.
-*CHI: mommy .
-*EXP: +, with your spoon .
-*MOT: well we haven’t started to +//.
-*MOT: Alex put that down !
+*CHI: <I wanted> [//] &-uh I thought I wanted to invite Margie .
+*CHI: <the fish is> [//] the [/] the fish are swimming .
+*CHI: <it was> [//] it is a sunny day. 
 """
 
-# Identify markers in the transcript
-identify_markers(transcript_text)
-
+# Find bracketed phrases in the transcript
+find_bracketed_phrases(transcript_text)
 ```
-
 
 
 
@@ -73,4 +100,5 @@ identify_markers(transcript_text)
 +/.
 +//.
 [/]
+[//]
 ```
