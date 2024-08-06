@@ -1,0 +1,9 @@
+out：wer score
+input: type text. Ai transicrip;ground truth
+key: anotation ragard as a token. PS: <the gril> <the grils> [//] [/]
+link: https://hesp.umd.edu/sites/hesp.umd.edu/files/SLPCLANGuide_August2015_Final.pdf
+https://talkbank.org/manuals/Clin-CLAN.pdf  from pdf14
+
+recongnize anotation.
+
+
