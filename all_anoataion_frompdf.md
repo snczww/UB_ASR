@@ -439,15 +439,4 @@ transcript_text = """
 
 # Find non-verbal activities in the transcript
 find_nonverbal_activities(transcript_text)
-
-```
-
-
-
-
-``` python
-
-```
-``` python
-
 ```
