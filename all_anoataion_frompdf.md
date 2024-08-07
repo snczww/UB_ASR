@@ -20,8 +20,6 @@ brackets is the same as the material immediately following the [/] symbol.
 ``` python
 import re
 
-import re
-
 def find_retracing_markers(text):
     # Define patterns for different types of retracing markers
     retracing_with_brackets_pattern = r'(<[^>]+> \[//\])|(<[^>]+> \[/\])'
@@ -136,9 +134,9 @@ find_interposed_words(transcript_text)
 import re
 
 def find_overlap_markers(text):
-    # Define the patterns for overlap markers
-    overlap_follows_pattern = r'<([^>]+)> \[>\]'
-    overlap_precedes_pattern = r'<([^>]+)> \[<\]'
+    # Define the patterns for overlap markers with content restricted to letters
+    overlap_follows_pattern = r'<[a-zA-Z ]+> \[>\]'
+    overlap_precedes_pattern = r'<[a-zA-Z ]+> \[<\]'
 
     # Find all occurrences of each pattern
     overlap_follows_matches = re.findall(overlap_follows_pattern, text)
@@ -147,11 +145,11 @@ def find_overlap_markers(text):
     # Display the results
     print('Overlap follows markers:')
     for match in overlap_follows_matches:
-        print(f"<{match}> [>]")
+        print(match)
     
     print('\nOverlap precedes markers:')
     for match in overlap_precedes_matches:
-        print(f"<{match}> [<]")
+        print(match)
 
 # Example transcript text
 transcript_text = """
@@ -163,6 +161,7 @@ transcript_text = """
 
 # Find overlap markers in the transcript
 find_overlap_markers(transcript_text)
+
 
 ```
 all synbol
@@ -439,4 +438,24 @@ transcript_text = """
 
 # Find non-verbal activities in the transcript
 find_nonverbal_activities(transcript_text)
+```
+
+gather synbol
+``` text
+(.)
+(?)
+(!)
++...
++/.
++//.
+[/]
+[//]
++<
++”/.
++”
+[*]
+xxx
+yyy
+(.)
+[+ exc]
 ```
