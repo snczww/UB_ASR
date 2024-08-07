@@ -394,7 +394,7 @@ find_annotations(transcript_text)
 
 - Tables for Other Communicative Behaviors and Words
 
-
+- Excluding utterances from analysis
 
 all synbol
 ```
@@ -404,6 +404,7 @@ all synbol
 xxx
 yyy
 (.)
+[+ exc]
 ```
 ~~## Simple Events (not required [could replace to same words])~~
 ``` python
