@@ -11,97 +11,89 @@ def find_retracing_markers(text):
 
     retracing_with_brackets_matches = [match[0] if match[0] else match[1] for match in retracing_with_brackets_matches]
 
-    print('Retracing with brackets:')
-    for match in retracing_with_brackets_matches:
-        print(match)
-
-
+    return retracing_with_brackets_matches + retracing_single_word_matches + retracing_with_fillers_matches
 
 def find_interposed_words(text):
     interposed_pattern = r'&\*[A-Z]{3}:[a-zA-Z]+'
     matches = re.findall(interposed_pattern, text)
-    print('Interposed words:')
-    for match in matches:
-        print(match)
+    return matches
 
 def find_overlap_markers(text):
     overlap_follows_pattern = r'<[a-zA-Z ]+> \[>\]'
     overlap_precedes_pattern = r'<[a-zA-Z ]+> \[<\]'
     overlap_follows_matches = re.findall(overlap_follows_pattern, text)
     overlap_precedes_matches = re.findall(overlap_precedes_pattern, text)
-    print('Overlap follows markers:')
-    for match in overlap_follows_matches:
-        print(match)
-    print('\nOverlap precedes markers:')
-    for match in overlap_precedes_matches:
-        print(match)
+    return overlap_follows_matches + overlap_precedes_matches
 
 def find_fillers(text):
     fillers_pattern = r'&-[a-zA-Z_]+'
     matches = re.findall(fillers_pattern, text)
-    print('Fillers:')
-    for match in matches:
-        print(match)
+    return matches
 
 # def find_quotation_markers(text):
 #     quotation_precedes_pattern = r'\+\”[^.]*'
 #     single_quoted_words_pattern = r'\b\w+@q\b'
-#     quotation_precedes_matches = re.findall(quotation_precedes_pattern, text)
-#     single_quoted_words_matches = re.findall(single_quoted_words_pattern, text)
-#     print('Quotation Precedes markers:')
-#     for match in quotation_precedes_matches:
-#         print(match)
-#     print('\nSingle quoted words:')
-#     for match in single_quoted_words_matches:
-#         print(match)
+    # quotation_precedes_matches = re.findall(quotation_precedes_pattern, text)
+    # single_quoted_words_matches = re.findall(single_quoted_words_pattern, text)
+#     return quotation_precedes_matches + single_quoted_words_matches
 
 def find_frozen_phrases(text):
     frozen_phrases_pattern = r'\b\w+(?:_\w+)+\b'
     matches = re.findall(frozen_phrases_pattern, text)
-    print('Frozen phrases:')
-    for match in matches:
-        print(match)
+    return matches
+
+# def find_errors_and_replacements(text):
+#     error_pattern = r'\[\*\]'
+#     replacement_pattern = r'\[: [^\]]+\]'
+#     error_matches = re.findall(error_pattern, text)
+#     replacement_matches = re.findall(replacement_pattern, text)
+#     return error_matches + replacement_matches
 
 def find_errors_and_replacements(text):
-    error_pattern = r'\[\*\]'
+    # error_pattern = r'\[\*\]'
     replacement_pattern = r'\[: [^\]]+\]'
-    error_matches = re.findall(error_pattern, text)
+    # error_matches = re.findall(error_pattern, text)
     replacement_matches = re.findall(replacement_pattern, text)
-    print('Errors:')
-    for match in error_matches:
-        print(match)
-    print('\nTarget Replacements:')
-    for match in replacement_matches:
-        print(match)
+    return  replacement_matches
 
 def find_omitted_words(text):
     omitted_word_pattern = r'\b0\w+\b'
     matches = re.findall(omitted_word_pattern, text)
-    print('Omitted words:')
-    for match in matches:
-        print(match)
+    return matches
 
 def find_word_fragments(text):
     word_fragment_pattern = r'&\+\w+'
     matches = re.findall(word_fragment_pattern, text)
-    print('Word fragments:')
-    for match in matches:
-        print(match)
+    return matches
 
 def find_annotations(text):
     annotation_pattern = r'\b(?:yyy|xxx)\b \[=! [^\]]+\]'
     matches = re.findall(annotation_pattern, text)
-    print('Annotations:')
-    for match in matches:
-        annotation = re.search(r'\[=! [^\]]+\]', match).group()
-        print(annotation)
+    annotations = [re.search(r'\[=! [^\]]+\]', match).group() for match in matches]
+    return annotations
 
 def find_nonverbal_activities(text):
     nonverbal_pattern = r'&=\w+(:\w+)?'
-    matches = re.findall(nonverbal_pattern, text) 
-    print('Non-verbal activities:')
-    for match in matches:
-        print(match)
+    matches = re.findall(nonverbal_pattern, text)
+    return matches
+
+def collect_all_matches(text):
+    all_matches = []
+    all_matches += find_retracing_markers(text)
+    all_matches += find_interposed_words(text)
+    all_matches += find_overlap_markers(text)
+    all_matches += find_fillers(text)
+    # all_matches += find_quotation_markers(text)
+    all_matches += find_frozen_phrases(text)
+    all_matches += find_errors_and_replacements(text)
+    all_matches += find_omitted_words(text)
+    all_matches += find_word_fragments(text)
+    all_matches += find_annotations(text)
+    all_matches += find_nonverbal_activities(text)
+
+    # Remove duplicates and empty values
+    all_matches = list(set(filter(None, all_matches)))
+    return all_matches
 
 # Example transcript text
 transcript_text = """
@@ -152,15 +144,6 @@ transcript_text = """
 *CHI: opens mouth &=opens:mouth.
 """
 
-# Run all functions on the transcript text
-find_retracing_markers(transcript_text)
-find_interposed_words(transcript_text)
-find_overlap_markers(transcript_text)
-find_fillers(transcript_text)
-# find_quotation_markers(transcript_text)
-find_frozen_phrases(transcript_text)
-find_errors_and_replacements(transcript_text)
-find_omitted_words(transcript_text)
-find_word_fragments(transcript_text)
-find_annotations(transcript_text)
-find_nonverbal_activities(transcript_text)
+# Run the function to collect all matches and print the result
+all_matches = collect_all_matches(transcript_text)
+print(all_matches)
