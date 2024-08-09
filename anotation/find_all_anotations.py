@@ -37,6 +37,24 @@ def find_fillers(text):
     # single_quoted_words_matches = re.findall(single_quoted_words_pattern, text)
 #     return quotation_precedes_matches + single_quoted_words_matches
 
+def find_shortened_words(text):
+    # 首先按空格分割文本
+    words = text.split()
+    
+    # 定义正则表达式来匹配缩写形式的单词
+    shortened_pattern = r'\(?\w*\(?\w+\)?\w*\)?'
+    
+    matches = []
+    for word in words:
+        match = re.fullmatch(shortened_pattern, word)
+        if match:
+            # 只保留包含括号的匹配项
+            if '(' in match.group() or ')' in match.group():
+                matches.append(match.group())
+    
+    return matches
+
+
 def find_frozen_phrases(text):
     frozen_phrases_pattern = r'\b\w+(?:_\w+)+\b'
     matches = re.findall(frozen_phrases_pattern, text)
@@ -90,6 +108,7 @@ def collect_all_matches(text):
     all_matches += find_word_fragments(text)
     all_matches += find_annotations(text)
     all_matches += find_nonverbal_activities(text)
+    all_matches += find_shortened_words(text)
 
     # Remove duplicates and empty values
     all_matches = list(set(filter(None, all_matches)))
@@ -142,8 +161,24 @@ transcript_text = """
 *CHI: shows pictures &=shows:pictures.
 *CHI: points to the picture &=points:picture.
 *CHI: opens mouth &=opens:mouth.
+(a)bout don('t) (h)is (re)frigerator
+an(d) (e)nough (h)isself (re)member
+(a)n(d) (e)spress(o) -in(g) sec(ond)
+(a)fraid (e)spresso nothin(g) s(up)pose
+(a)gain (es)presso (i)n (th)e
+(a)nother (ex)cept (in)stead (th)em
+(a)round (ex)cuse Jag(uar) (th)emselves
+ave(nue) (ex)cused lib(r)ary (th)ere
+(a)way (e)xcuse Mass(achusetts) (th)ese
+(be)cause (e)xcused micro(phone) (th)ey
+(be)fore (h)e (pa)jamas (to)gether
+(be)hind (h)er (o)k (to)mato
+b(e)long (h)ere o(v)er (to)morrow
+b(e)longs (h)erself (po)tato (to)night
+Cad(illac) doc(tor) (h)im (h)imself prob(ab)ly (re)corder (un)til
 """
 
 # Run the function to collect all matches and print the result
-all_matches = collect_all_matches(transcript_text)
-print(all_matches)
+# all_matches = collect_all_matches(transcript_text)
+# print(all_matches)
+print(find_shortened_words(transcript_text))

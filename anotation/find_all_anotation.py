@@ -102,7 +102,10 @@ def find_nonverbal_activities(text):
     print('Non-verbal activities:')
     for match in matches:
         print(match)
-
+def find_shortened_words(text):
+    shortened_pattern = r'\b\w*\(\w+\)\w*\b'
+    matches = re.findall(shortened_pattern, text)
+    return matches
 # Example transcript text
 transcript_text = """
 *CHI: <I wanted> [/] I wanted to invite Margie .
@@ -150,6 +153,21 @@ transcript_text = """
 *CHI: shows pictures &=shows:pictures.
 *CHI: points to the picture &=points:picture.
 *CHI: opens mouth &=opens:mouth.
+(a)bout don('t) (h)is (re)frigerator
+an(d) (e)nough (h)isself (re)member
+(a)n(d) (e)spress(o) -in(g) sec(ond)
+(a)fraid (e)spresso nothin(g) s(up)pose
+(a)gain (es)presso (i)n (th)e
+(a)nother (ex)cept (in)stead (th)em
+(a)round (ex)cuse Jag(uar) (th)emselves
+ave(nue) (ex)cused lib(r)ary (th)ere
+(a)way (e)xcuse Mass(achusetts) (th)ese
+(be)cause (e)xcused micro(phone) (th)ey
+(be)fore (h)e (pa)jamas (to)gether
+(be)hind (h)er (o)k (to)mato
+b(e)long (h)ere o(v)er (to)morrow
+b(e)longs (h)erself (po)tato (to)night
+Cad(illac) doc(tor) (h)im (h)imself prob(ab)ly (re)corder (un)til
 """
 
 # Run all functions on the transcript text
