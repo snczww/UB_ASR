@@ -36,12 +36,20 @@ def word_error_rate(s1, s2):
     '''
     s1_words = s1.split()
     s2_words = s2.split()
+    # print(s1_words)
     distance = damerau_levenshtein_distance(s1_words, s2_words)
     return distance / len(s1_words)
-
+def word_list_error_rate(s1_words, s2_words):
+    '''
+    Calculates the WER percentage. 
+    '''
+    # s1_words = s1.split()
+    # s2_words = s2.split()
+    distance = damerau_levenshtein_distance(s1_words, s2_words)
+    return distance / len(s1_words)
 reference = "this is test a"
 hypothesis = "this is a test"
 
 #example
-wer = word_error_rate(reference, hypothesis)
-print(f"Word Error Rate: {wer * 100:.2f}%")
+# wer = word_error_rate(reference, hypothesis)
+# print(f"Word Error Rate: {wer * 100:.2f}%")

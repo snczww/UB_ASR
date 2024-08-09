@@ -190,4 +190,4 @@ Cad(illac) doc(tor) (h)im (h)imself prob(ab)ly (re)corder (un)til
 # Run the function to collect all matches and print the result
 # all_matches = collect_all_matches(transcript_text)
 # print(all_matches)
-print(find_shortened_words(transcript_text))
+# print(find_shortened_words(transcript_text))

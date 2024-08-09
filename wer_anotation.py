@@ -1,56 +1,35 @@
 from transformers import AutoTokenizer
 from anotation.find_all_anotations import collect_all_matches
-from utils.ASR_utils import read_file
-def extract_chi_lines_from_file(file_path):
-    """
-    This function extracts lines that start with '*CHI:' from a file and returns them as a single string.
+from utils.ASR_utils import read_file 
+from utils.wer_by_tokens import word_list_error_rate
+from utils.anotaion_utils import extract_lines_from_file
 
-    Parameters:
-    file_path (str): Path to the input file.
 
-    Returns:
-    str: A string containing all lines that start with '*CHI:', separated by newline characters.
-    """
-    try:
-        # Open the file and read all lines
-        with open(file_path, 'r', encoding='utf-8') as file:
-            lines = file.readlines()
+# Define model path and file paths
+tokenizer_model_path = 'allenai/longformer-base-4096'
+ground_truth_path = 'anotation/cha_files/758_2.cha'
+candidate_path = 'anotation/cha_files/758_AI.cha'
 
-        # # Use list comprehension to filter lines that start with '*CHI:'
-        # chi_lines = [line.strip() for line in lines if line.startswith('*CHI:')]
+# Read the fixed annotations from a file
+fix_anotation = read_file('/home/jovyan/work/anotation/fix_anotation.txt')
 
-        # # Use list comprehension to filter lines that start with '*CHI:' whitout chi
+# Extract lines from ground truth and candidate files based on specific prefixes
+ground_truth_text = extract_lines_from_file(ground_truth_path, prefix='*CHI:')
+candidate_text = extract_lines_from_file(candidate_path, prefix='*PAR0:')
 
-        chi_lines = [line.strip()[5:].strip() for line in lines if line.startswith('*CHI:')]
+# Collect all matches from both ground truth and candidate texts, and combine with fixed annotations
+all_matches = collect_all_matches(ground_truth_text) + collect_all_matches(candidate_text) + fix_anotation
 
-        # Join the list of lines into a single string with newline characters separating them
-        chi_lines_str = "\n".join(chi_lines)
+# Initialize the tokenizer from the specified model path
+tokenizer = AutoTokenizer.from_pretrained(tokenizer_model_path)
 
-        return chi_lines_str
-    
-    except FileNotFoundError:
-        return f"The file at {file_path} was not found."
-    except Exception as e:
-        return f"An error occurred: {e}"
-
-fix_anotation=read_file('/home/jovyan/work/anotation/fix_anotation.txt')
-all_matches=[]
-dictionary_path='/home/jovyan/work/audio_files/758.txt'
-transcript_text = extract_chi_lines_from_file(dictionary_path)
-print(type(transcript_text))
-# for i in transcript_text:
-#     single_line_matches=collect_all_matches(i)
-#     all_matches = single_line_matches + all_matches
-all_matches = collect_all_matches(transcript_text) + fix_anotation
-tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
-  
+# Add custom tokens (annotations) to the tokenizer
 num_added_toks = tokenizer.add_tokens(all_matches, special_tokens=True)
 
-print(all_matches)
+# Tokenize the ground truth and candidate texts
+ground_truth_text_split_tokens = tokenizer(ground_truth_text, max_length=4096, truncation=True).tokens()
+candidate_text_split_tokens = tokenizer(candidate_text, max_length=4096, truncation=True).tokens()
 
-print("We have added", num_added_toks, "tokens")
-split_tokens=tokenizer(transcript_text).tokens()
-print(tokenizer(transcript_text).tokens())
-# print(type(tokenizer(transcript_text).tokens()))
-for item in split_tokens:
-    print(item)
+# Calculate the Word Error Rate (WER) between the tokenized ground truth and candidate texts
+wer = word_list_error_rate(ground_truth_text_split_tokens, candidate_text_split_tokens)
+print(f"Word Error Rate: {wer * 100:.2f}%")

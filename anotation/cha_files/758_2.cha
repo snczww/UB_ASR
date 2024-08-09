@@ -1,0 +1,318 @@
+@UTF8
+@PID:	11312/c-00036369-1
+@Begin
+@Languages:	eng
+@Participants:	CHI Target_Child
+@Options:	multi
+@ID:	eng|ENNI|CHI|7;03.25|male|TD||Target_Child|||
+@Media:	758, audio
+@Comment:	Birth of CHI is 05-OCT-1993
+@Date:	30-JAN-2001
+@Tape Location:	Disk L24, Track 6
+@G:	B1
+*CHI:	<um> [/] a rabbit and his dog (.) are making a sandcastle . 35815_40435
+%wor:	um 35815_36295 a 36295_36895 rabbit 36895_37235 and 37235_37535 his 37535_37815 dog 37815_38235 are 38235_38835 making 38835_39215 a 39215_39435 sandcastle 39435_40435 .
+%mor:	det:art|a n|rabbit coord|and det:poss|his n|dog aux|be&PRES part|make-PRESP det:art|a n|+n|sand+n|castle .
+%gra:	1|2|DET 2|7|SUBJ 3|2|CONJ 4|5|DET 5|3|COORD 6|7|AUX 7|0|ROOT 8|9|DET 9|7|OBJ 10|7|PUNCT
+*CHI:	and now the rabbit gots [: has got] a shovel and his bucket . 40595_46375
+%wor:	and 40595_42555 now 42555_42975 the 42975_43195 rabbit 43195_43875 has 43875_44135 got 44135_44195 a 44195_44475 shovel 44475_44915 and 44915_45155 his 45155_45375 bucket 45375_46375 .
+%mor:	coord|and adv:tem|now det:art|the n|rabbit aux|have&3S part|get&PASTP det:art|a n|shovel coord|and det:poss|his n|bucket .
+%gra:	1|6|LINK 2|6|JCT 3|4|DET 4|6|SUBJ 5|6|AUX 6|0|ROOT 7|8|DET 8|6|OBJ 9|8|CONJ 10|11|DET 11|9|COORD 12|6|PUNCT
+*CHI:	and now (.) the rabbit (i)s going to [?] dump the sand from the bucket onto the sandcastle . 47095_52875
+%wor:	and 47095_47775 now 47775_47955 the 47955_49015 rabbit 49015_49355 is 49355_49535 going 49535_49675 to 49675_49795 dump 49795_50015 the 50015_50195 sand 50195_50495 from 50495_50715 the 50715_50935 bucket 50935_51175 onto 51175_51635 the 51635_51875 sandcastle 51875_52875 .
+%mor:	coord|and adv:tem|now det:art|the n|rabbit aux|be&3S part|go-PRESP inf|to v|dump det:art|the n|sand prep|from det:art|the n|bucket prep|onto det:art|the n|+n|sand+n|castle .
+%gra:	1|6|LINK 2|6|JCT 3|4|DET 4|6|SUBJ 5|6|AUX 6|0|ROOT 7|8|INF 8|6|COMP 9|10|DET 10|8|OBJ 11|8|JCT 12|13|DET 13|11|POBJ 14|8|JCT 15|16|DET 16|14|POBJ 17|6|PUNCT
+*CHI:	and the sandcastle (i)s all mushed with a big pile of sand on top of it . 54075_59495
+%wor:	and 54075_54155 the 54155_54375 sandcastle 54375_55135 is 55135_55415 all 55415_55775 mushed 55775_56315 with 56315_56535 a 56535_56675 big 56675_56915 pile 56915_57375 of 57375_57555 sand 57555_57835 on 57835_58055 top 58055_58315 of 58315_58495 it 58495_59495 .
+%mor:	coord|and det:art|the n|+n|sand+n|castle aux|be&3S adv|all part|mush-PASTP prep|with det:art|a adj|big n|pile prep|of n|sand prep|on n|top prep|of pro:per|it .
+%gra:	1|6|LINK 2|3|DET 3|6|SUBJ 4|6|AUX 5|6|JCT 6|0|ROOT 7|6|JCT 8|10|DET 9|10|MOD 10|7|POBJ 11|10|NJCT 12|11|POBJ 13|10|NJCT 14|13|POBJ 15|14|NJCT 16|15|POBJ 17|6|PUNCT
+*CHI:	and now they (a)re trying to put it back together . 60315_64035
+%wor:	and 60315_60975 now 60975_61535 they 61535_62035 are trying 62035_62375 to 62375_62515 put 62515_62695 it 62695_62795 back 62795_63035 together 63035_64035 .
+%mor:	coord|and adv:tem|now pro:sub|they aux|be&PRES part|try-PRESP inf|to v|put&ZERO pro:per|it adv|back adv|together .
+%gra:	1|5|LINK 2|5|JCT 3|5|SUBJ 4|5|AUX 5|0|ROOT 6|7|INF 7|5|COMP 8|7|OBJ 9|7|JCT 10|7|JCT 11|5|PUNCT
+*CHI:	and the rabbit (i)s like standing <like> [//] (.) something like this . 63495_67555
+%wor:	and 63495_63795 the 63795_63815 rabbit 63815_64075 is 64075_64255 like 64255_64475 standing 64475_64895 like 64895_65355 something 65355_66215 like 66215_66555 this 66555_67555 .
+%mor:	coord|and det:art|the n|rabbit cop|be&3S co|like part|stand-PRESP pro:indef|something prep|like pro:dem|this .
+%gra:	1|4|LINK 2|3|DET 3|4|SUBJ 4|0|ROOT 5|4|COM 6|4|XJCT 7|6|OBJ 8|7|NJCT 9|8|POBJ 10|4|PUNCT
+@G:	B2
+*CHI:	<um> [/] a rabbit and this (.) dog are walking down the road with these picnic baskets . 69995_77755
+%wor:	um 69995_72555 a 72555_73055 rabbit 73055_73375 and 73375_73695 this 73695_73995 dog 73995_74775 are 74775_74915 walking 74915_75255 down 75255_75635 the 75635_75815 road 75815_76015 with 76015_76235 these 76235_76395 picnic 76395_76755 baskets 76755_77755 .
+%mor:	det:art|a n|rabbit coord|and det:dem|this n|dog aux|be&PRES part|walk-PRESP prep|down det:art|the n|road prep|with det:dem|these n|picnic n|basket-PL .
+%gra:	1|2|DET 2|7|SUBJ 3|2|CONJ 4|5|DET 5|3|COORD 6|7|AUX 7|0|ROOT 8|7|JCT 9|10|DET 10|8|POBJ 11|7|JCT 12|14|DET 13|14|MOD 14|11|POBJ 15|7|PUNCT
+*CHI:	and now they (a)re eating . 78635_80755
+%wor:	and 78635_79395 now 79395_79595 they 79595_79695 are 79695_79755 eating 79755_80755 .
+%mor:	coord|and adv:tem|now pro:sub|they aux|be&PRES part|eat-PRESP .
+%gra:	1|5|LINK 2|5|JCT 3|5|SUBJ 4|5|AUX 5|0|ROOT 6|5|PUNCT
+*CHI:	and now the rabbit (i)s stuffed . 81435_84875
+%wor:	and 81435_83135 now 83135_83295 the 83295_83455 rabbit 83455_83695 is 83695_83875 stuffed 83875_84875 .
+%mor:	coord|and adv:tem|now det:art|the n|rabbit aux|be&3S part|stuff-PASTP .
+%gra:	1|6|LINK 2|6|JCT 3|4|DET 4|6|SUBJ 5|6|AUX 6|0|ROOT 7|6|PUNCT
+*CHI:	and he (i)s lying down . 84255_85835
+%wor:	and 84255_84355 he 84355_84535 is lying 84535_84835 down 84835_85835 .
+%mor:	coord|and pro:sub|he aux|be&3S part|lie-PRESP adv|down .
+%gra:	1|4|LINK 2|4|SUBJ 3|4|AUX 4|0|ROOT 5|4|JCT 6|4|PUNCT
+*CHI:	and the dog (i)s still eating (.) with a juice box in his hand . 85475_89315
+%wor:	and 85475_85555 the 85555_85795 dog 85795_86075 is 86075_86215 still 86215_86415 eating 86415_86795 with 86795_87355 a 87355_87455 juice 87455_87655 box 87655_87935 in 87935_88135 his 88135_88315 hand 88315_89315 .
+%mor:	coord|and det:art|the n|dog aux|be&3S adv|still part|eat-PRESP prep|with det:art|a n|juice n|box prep|in det:poss|his n|hand .
+%gra:	1|6|LINK 2|3|DET 3|6|SUBJ 4|6|AUX 5|6|JCT 6|0|ROOT 7|6|JCT 8|10|DET 9|10|MOD 10|7|POBJ 11|10|NJCT 12|13|DET 13|11|POBJ 14|6|PUNCT
+*CHI:	and now the juice box is is still in his hand . 90345_94205
+%wor:	and 90345_90645 now the 90645_90825 juice 90825_91065 box 91065_91385 is 91385_91705 is 91705_92745 still 92745_92765 in 92765_93005 his 93005_93205 hand 93205_94205 .
+%mor:	coord|and adv:tem|now det:art|the n|juice n|box cop|be&3S cop|be&3S adv|still prep|in det:poss|his n|hand .
+%gra:	1|6|LINK 2|6|JCT 3|5|DET 4|5|MOD 5|6|SUBJ 6|7|SUBJ 7|0|ROOT 8|7|JCT 9|7|JCT 10|11|DET 11|9|POBJ 12|7|PUNCT
+*CHI:	and now the rabbit is still doing what <he> [/] he was doing before . 93565_97465
+%wor:	and 93565_93685 now 93685_93905 the 93905_94405 rabbit 94405_94645 is 94645_94885 still 94885_95185 doing 95185_95485 what 95485_95705 he 95705_95845 he 95845_96085 was 96085_96205 doing 96205_96465 before 96465_97465 .
+%mor:	coord|and adv:tem|now det:art|the n|rabbit aux|be&3S adv|still part|do-PRESP pro:int|what pro:sub|he aux|be&PAST&13S part|do-PRESP adv|before .
+%gra:	1|7|LINK 2|7|JCT 3|4|DET 4|7|SUBJ 5|7|AUX 6|7|JCT 7|0|ROOT 8|11|LINK 9|11|SUBJ 10|11|AUX 11|7|COMP 12|11|JCT 13|7|PUNCT
+*CHI:	and now (.) he (ha)s gots [: got] his hands on his tummy . 97185_100625
+%wor:	and 97185_97225 now 97225_97505 he 97505_98085 has 98085_98365 got 98365_98505 his 98505_98705 hands 98705_99105 on 99105_99445 his 99445_99625 tummy 99625_100625 .
+%mor:	coord|and adv:tem|now pro:sub|he aux|have&3S part|get&PASTP det:poss|his n|hand-PL prep|on det:poss|his n|tum-DIM .
+%gra:	1|5|LINK 2|5|JCT 3|5|SUBJ 4|5|AUX 5|0|ROOT 6|7|DET 7|5|OBJ 8|5|JCT 9|10|DET 10|8|POBJ 11|5|PUNCT
+*CHI:	and he (i)s going pluck[/] pluck [/] pluck (.) something like that . 100005_103505
+%wor:	and 100005_100045 he 100045_100165 is 100165_100225 going 100225_100465 pluck 100465_101025 pluck 101025_101225 pluck 101225_101565 something 101565_102205 like 102205_102505 that 102505_103505 .
+%mor:	coord|and pro:sub|he aux|be&3S part|go-PRESP n|pluck pro:indef|something prep|like pro:dem|that .
+%gra:	1|4|LINK 2|4|SUBJ 3|4|AUX 4|0|ROOT 5|4|OBJ 6|5|POSTMOD 7|6|NJCT 8|7|POBJ 9|4|PUNCT
+*CHI:	and now (.) <the dog> [//] <the> [/] the dog (i)s running to (.) a doctor that (i)s walking down the road (.) and pulls the doctor to the rabbit . 103665_117245
+%wor:	and 103665_105285 now 105285_105605 the 105605_106205 dog 106205_106605 the 106605_108005 the 108005_108165 dog 108165_108365 is 108365_108505 running 108505_108805 to 108805_109325 a 109325_109965 doctor 109965_110365 that 110365_111025 is 111025_111125 walking 111125_111445 down 111445_111725 the 111725_111865 road 111865_112145 and 112145_114225 pulls 114225_114605 the 114605_115045 doctor 115045_115385 to 115385_115845 the 115845_116245 rabbit 116245_117245 .
+%mor:	coord|and adv:tem|now det:art|the n|dog aux|be&3S part|run-PRESP prep|to det:art|a n|doctor pro:rel|that aux|be&3S part|walk-PRESP prep|down det:art|the n|road coord|and v|pull-3S det:art|the n|doctor prep|to det:art|the n|rabbit .
+%gra:	1|6|LINK 2|6|JCT 3|4|DET 4|6|SUBJ 5|6|AUX 6|0|ROOT 7|6|JCT 8|9|DET 9|7|POBJ 10|12|LINK 11|12|AUX 12|9|CMOD 13|12|JCT 14|15|DET 15|13|POBJ 16|12|CONJ 17|16|COORD 18|19|DET 19|17|OBJ 20|17|JCT 21|22|DET 22|20|POBJ 23|6|PUNCT
+*CHI:	and now (.) the doctor is fixing up the rabbit . 119385_122965
+%wor:	and 119385_119585 now the 119585_120265 doctor 120265_120605 is 120605_121005 fixing 121005_121385 up 121385_121745 the 121745_121965 rabbit 121965_122965 .
+%mor:	coord|and adv:tem|now det:art|the n|doctor aux|be&3S part|fix-PRESP prep|up det:art|the n|rabbit .
+%gra:	1|6|LINK 2|6|JCT 3|4|DET 4|6|SUBJ 5|6|AUX 6|0|ROOT 7|6|JCT 8|9|DET 9|7|POBJ 10|6|PUNCT
+*CHI:	and now <the r> [//] the doctor rabbit is taking (.) <the> [/] the little rabbit home (.) I think . 123125_132425
+%wor:	and 123125_124885 now 124885_125065 the 125065_125465 r the 125465_125765 doctor 125765_126545 rabbit 126545_127005 is 127005_127345 taking 127345_127725 the 127725_128605 the 128605_129485 little 129485_129965 rabbit 129965_130485 home 130485_131085 I 131085_131425 think 131425_132425 .
+%mor:	coord|and adv:tem|now det:art|the n|doctor n|rabbit aux|be&3S part|take-PRESP det:art|the adj|little n|rabbit adv|home pro:sub|I v|think .
+%gra:	1|7|LINK 2|7|JCT 3|5|DET 4|5|MOD 5|7|SUBJ 6|7|AUX 7|0|ROOT 8|10|DET 9|10|MOD 10|7|OBJ 11|7|JCT 12|13|SUBJ 13|7|CJCT 14|7|PUNCT
+@G:	B3
+*CHI:	this dog has a balloon tied up to his wagon . 134465_139785
+%wor:	this 134465_136805 dog 136805_137105 has 137105_137365 a 137365_137565 balloon 137565_137805 tied 137805_138105 up 138105_138385 to 138385_138605 his 138605_138785 wagon 138785_139785 .
+%mor:	det:dem|this n|dog v|have&3S det:art|a n|balloon v|tie-PAST adv|up prep|to det:poss|his n|wagon .
+%gra:	1|2|DET 2|3|SUBJ 3|0|ROOT 4|5|DET 5|6|SUBJ 6|3|COMP 7|6|JCT 8|6|JCT 9|10|DET 10|8|POBJ 11|3|PUNCT
+*CHI:	<and the ra> [//] and the rabbit (i)s walking by . 139325_142005
+%wor:	and 139325_139345 the 139345_139525 ra 139525_139705 and 139705_140105 the 140105_140285 rabbit 140285_140565 is 140565_140725 walking 140725_141005 by 141005_142005 .
+%mor:	coord|and det:art|the n|rabbit aux|be&3S part|walk-PRESP adv|by .
+%gra:	1|5|LINK 2|3|DET 3|5|SUBJ 4|5|AUX 5|0|ROOT 6|5|JCT 7|5|PUNCT
+*CHI:	and now the rabbit (i)s going to [^ gonna] grab the balloon and untie it I guess . 142485_146985
+%wor:	and 142485_142985 now 142985_143165 the 143165_143325 rabbit 143325_143565 is 143565_143745 going 143745_143925 to 143925_144045 grab 144045_144325 the 144325_144485 balloon 144485_144765 and 144765_145025 untie 145025_145685 it 145685_145845 I 145845_145985 guess 145985_146985 .
+%mor:	coord|and adv:tem|now det:art|the n|rabbit aux|be&3S part|go-PRESP inf|to v|grab det:art|the n|balloon coord|and un#v|tie pro:per|it pro:sub|I v|guess .
+%gra:	1|6|LINK 2|6|JCT 3|4|DET 4|6|SUBJ 5|6|AUX 6|0|ROOT 7|8|INF 8|6|COMP 9|10|DET 10|8|OBJ 11|10|CONJ 12|11|COORD 13|8|OBJ 14|15|SUBJ 15|13|CMOD 16|6|PUNCT
+*CHI:	and now he (i)s untying it . 147785_150845
+%wor:	and 147785_148565 now he 148565_149005 is 149005_149205 untying 149205_149845 it 149845_150845 .
+%mor:	coord|and adv:tem|now pro:sub|he cop|be&3S un#n:gerund|tie-GERUND pro:per|it .
+%gra:	1|4|LINK 2|4|JCT 3|4|SUBJ 4|0|ROOT 5|4|PRED 6|5|OBJ 7|4|PUNCT
+*CHI:	and now the balloon (i)s floating up into the air . 151505_154345
+%wor:	and 151505_151565 now 151565_151725 the 151725_151885 balloon 151885_152125 is 152125_152265 floating 152265_152625 up 152625_152885 into 152885_153185 the 153185_153345 air 153345_154345 .
+%mor:	coord|and adv:tem|now det:art|the n|balloon aux|be&3S part|float-PRESP adv|up prep|into det:art|the n|air .
+%gra:	1|6|LINK 2|6|JCT 3|4|DET 4|6|SUBJ 5|6|AUX 6|0|ROOT 7|6|JCT 8|6|JCT 9|10|DET 10|8|POBJ 11|6|PUNCT
+*CHI:	and now the string is all that they can see . 154825_157465
+%wor:	and 154825_154965 now 154965_155085 the 155085_155225 string 155225_155565 is 155565_155785 all 155785_155965 that 155965_156165 they 156165_156325 can 156325_156465 see 156465_157465 .
+%mor:	coord|and adv:tem|now det:art|the n|string cop|be&3S adv|all comp|that pro:sub|they mod|can v|see .
+%gra:	1|5|LINK 2|5|JCT 3|4|DET 4|5|SUBJ 5|0|ROOT 6|10|JCT 7|10|LINK 8|10|SUBJ 9|10|AUX 10|5|CPRED 11|5|PUNCT
+*CHI:	<and the rab> [//] and the dog (.) shaking its fists (.) and just standing there [^ makes noise "errr"] . 157485_163405
+%wor:	and 157485_157525 the 157525_157665 rab 157665_157925 and 157925_158065 the 158065_158365 dog 158365_158805 shaking 158805_159885 its 159885_160445 fists 160445_161085 and 161085_161785 just 161785_162005 standing 162005_162405 there 162405_163405 .
+%mor:	coord|and det:art|the n|dog part|shake-PRESP det:poss|its n|fist-PL coord|and adv|just part|stand-PRESP n|there .
+%gra:	1|0|INCROOT 2|3|DET 3|1|COORD 4|3|XMOD 5|6|DET 6|4|OBJ 7|3|CONJ 8|9|JCT 9|7|COORD 10|9|OBJ 11|1|PUNCT
+*CHI:	and then there (i)s another rabbit over here (.) that gots [: has got] some balloons in his hands . 163165_171965
+%wor:	and 163165_163985 then 163985_166325 there 166325_166545 is 166545_166625 another 166625_167005 rabbit 167005_167465 over 167465_168165 here 168165_168785 that 168785_169425 has 169425_169765 got some 169765_170145 balloons 170145_170565 in 170565_170845 his 170845_170965 hands 170965_171965 .
+%mor:	coord|and adv:tem|then adv|there cop|be&3S qn|another n|rabbit prep|over n|here pro:rel|that aux|have&3S part|get&PASTP qn|some n|balloon-PL prep|in det:poss|his n|hand-PL .
+%gra:	1|4|LINK 2|4|JCT 3|4|SUBJ 4|0|ROOT 5|6|QUANT 6|4|PRED 7|6|NJCT 8|7|POBJ 9|11|LINK 10|11|AUX 11|8|CMOD 12|13|QUANT 13|11|OBJ 14|11|JCT 15|16|DET 16|14|POBJ 17|4|PUNCT
+*CHI:	and now <the rabbit> [//] (.) the little rabbit walks up to him and asks could I have a balloon ? 173525_180065
+%wor:	and 173525_173965 now the 173965_174365 rabbit 174365_174845 the 174845_175685 little 175685_176265 rabbit 176265_176605 walks 176605_177045 up 177045_177285 to 177285_177505 him 177505_177705 and 177705_178125 asks 178125_178405 could 178405_178645 I 178645_178745 have 178745_178925 a 178925_179065 balloon 179065_180065 ?
+%mor:	coord|and adv:tem|now det:art|the adj|little n|rabbit v|walk-3S adv|up prep|to pro:obj|him coord|and v|ask-3S mod|could pro:sub|I v|have det:art|a n|balloon ?
+%gra:	1|6|LINK 2|6|JCT 3|5|DET 4|5|MOD 5|6|SUBJ 6|0|ROOT 7|6|JCT 8|6|JCT 9|8|POBJ 10|6|CONJ 11|10|COORD 12|14|AUX 13|14|SUBJ 14|11|COMP 15|16|DET 16|14|OBJ 17|6|PUNCT
+*CHI:	and they (a)re five cents [=! yawning] each a balloon . 179365_184905
+%wor:	and 179365_181725 they 181725_182025 are five 182025_182505 cents 182505_183305 each 183305_183705 a 183705_183905 balloon 183905_184905 .
+%mor:	coord|and pro:sub|they cop|be&PRES det:num|five n|cent-PL qn|each det:art|a n|balloon .
+%gra:	1|3|LINK 2|3|SUBJ 3|0|ROOT 4|5|QUANT 5|3|PRED 6|8|QUANT 7|8|DET 8|5|OBJ 9|3|PUNCT
+*CHI:	and now he (i)s pulling out his pockets . 184965_187425
+%wor:	and 184965_185265 now 185265_185465 he 185465_185805 is pulling 185805_186105 out 186105_186325 his 186325_186425 pockets 186425_187425 .
+%mor:	coord|and adv:tem|now pro:sub|he aux|be&3S part|pull-PRESP adv|out det:poss|his n|pocket-PL .
+%gra:	1|5|LINK 2|5|JCT 3|5|SUBJ 4|5|AUX 5|0|ROOT 6|5|JCT 7|8|DET 8|6|POBJ 9|5|PUNCT
+*CHI:	and there (i)s nothing in it . 187105_189165
+%wor:	and 187105_187145 there 187145_187305 is nothing 187305_187745 in 187745_188165 it 188165_189165 .
+%mor:	coord|and adv|there cop|be&3S pro:indef|nothing prep|in pro:per|it .
+%gra:	1|3|LINK 2|3|SUBJ 3|0|ROOT 4|3|PRED 5|4|NJCT 6|5|POBJ 7|3|PUNCT
+*CHI:	and now they (a)re both just standing there . 190985_193645
+%wor:	and 190985_191065 now 191065_191385 they 191385_191565 are 191565_191585 both 191585_191885 just 191885_192185 standing 192185_192645 there 192645_193645 .
+%mor:	coord|and adv:tem|now pro:sub|they cop|be&PRES qn|both adv|just part|stand-PRESP n|there .
+%gra:	1|4|LINK 2|4|JCT 3|4|SUBJ 4|0|ROOT 5|7|QUANT 6|7|JCT 7|4|PRED 8|7|OBJ 9|4|PUNCT
+*CHI:	and now <the rabbit> [//] the little [!] rabbit walks over to the doctor bunny [!] again (.) and asks can I have a balloon from him ? 195375_205015
+%wor:	and 195375_195935 now the 195935_196215 rabbit 196215_196635 the 196635_196895 little 196895_197235 rabbit 197235_197595 walks 197595_198035 over 198035_198275 to 198275_198535 the 198535_198715 doctor 198715_199035 bunny 199035_199455 again 199455_199975 and 199975_201935 asks 201935_202535 can 202535_202915 I 202915_202995 have 202995_203175 a 203175_203355 balloon 203355_203675 from 203675_204015 him 204015_205015 ?
+%mor:	coord|and adv:tem|now det:art|the adj|little n|rabbit v|walk-3S adv|over prep|to det:art|the n|doctor n|bunny adv:tem|again coord|and v|ask-3S mod|can pro:sub|I v|have det:art|a n|balloon prep|from pro:obj|him ?
+%gra:	1|6|LINK 2|6|JCT 3|5|DET 4|5|MOD 5|6|SUBJ 6|0|ROOT 7|6|JCT 8|6|JCT 9|11|DET 10|11|MOD 11|8|POBJ 12|6|JCT 13|6|CONJ 14|13|COORD 15|17|AUX 16|17|SUBJ 17|14|COMP 18|19|DET 19|17|OBJ 20|17|JCT 21|20|POBJ 22|6|PUNCT
+*CHI:	and now <he> [//] the <lit> [//] rabbit (i)s paying (.) <to> [//] for a balloon (.) too . 204215_213195
+%wor:	and 204215_206035 now 206035_206415 he 206415_207055 the 207055_207455 lit 207455_208335 rabbit is 208335_208635 paying 208635_209055 to 209055_210795 for 210795_211655 a 211655_211815 balloon 211815_212195 too 212195_213195 .
+%mor:	coord|and adv:tem|now det:art|the n|rabbit aux|be&3S part|pay-PRESP prep|for det:art|a n|balloon adv|too .
+%gra:	1|6|LINK 2|6|JCT 3|4|DET 4|6|SUBJ 5|6|AUX 6|0|ROOT 7|6|JCT 8|9|DET 9|7|POBJ 10|6|JCT 11|6|PUNCT
+*CHI:	and now they both got a balloon . 213915_216135
+%wor:	and 213915_214135 now 214135_214275 they 214275_214415 both 214415_214735 got 214735_214975 a 214975_215135 balloon 215135_216135 .
+%mor:	coord|and adv:tem|now pro:sub|they qn|both v|get&PAST det:art|a n|balloon .
+%gra:	1|0|INCROOT 2|1|COORD 3|5|SUBJ 4|5|QUANT 5|2|CMOD 6|7|DET 7|5|OBJ 8|1|PUNCT
+*CHI:	and that (i)s the end . [+ bch] 217235_219495
+%wor:	and 217235_217875 that 217875_218135 is 218135_218215 the 218215_218495 end 218495_219495 .
+%mor:	coord|and pro:dem|that cop|be&3S det:art|the n|end .
+%gra:	1|3|LINK 2|3|SUBJ 3|0|ROOT 4|5|DET 5|3|PRED 6|3|PUNCT
+@G:	A1
+@Types:	cross, narrative, TD
+*CHI:	there (i)s a giraffe and this <um> [/] elephant . 221885_224585
+%wor:	there 221885_222305 is a giraffe 222305_222365 and 222365_222825 this 222825_223245 um 223245_223585 elephant 223585_224585 .
+%mor:	pro:exist|there cop|be&3S det:art|a n|giraffe coord|and det:dem|this n|elephant .
+%gra:	1|2|SUBJ 2|0|ROOT 3|4|DET 4|2|PRED 5|4|CONJ 6|7|DET 7|5|COORD 8|2|PUNCT
+*CHI:	and the elephant (i)s bouncing this ball . 224265_226685
+%wor:	and 224265_224385 the 224385_224545 elephant 224545_224845 is 224845_225065 bouncing 225065_225405 this 225405_225685 ball 225685_226685 .
+%mor:	coord|and det:art|the n|elephant aux|be&3S part|bounce-PRESP det:dem|this n|ball .
+%gra:	1|5|LINK 2|3|DET 3|5|SUBJ 4|5|AUX 5|0|ROOT 6|7|DET 7|5|OBJ 8|5|PUNCT
+*CHI:	and they (a)re right beside a pool . 226545_228305
+%wor:	and 226545_226605 they 226605_226665 are 226665_226705 right 226705_226825 beside 226825_227045 a 227045_227305 pool 227305_228305 .
+%mor:	coord|and pro:sub|they cop|be&PRES adv|right prep|beside det:art|a n|pool .
+%gra:	1|3|LINK 2|3|SUBJ 3|0|ROOT 4|5|JCT 5|3|JCT 6|7|DET 7|5|POBJ 8|3|PUNCT
+*CHI:	and now the ball lands into the pool . 229365_232505
+%wor:	and 229365_229525 now 229525_229725 the 229725_229965 ball 229965_230305 lands 230305_230885 into 230885_231265 the 231265_231505 pool 231505_232505 .
+%mor:	coord|and adv:tem|now det:art|the n|ball n|land-PL prep|into det:art|the n|pool .
+%gra:	1|0|INCROOT 2|1|COORD 3|5|DET 4|5|MOD 5|2|OBJ 6|5|NJCT 7|8|DET 8|6|POBJ 9|1|PUNCT
+*CHI:	and now the giraffe (.) jumps into the pool . 233645_237485
+%wor:	and 233645_233785 now 233785_234065 the 234065_234405 giraffe 234405_234965 jumps 234965_235905 into 235905_236265 the 236265_236485 pool 236485_237485 .
+%mor:	coord|and adv:tem|now det:art|the n|giraffe n|jump-PL prep|into det:art|the n|pool .
+%gra:	1|0|INCROOT 2|1|COORD 3|5|DET 4|5|MOD 5|2|OBJ 6|5|NJCT 7|8|DET 8|6|POBJ 9|1|PUNCT
+*CHI:	and he (i)s swimming for it . 236965_238965
+%wor:	and 236965_236985 he 236985_237125 is 237125_237205 swimming 237205_237525 for 237525_237965 it 237965_238965 .
+%mor:	coord|and pro:sub|he aux|be&3S part|swim-PRESP prep|for pro:per|it .
+%gra:	1|4|LINK 2|4|SUBJ 3|4|AUX 4|0|ROOT 5|4|JCT 6|5|POBJ 7|4|PUNCT
+*CHI:	and now he (i)s <be> [/] be giving it back to the elephant . 239485_242565
+%wor:	and 239485_239505 now 239505_239685 he 239685_239845 is 239845_239965 be 239965_240185 be 240185_240625 giving 240625_240805 it 240805_241005 back 241005_241205 to 241205_241405 the 241405_241565 elephant 241565_242565 .
+%mor:	coord|and adv:tem|now pro:sub|he aux|be&3S aux|be part|give-PRESP pro:per|it adv|back prep|to det:art|the n|elephant .
+%gra:	1|6|LINK 2|6|JCT 3|6|SUBJ 4|6|AUX 5|6|AUX 6|0|ROOT 7|6|OBJ 8|6|JCT 9|6|JCT 10|11|DET 11|9|POBJ 12|6|PUNCT
+*CHI:	and now (.) the elephant (i)s kind of smiling . 243225_247025
+%wor:	and 243225_243765 now 243765_244085 the 244085_244825 elephant 244825_245405 is 245405_245745 kind 245745_245945 of 245945_246025 smiling 246025_247025 .
+%mor:	coord|and adv:tem|now det:art|the n|elephant cop|be&3S adj|kind prep|of part|smile-PRESP .
+%gra:	1|5|LINK 2|5|JCT 3|4|DET 4|5|SUBJ 5|0|ROOT 6|5|PRED 7|6|JCT 8|7|POBJ 9|5|PUNCT
+*CHI:	<and> [/] (.) and the giraffe (i)s just smiling at each_other . 246705_251165
+%wor:	and 246705_247945 and the 247945_248365 giraffe 248365_248905 is 248905_249065 just 249065_249325 smiling 249325_249605 at 249605_250165 each_other 250165_251165 .
+%mor:	coord|and det:art|the n|giraffe aux|be&3S adv|just part|smile-PRESP prep|at pro:refl|each_other .
+%gra:	1|6|LINK 2|3|DET 3|6|SUBJ 4|6|AUX 5|6|JCT 6|0|ROOT 7|6|JCT 8|7|POBJ 9|6|PUNCT
+*CHI:	that (i)s the end . [+ bch] 252245_253645
+%wor:	that 252245_252525 is 252525_252545 the 252545_252645 end 252645_253645 .
+%mor:	pro:dem|that cop|be&3S det:art|the n|end .
+%gra:	1|2|SUBJ 2|0|ROOT 3|4|DET 4|2|PRED 5|2|PUNCT
+@G:	A2
+*CHI:	the elephant and the giraffe again . 253965_259265
+%wor:	the 253965_256725 elephant 256725_257245 and 257245_257625 the 257625_257865 giraffe 257865_258265 again 258265_259265 .
+%mor:	det:art|the n|elephant coord|and det:art|the n|giraffe adv:tem|again .
+%gra:	1|2|DET 2|0|INCROOT 3|2|CONJ 4|5|DET 5|3|COORD 6|5|JCT 7|2|PUNCT
+*CHI:	and they see this diving board . 258865_260765
+%wor:	and 258865_258945 they 258945_259085 see 259085_259225 this 259225_259425 diving 259425_259765 board 259765_260765 .
+%mor:	coord|and pro:sub|they v|see det:dem|this part|dive-PRESP n|board .
+%gra:	1|3|LINK 2|3|SUBJ 3|0|ROOT 4|6|DET 5|6|MOD 6|3|OBJ 7|3|PUNCT
+*CHI:	and now (.) the elephant (i)s <gonna> [//] pointing at it . 262045_265685
+%wor:	and 262045_262245 now 262245_262565 the 262565_262925 elephant 262925_263165 is 263165_263365 gonna 263365_263525 pointing 263525_264325 at 264325_264685 it 264685_265685 .
+%mor:	coord|and adv:tem|now det:art|the n|elephant aux|be&3S part|point-PRESP prep|at pro:per|it .
+%gra:	1|6|LINK 2|6|JCT 3|4|DET 4|6|SUBJ 5|6|AUX 6|0|ROOT 7|6|JCT 8|7|POBJ 9|6|PUNCT
+*CHI:	and <it (i)s gonna> [//] and (.) he (i)s going to [: gonna] go to run over to it . 265065_269265
+%wor:	and it 265065_265385 is 265385_265425 gonna 265425_265645 and 265645_266425 he 266425_266925 is 266925_267045 going 267045_267205 gonna 267205_267405 go to 267405_267525 run 267525_267685 over 267685_267945 to 267945_268265 it 268265_269265 .
+%mor:	coord|and coord|and pro:sub|he aux|be&3S part|go-PRESP part|go&PRESP~inf|to v|go inf|to v|run adv|over prep|to pro:per|it .
+%gra:	1|5|LINK 2|5|LINK 3|5|SUBJ 4|5|AUX 5|0|ROOT 6|5|XJCT 7|8|INF 8|6|COMP 9|10|INF 10|8|COMP 11|10|JCT 12|10|JCT 13|12|POBJ 14|5|PUNCT
+*CHI:	and now they are both running over . 268865_272045
+%wor:	and 268865_270105 now 270105_270285 they 270285_270425 are 270425_270445 both 270445_270725 running 270725_271045 over 271045_272045 .
+%mor:	coord|and adv:tem|now pro:sub|they cop|be&PRES qn|both part|run-PRESP adv|over .
+%gra:	1|0|INCROOT 2|1|COORD 3|4|SUBJ 4|2|CMOD 5|4|PRED 6|5|XMOD 7|6|JCT 8|1|PUNCT
+*CHI:	and elephant (i)s going to [^ gonna] fall . 271945_273825
+%wor:	and 271945_272045 elephant 272045_272425 is 272425_272625 going 272625_272745 to 272745_272825 fall 272825_273825 .
+%mor:	coord|and n|elephant aux|be&3S part|go-PRESP prep|to n|fall .
+%gra:	1|4|LINK 2|4|SUBJ 3|4|AUX 4|0|ROOT 5|4|JCT 6|5|POBJ 7|4|PUNCT
+*CHI:	and now the elephant fell and (.) <stub> [//] <made> [//] gots [: has got] a boo_boo on her knee . 274625_281045
+%wor:	and 274625_274985 now the 274985_275125 elephant 275125_275565 fell 275565_276125 and 276125_276685 stub 276685_277605 made 277605_278025 has 278025_279105 got a 279105_279265 boo_boo 279265_279625 on 279625_279865 her 279865_280045 knee 280045_281045 .
+%mor:	coord|and adv:tem|now det:art|the n|elephant v|fall&PAST coord|and aux|have&3S part|get&PASTP det:art|a n|boo&DUP prep|on det:poss|her n|knee .
+%gra:	1|5|LINK 2|5|JCT 3|4|DET 4|5|SUBJ 5|0|ROOT 6|5|CONJ 7|8|AUX 8|6|COORD 9|10|DET 10|8|OBJ 11|8|JCT 12|13|DET 13|11|POBJ 14|5|PUNCT
+*CHI:	now (.) the lifeguard (.) is another [!] elephant and comes over to see what the matter . 281285_287505
+%wor:	now 281285_281945 the 281945_282685 lifeguard 282685_283405 is 283405_284045 another 284045_284465 elephant 284465_284925 and 284925_285245 comes 285245_285505 over 285505_285745 to 285745_285945 see 285945_286105 what 286105_286305 the 286305_286505 matter 286505_287505 .
+%mor:	adv:tem|now det:art|the n|+n|life+n|guard cop|be&3S qn|another n|elephant coord|and v|come-3S adv|over inf|to v|see pro:int|what det:art|the v|matter .
+%gra:	1|4|LINK 2|3|DET 3|4|SUBJ 4|0|ROOT 5|6|QUANT 6|4|PRED 7|4|CONJ 8|7|COORD 9|8|JCT 10|11|INF 11|8|XJCT 12|14|DET 13|14|DET 14|11|COMP 15|4|PUNCT
+*CHI:	and now <um (..) the> [/] <the> [/] the (.) lifeguard (i)s putting a bandaid on the elephant that (.) <made> [//] got a boo_boo on her knee . 288905_303605
+%wor:	and 288905_289545 now 289545_289585 um 289585_290785 the 290785_292645 the 292645_293705 the 293705_294625 lifeguard 294625_296125 is 296125_296425 putting 296425_296445 a 296445_296625 bandaid 296625_297005 on 297005_297365 the 297365_297965 elephant 297965_298705 that 298705_299205 made 299205_299825 got 299825_300745 a 300745_301205 boo_boo 301205_301605 on 301605_301925 her 301925_302605 knee 302605_303605 .
+%mor:	coord|and adv:tem|now det:art|the n|+n|life+n|guard aux|be&3S part|put-PRESP det:art|a n|bandaid prep|on det:art|the n|elephant pro:rel|that v|get&PAST det:art|a n|boo&DUP prep|on det:poss|her n|knee .
+%gra:	1|6|LINK 2|6|JCT 3|4|DET 4|6|SUBJ 5|6|AUX 6|0|ROOT 7|8|DET 8|6|OBJ 9|6|JCT 10|11|DET 11|9|POBJ 12|13|LINK 13|11|CMOD 14|15|DET 15|13|OBJ 16|13|JCT 17|18|DET 18|16|POBJ 19|6|PUNCT
+*CHI:	and the (.) giraffe (i)s just kneeling there on (.) his knees . 302965_307145
+%wor:	and 302965_303045 the 303045_303365 giraffe 303365_304145 is 304145_304365 just 304365_304525 kneeling 304525_304865 there 304865_305265 on 305265_305465 his 305465_306145 knees 306145_307145 .
+%mor:	coord|and det:art|the n|giraffe aux|be&3S adv|just part|kneel-PRESP adv|there prep|on det:poss|his n|knee-PL .
+%gra:	1|6|LINK 2|3|DET 3|6|SUBJ 4|6|AUX 5|6|JCT 6|0|ROOT 7|6|JCT 8|6|JCT 9|10|DET 10|8|POBJ 11|6|PUNCT
+*CHI:	and now they (a)re taking <the> [/] (.) the elephant that gots [: has got] <um> [/] a (.) boo_boo on her knee to a bench . 308545_318685
+%wor:	and 308545_308985 now they 308985_309465 are 309465_309525 taking 309525_310045 the 310045_311405 the 311405_312305 elephant 312305_312745 that 312745_313025 has 313025_313365 got 313365_313945 um a 313945_315485 boo_boo 315485_315845 on 315845_316305 her 316305_316665 knee 316665_317025 to 317025_317525 a 317525_317685 bench 317685_318685 .
+%mor:	coord|and adv:tem|now pro:sub|they aux|be&PRES part|take-PRESP det:art|the n|elephant pro:rel|that aux|have&3S part|get&PASTP det:art|a n|boo&DUP prep|on det:poss|her n|knee prep|to det:art|a n|bench .
+%gra:	1|5|LINK 2|5|JCT 3|5|SUBJ 4|5|AUX 5|0|ROOT 6|7|DET 7|5|OBJ 8|10|LINK 9|10|AUX 10|7|CMOD 11|12|DET 12|10|OBJ 13|10|JCT 14|15|DET 15|13|POBJ 16|10|JCT 17|18|DET 18|16|POBJ 19|5|PUNCT
+*CHI:	and now (.) the lifeguard points to the sign no running . 320125_324965
+%wor:	and 320125_320485 now 320485_320945 the 320945_321945 lifeguard 321945_322525 points 322525_323125 to 323125_323425 the 323425_323485 sign 323485_323685 no 323685_323965 running 323965_324965 .
+%mor:	coord|and adv:tem|now det:art|the n|+n|life+n|guard v|point-3S prep|to det:art|the n|sign co|no part|run-PRESP .
+%gra:	1|5|LINK 2|5|JCT 3|4|DET 4|5|SUBJ 5|0|ROOT 6|5|JCT 7|8|DET 8|6|POBJ 9|10|COM 10|5|XJCT 11|5|PUNCT
+*CHI:	and that (i)s what she was doing . 325145_327065
+%wor:	and 325145_325205 that 325205_325425 is 325425_325465 what 325465_325625 she 325625_325865 was 325865_326065 doing 326065_327065 .
+%mor:	coord|and pro:dem|that cop|be&3S pro:int|what pro:sub|she aux|be&PAST&13S part|do-PRESP .
+%gra:	1|3|LINK 2|3|SUBJ 3|0|ROOT 4|7|LINK 5|7|SUBJ 6|7|AUX 7|3|CPRED 8|3|PUNCT
+@G:	A3
+*CHI:	<um> [/] a elephant and a giraffe . 333925_337245
+%wor:	um 333925_334125 a 334125_334865 elephant 334865_335685 and 335685_335985 a 335985_336245 giraffe 336245_337245 .
+%mor:	det:art|a n|elephant coord|and det:art|a n|giraffe .
+%gra:	1|2|DET 2|0|INCROOT 3|2|CONJ 4|5|DET 5|3|COORD 6|2|PUNCT
+*CHI:	and the giraffe (ha)s gots [: has got] a airplane in his hand (.) ready to fly it . 336605_340625
+%wor:	and 336605_336725 the 336725_336905 giraffe 336905_337205 has 337205_337485 has 337485_337545 got a 337545_337645 airplane 337645_338105 in 338105_338305 his 338305_338425 hand 338425_338785 ready 338785_339285 to 339285_339405 fly 339405_339625 it 339625_340625 .
+%mor:	coord|and det:art|the n|giraffe aux|have&3S aux|have&3S part|get&PASTP det:art|a n|+n|air+n|plane prep|in det:poss|his n|hand adj|ready inf|to v|fly pro:per|it .
+%gra:	1|6|LINK 2|3|DET 3|6|SUBJ 4|6|AUX 5|6|AUX 6|0|ROOT 7|8|DET 8|6|OBJ 9|6|JCT 10|11|DET 11|9|POBJ 12|6|JCT 13|14|INF 14|12|XMOD 15|14|OBJ 16|6|PUNCT
+*CHI:	and now (.) <the> [/] <the> [/] the (.) <gir> [//] giraffe is going to [^ gonna] throw it . 340425_347405
+%wor:	and 340425_340485 now 340485_340665 the 340665_342505 the 342505_343765 the 343765_344665 gir 344665_344965 giraffe 344965_345285 is 345285_345765 going 345765_346025 to 346025_346165 throw 346165_346405 it 346405_347405 .
+%mor:	coord|and adv:tem|now det:art|the n|giraffe aux|be&3S part|go-PRESP inf|to v|throw pro:per|it .
+%gra:	1|6|LINK 2|6|JCT 3|4|DET 4|6|SUBJ 5|6|AUX 6|0|ROOT 7|8|INF 8|6|COMP 9|8|OBJ 10|6|PUNCT
+*CHI:	and the elephant (i)s staring at it . 346845_349625
+%wor:	and 346845_346905 the 346905_347125 elephant 347125_347445 is 347445_347765 staring 347765_348225 at 348225_348625 it 348625_349625 .
+%mor:	coord|and det:art|the n|elephant aux|be&3S part|stare-PRESP prep|at pro:per|it .
+%gra:	1|5|LINK 2|3|DET 3|5|SUBJ 4|5|AUX 5|0|ROOT 6|5|JCT 7|6|POBJ 8|5|PUNCT
+*CHI:	and now the elephant grabs it . 350305_353285
+%wor:	and 350305_351205 now 351205_351345 the 351345_351485 elephant 351485_351765 grabs 351765_352285 it 352285_353285 .
+%mor:	coord|and adv:tem|now det:art|the n|elephant v|grab-3S pro:per|it .
+%gra:	1|5|LINK 2|5|JCT 3|4|DET 4|5|SUBJ 5|0|ROOT 6|5|OBJ 7|5|PUNCT
+*CHI:	and now (.) she (i)s going to [: gonna] try to fly it . 353385_356885
+%wor:	and 353385_353485 now 353485_353845 she 353845_354825 is 354825_354985 going 354985_355165 gonna 355165_355265 try 355265_355445 to 355445_355525 fly 355525_355885 it 355885_356885 .
+%mor:	coord|and adv:tem|now pro:sub|she aux|be&3S part|go-PRESP part|go&PRESP~inf|to v|try inf|to v|fly pro:per|it .
+%gra:	1|0|INCROOT 2|1|COORD 3|5|SUBJ 4|5|AUX 5|2|CMOD 6|5|XJCT 7|8|INF 8|6|COMP 9|10|INF 10|8|COMP 11|10|OBJ 12|1|PUNCT
+*CHI:	and now she throws it into the pool . 357085_360005
+%wor:	and 357085_357625 now 357625_357865 she 357865_358105 throws 358105_358425 it 358425_358645 into 358645_358825 the 358825_359005 pool 359005_360005 .
+%mor:	coord|and adv:tem|now pro:sub|she v|throw-3S pro:per|it prep|into det:art|the n|pool .
+%gra:	1|4|LINK 2|4|JCT 3|4|SUBJ 4|0|ROOT 5|4|OBJ 6|4|JCT 7|8|DET 8|6|POBJ 9|4|PUNCT
+*CHI:	and now the giraffe (i)s angry at the elephant . 360945_363905
+%wor:	and 360945_361265 now the 361265_361485 giraffe 361485_361805 is 361805_361925 angry 361925_362205 at 362205_362645 the 362645_362905 elephant 362905_363905 .
+%mor:	coord|and adv:tem|now det:art|the n|giraffe cop|be&3S adj|angry prep|at det:art|the n|elephant .
+%gra:	1|5|LINK 2|5|JCT 3|4|DET 4|5|SUBJ 5|0|ROOT 6|5|PRED 7|6|JCT 8|9|DET 9|7|POBJ 10|5|PUNCT
+*CHI:	and now the lifeguard sees it just floating in there . 363845_368605
+%wor:	and 363845_365305 now 365305_365425 the 365425_365585 lifeguard 365585_366085 sees 366085_366525 it 366525_366725 just 366725_366985 floating 366985_367345 in 367345_367605 there 367605_368605 .
+%mor:	coord|and adv:tem|now det:art|the n|+n|life+n|guard v|see-3S pro:per|it adv|just part|float-PRESP prep|in n|there .
+%gra:	1|5|LINK 2|5|JCT 3|4|DET 4|5|SUBJ 5|0|ROOT 6|5|OBJ 7|8|JCT 8|5|COMP 9|8|JCT 10|9|POBJ 11|5|PUNCT
+*CHI:	and now (.) <the elephant> [//] the (.) girl elephant (i)s trying to talk (.) what happened with the airplane to the lifeguard . 369025_378145
+%wor:	and 369025_369965 now 369965_370245 the 370245_371405 elephant 371405_371925 the 371925_372565 girl 372565_373105 elephant 373105_373485 is 373485_373705 trying 373705_374005 to 374005_374165 talk 374165_374605 what 374605_375225 happened 375225_375725 with 375725_375985 the 375985_376185 airplane 376185_376625 to 376625_376965 the 376965_377145 lifeguard 377145_378145 .
+%mor:	coord|and adv:tem|now det:art|the n|girl n|elephant aux|be&3S part|try-PRESP inf|to v|talk pro:int|what v|happen-PAST prep|with det:art|the n|+n|air+n|plane prep|to det:art|the n|+n|life+n|guard .
+%gra:	1|7|LINK 2|7|JCT 3|5|DET 4|5|MOD 5|7|SUBJ 6|7|AUX 7|0|ROOT 8|9|INF 9|7|COMP 10|11|SUBJ 11|9|COMP 12|11|JCT 13|14|DET 14|12|POBJ 15|14|NJCT 16|17|DET 17|15|POBJ 18|7|PUNCT
+*CHI:	now the lifeguard is trying to reach over and get it . 378925_382185
+%wor:	now 378925_379065 the 379065_379205 lifeguard 379205_379545 is 379545_379705 trying 379705_380005 to 380005_380145 reach 380145_380445 over 380445_380725 and 380725_380945 get 380945_381185 it 381185_382185 .
+%mor:	adv:tem|now det:art|the n|+n|life+n|guard aux|be&3S part|try-PRESP inf|to v|reach adv|over coord|and v|get pro:per|it .
+%gra:	1|5|LINK 2|3|DET 3|5|SUBJ 4|5|AUX 5|0|ROOT 6|7|INF 7|5|COMP 8|7|JCT 9|5|CONJ 10|9|COORD 11|10|OBJ 12|5|PUNCT
+*CHI:	and <now the> [/] (.) now the giraffe <is tear> [//] got tears in his eyes . 382865_389585
+%wor:	and 382865_383285 now 383285_383545 the 383545_384305 now 384305_386045 the 386045_386245 giraffe 386245_386685 is 386685_386945 tear 386945_387405 got 387405_387685 tears 387685_388225 in 388225_388405 his 388405_388585 eyes 388585_389585 .
+%mor:	coord|and adv:tem|now det:art|the n|giraffe v|get&PAST n|tear-PL prep|in det:poss|his n|eye-PL .
+%gra:	1|5|LINK 2|5|JCT 3|4|DET 4|5|SUBJ 5|0|ROOT 6|5|OBJ 7|5|JCT 8|9|DET 9|7|POBJ 10|5|PUNCT
+*CHI:	now (.) there (i)s a girl there (.) a girl elephant with a net that (i)s going to [: gonna] grab it . 390985_396685
+%wor:	now 390985_391465 there 391465_391905 is 391905_392085 a 392085_392205 girl 392205_392465 there 392465_392825 a 392825_393265 girl 393265_393525 elephant 393525_393965 with 393965_394285 a 394285_394445 net 394445_394645 that 394645_394925 is 394925_395045 going 395045_395185 gonna 395185_395285 grab 395285_395685 it 395685_396685 .
+%mor:	adv:tem|now pro:exist|there cop|be&3S det:art|a n|girl adv|there det:art|a n|girl n|elephant prep|with det:art|a adj|net comp|that aux|be&3S part|go-PRESP part|go&PRESP~inf|to v|grab pro:per|it .
+%gra:	1|3|LINK 2|3|SUBJ 3|0|ROOT 4|5|DET 5|3|PRED 6|5|NJCT 7|9|DET 8|9|MOD 9|6|POBJ 10|9|NJCT 11|12|DET 12|10|POBJ 13|15|LINK 14|15|AUX 15|12|CMOD 16|15|XJCT 17|18|INF 18|16|COMP 19|18|OBJ 20|3|PUNCT
+*CHI:	and now it (i)s picking it up out_of the water . 396425_401045
+%wor:	and 396425_397725 now 397725_398325 it 398325_398705 is 398705_398765 picking 398765_399205 it 399205_399445 up 399445_399645 out_of 399645_399945 the 399945_400045 water 400045_401045 .
+%mor:	coord|and adv:tem|now pro:per|it aux|be&3S part|pick-PRESP pro:per|it adv|up prep|out_of det:art|the n|water .
+%gra:	1|5|LINK 2|5|JCT 3|5|SUBJ 4|5|AUX 5|0|ROOT 6|5|OBJ 7|5|JCT 8|5|JCT 9|10|DET 10|8|POBJ 11|5|PUNCT
+*CHI:	now gives it (.) to the giraffe . 401345_403865
+%wor:	now 401345_401505 gives 401505_401865 it 401865_402145 to 402145_402685 the 402685_402865 giraffe 402865_403865 .
+%mor:	adv:tem|now v|give-3S pro:per|it prep|to det:art|the n|giraffe .
+%gra:	1|2|JCT 2|0|ROOT 3|2|OBJ 4|2|JCT 5|6|DET 6|4|POBJ 7|2|PUNCT
+*CHI:	and now (.) the giraffe is hugging [!] (.) <the> [//] his airplane . 404245_410605
+%wor:	and 404245_406205 now 406205_406445 the 406445_407085 giraffe 407085_407485 is 407485_407765 hugging 407765_408365 the 408365_409225 his 409225_409605 airplane 409605_410605 .
+%mor:	coord|and adv:tem|now det:art|the n|giraffe aux|be&3S part|hug-PRESP det:poss|his n|+n|air+n|plane .
+%gra:	1|6|LINK 2|6|JCT 3|4|DET 4|6|SUBJ 5|6|AUX 6|0|ROOT 7|8|DET 8|6|OBJ 9|6|PUNCT
+*CHI:	the end . [+ bch]
+%mor:	det:art|the n|end .
+%gra:	1|2|DET 2|0|INCROOT 3|2|PUNCT
+@End
