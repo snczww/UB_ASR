@@ -38,17 +38,17 @@ def find_fillers(text):
 #     return quotation_precedes_matches + single_quoted_words_matches
 
 def find_shortened_words(text):
-    # 首先按空格分割文本
+    # using spilt first
     words = text.split()
     
-    # 定义正则表达式来匹配缩写形式的单词
+    # setting pattern
     shortened_pattern = r'\(?\w*\(?\w+\)?\w*\)?'
     
     matches = []
     for word in words:
         match = re.fullmatch(shortened_pattern, word)
         if match:
-            # 只保留包含括号的匹配项
+            # keep
             if '(' in match.group() or ')' in match.group():
                 matches.append(match.group())
     

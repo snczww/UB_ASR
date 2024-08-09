@@ -45,10 +45,12 @@ all_matches = collect_all_matches(transcript_text) + fix_anotation
 tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
   
 num_added_toks = tokenizer.add_tokens(all_matches, special_tokens=True)
-  
+
+print(all_matches)
+
 print("We have added", num_added_toks, "tokens")
 split_tokens=tokenizer(transcript_text).tokens()
 # print(tokenizer(transcript_text).tokens())
 # print(type(tokenizer(transcript_text).tokens()))
-for item in split_tokens:
-    print(item)
+# for item in split_tokens:
+#     print(item)
