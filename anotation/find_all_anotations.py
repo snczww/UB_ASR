@@ -94,6 +94,14 @@ def find_nonverbal_activities(text):
     nonverbal_pattern = r'&=\w+(:\w+)?'
     matches = re.findall(nonverbal_pattern, text)
     return matches
+def find_cheating_content(text):
+    # Regular expression to match content inside square brackets, specifically in the form [: ...]
+    bracketed_pattern = r'\[.*?\]'
+    
+    # Find all matches in the text
+    matches = re.findall(bracketed_pattern, text)
+    
+    return matches
 
 def collect_all_matches(text):
     all_matches = []
@@ -109,6 +117,7 @@ def collect_all_matches(text):
     all_matches += find_annotations(text)
     all_matches += find_nonverbal_activities(text)
     all_matches += find_shortened_words(text)
+    all_matches += find_cheating_content(text)
 
     # Remove duplicates and empty values
     all_matches = list(set(filter(None, all_matches)))

@@ -50,7 +50,7 @@ print(all_matches)
 
 print("We have added", num_added_toks, "tokens")
 split_tokens=tokenizer(transcript_text).tokens()
-# print(tokenizer(transcript_text).tokens())
+print(tokenizer(transcript_text).tokens())
 # print(type(tokenizer(transcript_text).tokens()))
-# for item in split_tokens:
-#     print(item)
+for item in split_tokens:
+    print(item)
