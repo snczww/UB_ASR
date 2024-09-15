@@ -1,7 +1,8 @@
 import pandas as pd
 import os
-from ASR_utils import read_file, read_json, find_files
-from ASR_model_process import process_audio
+
+from utils.ASR_utils import read_file, read_json, find_files
+from utils.ASR_model_process import process_audio
 from datasets import load_dataset
 
 def process_single_audio(audio_path, dictionary, ground_truth, model_configs, normalizer_config, unit):

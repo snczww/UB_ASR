@@ -5,6 +5,7 @@ from ASR_metrics import calculate_per_time_unit, calculate_per_sentence_errors, 
 from ASR_audio_duration import calculate_audio_duration
 
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
+
 torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
 
 def load_model(config):

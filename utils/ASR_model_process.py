@@ -1,8 +1,8 @@
 import torch
 from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
-from ASR_normalizer import create_normalizer
-from ASR_metrics import calculate_per_time_unit, calculate_per_sentence_errors, count_sentences, count_words_verbs_nouns, count_words_from_dictionary
-from ASR_audio_duration import calculate_audio_duration
+from utils.ASR_normalizer import create_normalizer
+from utils.ASR_metrics import calculate_per_time_unit, calculate_per_sentence_errors, count_sentences, count_words_verbs_nouns, count_words_from_dictionary
+from utils.ASR_audio_duration import calculate_audio_duration
 
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
