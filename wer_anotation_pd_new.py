@@ -2,8 +2,8 @@ import os
 import pandas as pd
 from transformers import AutoTokenizer
 from utils.ASR_utils import read_file
-from concurrent.futures import ThreadPoolExecutor
-from wer_anotation import calculate_overall_wer_by_path, calculate_line_wer_by_path
+from wer_by_path import calculate_overall_wer_by_path, calculate_line_wer_by_path
+from utils.anotaion_utils import *
 
 if __name__ == "__main__":
     # 定义模型路径和文件路径

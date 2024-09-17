@@ -261,14 +261,14 @@ def calculate_annotation_overall_wer_by_list(ground_truth_lines, candidate_lines
 def calculate_annotation_line_wer_by_list(ground_truth_lines, candidate_lines, tokenizer_model_path, fixed_annotations, decimal_places=3):
     """
     Calculate line-by-line WER after filtering input lists to only retain annotation matches and fixed annotations.
-
+    
     Parameters:
     ground_truth_lines (list): List of ground truth lines.
     candidate_lines (list): List of candidate lines.
     tokenizer_model_path (str): Path to the tokenizer model.
     fixed_annotations (list): List of fixed annotations.
     decimal_places (int): Number of decimal places to round the WER result.
-
+    
     Returns:
     list: List of WER values for each line after processing the filtered input lists.
     """
@@ -280,6 +280,10 @@ def calculate_annotation_line_wer_by_list(ground_truth_lines, candidate_lines, t
     # Filter both ground truth and candidate lines
     filtered_ground_truth = filter_text_by_annotations(ground_truth_lines, fixed_annotations)
     filtered_candidate = filter_text_by_annotations(candidate_lines, fixed_annotations)
+
+    # Replace empty lines with a single space
+    filtered_ground_truth = [' ' if not line.strip() else line for line in filtered_ground_truth]
+    filtered_candidate = [' ' if not line.strip() else line for line in filtered_candidate]
 
     # Use parallel processing to calculate WER line by line if there are enough lines
     if min_length > 10:
@@ -295,3 +299,4 @@ def calculate_annotation_line_wer_by_list(ground_truth_lines, candidate_lines, t
         ]
 
     return wer_list
+
