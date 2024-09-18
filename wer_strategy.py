@@ -3,7 +3,7 @@
 from abc import ABC, abstractmethod
 from transformers import AutoTokenizer
 from utils.wer_by_tokens import word_list_error_rate
-from utils.find_all_anotations import collect_all_matches
+from anotation.find_all_anotations import collect_all_matches
 
 # Strategy interface for WER calculation
 class WERStrategy(ABC):
