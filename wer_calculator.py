@@ -1,7 +1,7 @@
 from transformers import AutoTokenizer
 from utils.ASR_utils import read_file
 from utils.wer_by_tokens import word_list_error_rate
-from anotation.find_all_anotations import collect_all_matches
+from utils.find_all_anotations import collect_all_matches
 import concurrent.futures
 import os
 
