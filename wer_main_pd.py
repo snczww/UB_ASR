@@ -72,7 +72,7 @@ if __name__ == "__main__":
     annotation_line_wer_list = calculator.calculate(ground_truth_lines, candidate_lines)
     
     # Save annotation line WER to another CSV file
-    annotation_output_csv_path = 'annotation_wer_output.csv'
+    annotation_output_csv_path = 'wer_annotation_wer_output.csv'
     annotation_df = pd.DataFrame({
         'Ground Truth Line': ground_truth_lines,
         'Candidate Line': candidate_lines,

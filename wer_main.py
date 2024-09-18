@@ -22,8 +22,8 @@ if __name__ == "__main__":
     calculator = WERCalculator(WERAnnotationOnlyWholeTextStrategy())  # Use default tokenizer_model_path, fixed_annotations, and decimal_places
 
     # User can override the fixed_annotations, decimal_places, or tokenizer_model_path if desired
-    user_fixed_annotations = ['<custom_annotation1>', '<custom_annotation2>']  # User provided annotations
-    calculator.set_fixed_annotations(user_fixed_annotations)  # Optional: set custom fixed_annotations
+    # user_fixed_annotations = ['<custom_annotation1>', '<custom_annotation2>']  # User provided annotations
+    # calculator.set_fixed_annotations(user_fixed_annotations)  # Optional: set custom fixed_annotations
     # calculator.set_decimal_places(3)  # Optional: change decimal_places to 3
     # calculator.set_tokenizer_model_path('another/tokenizer/path')  # Optional: change tokenizer_model_path
 
