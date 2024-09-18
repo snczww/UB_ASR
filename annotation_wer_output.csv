@@ -1,0 +1,76 @@
+Ground Truth Line,Candidate Line,Annotation Line WER
+<um> [/] a rabbit and his dog (.) are making a sandcastle . 35815_40435,&-um a rabbit and his dog are making a sandcastle . 35460_40160,0.2
+and now the rabbit gots [: has got] a shovel and his bucket . 40595_46375,and now the rabbit gots a shovel and his bucket . 40760_45680,0.15
+and now (.) the rabbit (i)s going to [?] dump the sand from the bucket onto the sandcastle . 47095_52875,now the rabbits can dump the sand from the bucket onto the sand castle . 47240_52500,0.45
+and the sandcastle (i)s all mushed with a big pile of sand on top of it . 54075_59495,and then the sand castle's all mushed with a big pile of sand on top of it . 53860_58640,0.19
+and now they (a)re trying to put it back together . 60315_64035,and they're trying to put it back together . 60020_63420,0.22
+and the rabbit (i)s like standing <like> [//] (.) something like this . 63495_67555,and the rabbit's like standing like something like this . 63620_66920,0.33
+<um> [/] a rabbit and this (.) dog are walking down the road with these picnic baskets . 69995_77755,&-um a rabbit and this dog are walking down the road with his picnic baskets . 72300_77380,0.21
+and now they (a)re eating . 78635_80755,and now they're eating . 78200_80200,0.23
+and now the rabbit (i)s stuffed . 81435_84875,and now the rabbit's stuffed . 82180_84100,0.21
+and he (i)s lying down . 84255_85835,and he's lying down . 84100_85200,0.23
+and the dog (i)s still eating (.) with a juice box in his hand . 85475_89315,and the dog's still eating the juice box is in his hand . 85380_88580,0.35
+and now the juice box is is still in his hand . 90345_94205,and now the juice box is [/] is still in his hand . 89480_93440,0.17
+and now the rabbit is still doing what <he> [/] he was doing before . 93565_97465,and now the rabbit is still doing what he [/] he was doing before . 93440_96860,0.1
+and now (.) he (ha)s gots [: got] his hands on his tummy . 97185_100625,and now he's got his hands on his tummy . 97080_99860,0.33
+and he (i)s going pluck[/] pluck [/] pluck (.) something like that . 100005_103505,and he's going pluck [/] pluck [/] pluck something like that . 99860_102840,0.33
+and now (.) <the dog> [//] <the> [/] the dog (i)s running to (.) a doctor that (i)s walking down the road (.) and pulls the doctor to the rabbit . 103665_117245,and now the dog p the dog's running to a doctor that's walking down the road and pulls the doctor to the rabbit . 104100_116600,0.37
+and now (.) the doctor is fixing up the rabbit . 119385_122965,now the doctor is fixing up the rabbit . 118140_122280,0.28
+and now <the r> [//] the doctor rabbit is taking (.) <the> [/] the little rabbit home (.) I think . 123125_132425,now the r the doctor rabbit is taking the b &-uh little rabbit home I think . 122280_131700,0.39
+this dog has a balloon tied up to his wagon . 134465_139785,this dog has a balloon tied up to his wagon . 135860_139060,0.06
+<and the ra> [//] and the rabbit (i)s walking by . 139325_142005,and the r and the rabbit's walking by . 139180_141440,0.4
+and now the rabbit (i)s going to [^ gonna] grab the balloon and untie it I guess . 142485_146985,and now the rabbit is gonna grab the balloon and untie it I guess . 142500_146280,0.27
+and now he (i)s untying it . 147785_150845,and now he he's untying it . 146940_150100,0.2
+and now the balloon (i)s floating up into the air . 151505_154345,and now the balloon's floating up into the air . 151320_153640,0.17
+and now the string is all that they can see . 154825_157465,and now the string is all that they could see . 154640_156860,0.12
+"<and the rab> [//] and the dog (.) shaking its fists (.) and just standing there [^ makes noise ""errr""] . 157485_163405",and the rat and the dog shaking its fists and just standing there . 156860_162760,0.42
+and then there (i)s another rabbit over here (.) that gots [: has got] some balloons in his hands . 163165_171965,and er and then there's another rabbit over here got some balloons in his hands . 162760_171300,0.39
+and now <the rabbit> [//] (.) the little rabbit walks up to him and asks could I have a balloon ? 173525_180065,and now the rabbit the little rabbit walks up to him and asks . 172820_178380,0.41
+and they (a)re five cents [=! yawning] each a balloon . 179365_184905,could I have a balloon . 178380_179360,0.56
+and now he (i)s pulling out his pockets . 184965_187425,and here are five cents each a balloon . 179980_184180,0.56
+and there (i)s nothing in it . 187105_189165,now he's pulling out his pockets . 184900_186860,0.57
+and now they (a)re both just standing there . 190985_193645,and there's nothing in it . 186880_188500,0.56
+and now <the rabbit> [//] the little [!] rabbit walks over to the doctor bunny [!] again (.) and asks can I have a balloon from him ? 195375_205015,and now they're both just standing there . 190180_193080,0.81
+and now <he> [//] the <lit> [//] rabbit (i)s paying (.) <to> [//] for a balloon (.) too . 204215_213195,now the rabbit the little rabbit walks over to the doctor bunny again and asks . 195700_202540,0.71
+and now they both got a balloon . 213915_216135,could I have a balloon from him . 202540_204220,0.57
+and that (i)s the end . [+ bch] 217235_219495,and now he the l the rabbit's paying to for a balloon . 205040_212160,0.87
+there (i)s a giraffe and this <um> [/] elephant . 221885_224585,two . 212400_213180,0.67
+and the elephant (i)s bouncing this ball . 224265_226685,now they both got a balloon . 214140_215400,0.6
+and they (a)re right beside a pool . 226545_228305,and that's the end . 217420_218520,0.53
+and now the ball lands into the pool . 229365_232505,here's a giraffe and this &-um elephant . 219580_224060,0.73
+and now the giraffe (.) jumps into the pool . 233645_237485,and the elephant's bouncing his ball and right beside a pool . 224220_227540,0.61
+and he (i)s swimming for it . 236965_238965,and now the ball lands into the pool . 229240_231820,0.57
+and now he (i)s <be> [/] be giving it back to the elephant . 239485_242565,now the giraffe jumps into the pool . 233740_236700,0.67
+and now (.) the elephant (i)s kind of smiling . 243225_247025,and he's swimming for it . 236700_238180,0.61
+<and> [/] (.) and the giraffe (i)s just smiling at each_other . 246705_251165,and now he's B b giving it back to the elephant . 239100_241820,0.71
+that (i)s the end . [+ bch] 252245_253645,and now the elephant's kind of smiling . 242740_246540,0.71
+the elephant and the giraffe again . 253965_259265,and [/] and &-uh giraffes are smiling at each other . 246540_250700,0.86
+and they see this diving board . 258865_260765,that's the end . 251760_252780,0.54
+and now (.) the elephant (i)s <gonna> [//] pointing at it . 262045_265685,okay . 253840_255660,0.7
+and <it (i)s gonna> [//] and (.) he (i)s going to [: gonna] go to run over to it . 265065_269265,okay . 255960_256180,0.77
+and now they are both running over . 268865_272045,the elephant and the giraffe again . 256620_258640,0.57
+and elephant (i)s going to [^ gonna] fall . 271945_273825,and they see this diving board . 258860_260140,0.56
+and now the elephant fell and (.) <stub> [//] <made> [//] gots [: has got] a boo_boo on her knee . 274625_281045,and now the elephant's gonna pointing at it . 260840_264780,0.66
+now (.) the lifeguard (.) is another [!] elephant and comes over to see what the matter . 281285_287505,and it's gonna go . 264980_265900,0.79
+and now <um (..) the> [/] <the> [/] the (.) lifeguard (i)s putting a bandaid on the elephant that (.) <made> [//] got a boo_boo on her knee . 288905_303605,and he's gonna go run over to it . 266120_268500,0.82
+and the (.) giraffe (i)s just kneeling there on (.) his knees . 302965_307145,and now they're both running over . 269300_271460,0.7
+and now they (a)re taking <the> [/] (.) the elephant that gots [: has got] <um> [/] a (.) boo_boo on her knee to a bench . 308545_318685,and elephant's gonna fall . 271860_273160,0.78
+and now (.) the lifeguard points to the sign no running . 320125_324965,and now the elephant fell . 274540_276120,0.55
+and that (i)s what she was doing . 325145_327065,and Stub made got to boo [/] boo on her knee . 276400_280320,0.67
+<um> [/] a elephant and a giraffe . 333925_337245,now the lifeguard is another elephant and comes over to see what's going on . 281360_287120,1.07
+and the giraffe (ha)s gots [: has got] a airplane in his hand (.) ready to fly it . 336605_340625,and now &-um the [/] the th the lifeguard's putting a bandaid on the elephant that may got a boo [/] boo on me . 287120_302720,0.93
+and now (.) <the> [/] <the> [/] the (.) <gir> [//] giraffe is going to [^ gonna] throw it . 340425_347405,and the giraffe's just kneeling there on his knees . 302720_306480,0.66
+and the elephant (i)s staring at it . 346845_349625,and now they're taking de [/] de elephant that got s &-um voo boo on her knee to a bench . 306840_318020,1.4
+and now the elephant grabs it . 350305_353285,and now the lifeguard points the sign . 319940_323680,0.46
+and now (.) she (i)s going to [: gonna] try to fly it . 353385_356885,no running . 323680_324400,0.73
+and now she throws it into the pool . 357085_360005,and that's what she was doing . 324420_326520,0.53
+and now the giraffe (i)s angry at the elephant . 360945_363905,&-um an elephant and a giraffe . 329420_336560,0.67
+and now the lifeguard sees it just floating in there . 363845_368605,and the giraffe gots a airplane in his hand ready to fly it . 336640_339860,0.78
+and now (.) <the elephant> [//] the (.) girl elephant (i)s trying to talk (.) what happened with the airplane to the lifeguard . 369025_378145,and now yeah the [/] the g giraffe is gonna throw it . 340280_346660,0.71
+now the lifeguard is trying to reach over and get it . 378925_382185,and the elephant's staring at it . 346800_348900,0.58
+and <now the> [/] (.) now the giraffe <is tear> [//] got tears in his eyes . 382865_389585,and now the elephant grabs it . 350320_352600,0.61
+now (.) there (i)s a girl there (.) a girl elephant with a net that (i)s going to [: gonna] grab it . 390985_396685,and now she's gonna try to fly it . 353260_356160,0.76
+and now it (i)s picking it up out_of the water . 396425_401045,and now she throws into the pool . 357280_359280,0.53
+now gives it (.) to the giraffe . 401345_403865,and now the giraffe's angry at the elephant . 359840_363380,0.69
+and now (.) the giraffe is hugging [!] (.) <the> [//] his airplane . 404245_410605,and now the lifeguard sees it just floating in there . 364360_367800,0.62
+the end . [+ bch],and now the elephant the girl elephant's trying to talk what happened with the airplane to the lifeguard . 369380_377660,3.29

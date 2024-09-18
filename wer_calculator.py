@@ -11,7 +11,7 @@ class WERCalculator:
         self.strategy = strategy
         # If no fixed_annotations are provided, load the default fix_anotation.txt file
         if fixed_annotations is None:
-            self.fixed_annotations = read_file('fix_anotation.txt')  # Default file
+            self.fixed_annotations = read_file('utils/fix_anotation.txt')  # Default file
         else:
             self.fixed_annotations = fixed_annotations
         self.decimal_places = decimal_places
