@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 from transformers import AutoTokenizer
-from anotation.find_all_anotations import collect_all_matches
+from find_all_anotations import collect_all_matches
 from utils.ASR_utils import read_file 
 from utils.wer_by_tokens import word_list_error_rate
 from utils.anotaion_utils import extract_lines_from_file,extract_lines_text_from_file

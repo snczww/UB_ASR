@@ -1,11 +1,11 @@
 import os
 from transformers import AutoTokenizer
-from anotation.find_all_anotations import collect_all_matches
+from find_all_anotations import collect_all_matches
 from utils.ASR_utils import read_file 
 from utils.wer_by_tokens import word_list_error_rate
 from utils.anotaion_utils import *
 import concurrent.futures
-from anotation.find_all_anotations import *
+from find_all_anotations import *
 
 def load_and_tokenize_texts(ground_truth, candidate, tokenizer, annotations):
     """
