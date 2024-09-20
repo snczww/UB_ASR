@@ -34,12 +34,18 @@ def filter_text_by_annotations(text_lines, fixed_annotations, tokenizer_model_pa
     Returns:
     list: List of filtered text lines, containing only matched annotations and fixed annotations.
     """
-    tokenizer = AutoTokenizer.from_pretrained(tokenizer_model_path)
+
     filtered_lines = []
 
+    all_text = ' '.join(text_lines)
+
+    all_text_gt = collect_all_matches(all_text)
+
+    valid_tokens = all_text_gt + fixed_annotations
+    tokenizer = initialize_tokenizer(tokenizer_model_path, valid_tokens )
+
     for line in text_lines:
-        annotation_matches = collect_all_matches(line)
-        valid_tokens = annotation_matches + fixed_annotations
+
         tokens = tokenizer.tokenize(line)
         filtered_tokens = [token for token in tokens if token in valid_tokens]
         filtered_line = ' '.join(filtered_tokens) if filtered_tokens else ' '
@@ -109,15 +115,20 @@ class WERAnnotationLineByLineStrategy(WERStrategy):
     def calculate_wer(self, ground_truth_lines, candidate_lines, tokenizer_model_path, fixed_annotations, decimal_places):
         min_length = min(len(ground_truth_lines), len(candidate_lines))
         ground_truth_lines, candidate_lines = ground_truth_lines[:min_length], candidate_lines[:min_length]
+        ground_truth_text = ' '.join(ground_truth_lines)
+        candidate_text = ' '.join(candidate_lines)
 
-        tokenizer = initialize_tokenizer(tokenizer_model_path, fixed_annotations)
+        annotations_gt = collect_all_matches(ground_truth_text)
+        annotations_cand = collect_all_matches(candidate_text)
+
+        tokenizer = initialize_tokenizer(tokenizer_model_path, fixed_annotations + annotations_gt + annotations_cand)
         wer_list = []
 
         for gt_line, cand_line in zip(ground_truth_lines, candidate_lines):
             annotations_gt = collect_all_matches(gt_line)
             annotations_cand = collect_all_matches(cand_line)
-            ground_truth_tokens = tokenizer(' '.join(annotations_gt), max_length=4096, truncation=True).tokens()
-            candidate_tokens = tokenizer(' '.join(annotations_cand), max_length=4096, truncation=True).tokens()
+            ground_truth_tokens = tokenizer(gt_line, max_length=4096, truncation=True).tokens()
+            candidate_tokens = tokenizer(cand_line, max_length=4096, truncation=True).tokens()
 
             wer = word_list_error_rate(ground_truth_tokens, candidate_tokens)
             wer_list.append(round(wer, decimal_places))

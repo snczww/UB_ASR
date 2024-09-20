@@ -29,12 +29,12 @@ if __name__ == "__main__":
 
     # Strategy 1: Calculate WER treating lists as whole texts
     overall_wer = calculator.calculate(ground_truth_lines, candidate_lines)
-    print(f"Overall WER (Whole Text): {overall_wer}")
+    print(f"Overall WER AnnotationOnly (Whole Text): {overall_wer}")
 
     # Strategy 2: Calculate WER line by line
     calculator.set_strategy(WERAnnotationOnlyLineByLineStrategy())
     line_wer_list = calculator.calculate(ground_truth_lines, candidate_lines)
-    print(f"Line-by-Line WER: {line_wer_list}")
+    print(f"Line-by-Line AnnotationOnly WER: {line_wer_list}")
 
     # Strategy 3: Calculate WER on annotations (whole text)
     calculator.set_strategy(WERAnnotationWholeTextStrategy())
