@@ -1,4 +1,15 @@
-# wer_calculator.py
+#!/usr/bin/env python
+# -*- encoding: utf-8 -*-
+'''
+@File    :   wer_calculator.py
+@Time    :   2024/09/20 17:38:56
+@Author  :   Victor Z 
+@Version :   1.0
+@Contact :   snczww@gmail.com
+@Desc    :   None
+'''
+
+# here put the import lib
 
 from wer_strategy import WERStrategy
 from utils.ASR_utils import read_file

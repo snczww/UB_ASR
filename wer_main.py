@@ -1,4 +1,16 @@
-# main.py
+#!/usr/bin/env python
+# -*- encoding: utf-8 -*-
+'''
+@File    :   wer_main.py
+@Time    :   2024/09/20 18:04:54
+@Author  :   Victor Z 
+@Version :   1.0
+@Contact :   snczww@gmail.com
+@Desc    :   None
+'''
+
+# here put the import lib
+
 
 from wer_calculator import WERCalculator
 from wer_strategy import (

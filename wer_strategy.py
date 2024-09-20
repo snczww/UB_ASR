@@ -1,3 +1,16 @@
+#!/usr/bin/env python
+# -*- encoding: utf-8 -*-
+'''
+@File    :   wer_strategy.py
+@Time    :   2024/09/20 18:05:01
+@Author  :   Victor Z 
+@Version :   1.0
+@Contact :   snczww@gmail.com
+@Desc    :   None
+'''
+
+# here put the import lib
+
 from abc import ABC, abstractmethod
 from transformers import AutoTokenizer
 from utils.wer_by_tokens import word_list_error_rate
