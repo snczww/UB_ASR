@@ -8,7 +8,7 @@ from wer_strategy import (
     WERAnnotationLineByLineStrategy
 )
 from utils.anotaion_utils import extract_lines_from_file
-from mark_difference import compare_strings  # 引入compare_strings函数
+from mark_difference_V05 import mark_word_changes  # 引入compare_strings函数
 
 def remove_nak_to_end(line):
     """
@@ -41,8 +41,8 @@ if __name__ == "__main__":
     ground_truth_lines = ground_truth_lines[:min_length]
     candidate_lines = candidate_lines[:min_length]
 
-    # 使用 compare_strings 函数处理每对 ground truth 和 candidate lines
-    compared_candidate_lines = [compare_strings(gt, cand) for gt, cand in zip(ground_truth_lines, candidate_lines)]
+    # 使用 mark_word_changes 函数处理每对 ground truth 和 candidate lines
+    compared_candidate_lines = [mark_word_changes(gt, cand) for gt, cand in zip(ground_truth_lines, candidate_lines)]
 
     # Initialize the WERCalculator with default fixed_annotations from fix_anotation.txt and decimal_places = 2
     calculator = WERCalculator(WERAnnotationOnlyWholeTextStrategy())  # Use default tokenizer_model_path, fixed_annotations, and decimal_places

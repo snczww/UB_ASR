@@ -16,6 +16,45 @@ from transformers import AutoTokenizer
 from utils.wer_by_tokens import word_list_error_rate
 from utils.find_all_anotations import collect_all_matches
 
+def mark_word_changes(s1_words, s2_words):
+    # s1_words = s1.split()
+    # s2_words = s2.split()
+    
+    i, j = 0, 0
+    result = []
+    
+    while i < len(s1_words) and j < len(s2_words):
+        if s1_words[i] == s2_words[j]:
+            # No change
+            result.append(s1_words[i])
+            i += 1
+            j += 1
+        elif s1_words[i] != s2_words[j]:
+            if i + 1 < len(s1_words) and s1_words[i + 1] == s2_words[j]:
+                # Deletion in s1
+                result.append(f"-{s1_words[i]}-")
+                i += 1
+            elif j + 1 < len(s2_words) and s1_words[i] == s2_words[j + 1]:
+                # Insertion in s2
+                result.append(f"+{s2_words[j]}+")
+                j += 1
+            else:
+                # Replacement
+                result.append(f"*{s1_words[i]}*")
+                i += 1
+                j += 1
+    
+    # Handle remaining words in either s1 or s2
+    while i < len(s1_words):
+        result.append(f"-{s1_words[i]}-")
+        i += 1
+    
+    while j < len(s2_words):
+        result.append(f"+{s2_words[j]}+")
+        j += 1
+    
+    return " ".join(result)
+
 
 # Helper function to initialize tokenizer and add fixed annotations
 def initialize_tokenizer(tokenizer_model_path, fixed_annotations):
@@ -185,3 +224,86 @@ class WERAnnotationOnlyLineByLineStrategy(WERStrategy):
             wer_list.append(round(wer, decimal_places))
 
         return wer_list
+# Concrete strategy to calculate WER for annotations only, line by line
+class WERAnnotationOnlyLineByLineStrategy(WERStrategy):
+    def calculate_wer(self, ground_truth_lines, candidate_lines, tokenizer_model_path, fixed_annotations, decimal_places):
+        min_length = min(len(ground_truth_lines), len(candidate_lines))
+        ground_truth_lines, candidate_lines = ground_truth_lines[:min_length], candidate_lines[:min_length]
+
+        filtered_ground_truth = filter_text_by_annotations(ground_truth_lines, fixed_annotations, tokenizer_model_path)
+        filtered_candidate = filter_text_by_annotations(candidate_lines, fixed_annotations, tokenizer_model_path)
+
+        tokenizer = initialize_tokenizer(tokenizer_model_path, fixed_annotations)
+        wer_list = []
+
+        for gt_line, cand_line in zip(filtered_ground_truth, filtered_candidate):
+            ground_truth_tokens = tokenizer(gt_line, max_length=4096, truncation=True).tokens()
+            candidate_tokens = tokenizer(cand_line, max_length=4096, truncation=True).tokens()
+            wer = word_list_error_rate(ground_truth_tokens, candidate_tokens)
+            wer_list.append(round(wer, decimal_places))
+
+        return wer_list
+
+    # New method to mark changes
+    def mark_changes(self, ground_truth_lines, candidate_lines, tokenizer_model_path, fixed_annotations):
+        min_length = min(len(ground_truth_lines), len(candidate_lines))
+        ground_truth_lines, candidate_lines = ground_truth_lines[:min_length], candidate_lines[:min_length]
+
+        filtered_ground_truth = filter_text_by_annotations(ground_truth_lines, fixed_annotations, tokenizer_model_path)
+        filtered_candidate = filter_text_by_annotations(candidate_lines, fixed_annotations, tokenizer_model_path)
+
+        tokenizer = initialize_tokenizer(tokenizer_model_path, fixed_annotations)
+        marked_changes = []
+
+        for gt_line, cand_line in zip(filtered_ground_truth, filtered_candidate):
+            ground_truth_tokens = tokenizer(gt_line, max_length=4096, truncation=True).tokens()
+            candidate_tokens = tokenizer(cand_line, max_length=4096, truncation=True).tokens()
+            marked_changes.append(mark_word_changes(ground_truth_tokens, candidate_tokens))
+
+        return marked_changes
+
+
+# Concrete strategy to calculate WER on annotations line by line
+class WERAnnotationLineByLineStrategy(WERStrategy):
+    def calculate_wer(self, ground_truth_lines, candidate_lines, tokenizer_model_path, fixed_annotations, decimal_places):
+        min_length = min(len(ground_truth_lines), len(candidate_lines))
+        ground_truth_lines, candidate_lines = ground_truth_lines[:min_length], candidate_lines[:min_length]
+        ground_truth_text = ' '.join(ground_truth_lines)
+        candidate_text = ' '.join(candidate_lines)
+
+        annotations_gt = collect_all_matches(ground_truth_text)
+        annotations_cand = collect_all_matches(candidate_text)
+
+        tokenizer = initialize_tokenizer(tokenizer_model_path, fixed_annotations + annotations_gt + annotations_cand)
+        wer_list = []
+
+        for gt_line, cand_line in zip(ground_truth_lines, candidate_lines):
+            annotations_gt = collect_all_matches(gt_line)
+            annotations_cand = collect_all_matches(cand_line)
+            ground_truth_tokens = tokenizer(gt_line, max_length=4096, truncation=True).tokens()
+            candidate_tokens = tokenizer(cand_line, max_length=4096, truncation=True).tokens()
+
+            wer = word_list_error_rate(ground_truth_tokens, candidate_tokens)
+            wer_list.append(round(wer, decimal_places))
+
+        return wer_list
+
+    # New method to mark changes
+    def mark_changes(self, ground_truth_lines, candidate_lines, tokenizer_model_path, fixed_annotations):
+        min_length = min(len(ground_truth_lines), len(candidate_lines))
+        ground_truth_lines, candidate_lines = ground_truth_lines[:min_length], candidate_lines[:min_length]
+
+        annotations_gt = collect_all_matches(' '.join(ground_truth_lines))
+        annotations_cand = collect_all_matches(' '.join(candidate_lines))
+
+        tokenizer = initialize_tokenizer(tokenizer_model_path, fixed_annotations + annotations_gt + annotations_cand)
+        marked_changes = []
+
+        for gt_line, cand_line in zip(ground_truth_lines, candidate_lines):
+            annotations_gt = collect_all_matches(gt_line)
+            annotations_cand = collect_all_matches(cand_line)
+            ground_truth_tokens = tokenizer(gt_line, max_length=4096, truncation=True).tokens()
+            candidate_tokens = tokenizer(cand_line, max_length=4096, truncation=True).tokens()
+            marked_changes.append(mark_word_changes(ground_truth_tokens, candidate_tokens))
+
+        return marked_changes
