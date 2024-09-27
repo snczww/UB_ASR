@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WER Comparison</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .ground-truth {
+            font-weight: bold;
+        }
+        .candidate-line {
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>WER Comparison Tool</h1>
+
+    <h2>Overall WER: {{ overall_wer }}</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Groundtruth Line</th>
+                <th>Candidate Line (with differences marked)</th>
+                <th>WER</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for gt_line, cand_line, wer in zip(ground_truth_lines, marked_candidate_lines, line_wer_list) %}
+            <tr>
+                <td class="ground-truth">{{ gt_line }}</td>
+                <td class="candidate-line">{{ cand_line|safe }}</td>
+                <td>{{ wer }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
