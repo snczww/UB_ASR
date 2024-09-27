@@ -1,130 +1,100 @@
-def damerau_levenshtein_distance_with_operations(s1_words, s2_words):
+import logging
+import difflib
+
+# 配置日志级别和输出格式
+logging.basicConfig(level=logging.DEBUG, format='%(message)s')
+
+# 定义相似性阈值
+SIMILARITY_THRESHOLD = 0.5  # difflib 通过相似度得分判断，值在 0~1 之间
+
+def is_similar(word1, word2, threshold=SIMILARITY_THRESHOLD):
+    """使用 difflib 计算两个词的相似性，得分大于 threshold 则认为相似"""
+    similarity_score = difflib.SequenceMatcher(None, word1, word2).ratio()
+    return similarity_score >= threshold
+
+def find_insertion_index(L, s2, idx_in_s2):
     """
-    Calculate the Damerau-Levenshtein distance and return the list of operations to transform s2_words into s1_words.
-    s1_words is treated as the fixed target.
+    寻找在 L 中插入多余词的合适位置，依据 s2 中的原始位置。
+    如果可能，在前后词之间插入。如果没有前后词，插入到空位或末尾。
     """
-    d = {}
-    lenstr1 = len(s1_words)
-    lenstr2 = len(s2_words)
+    # 寻找前一个非 '0' 的词
+    previous_idx = idx_in_s2 - 1
+    while previous_idx >= 0 and L[previous_idx] == '0':
+        previous_idx -= 1
 
-    # Initialize the table with base cases for insertion and deletion
-    for i in range(-1, lenstr1 + 1):
-        d[(i, -1)] = i + 1
+    # 寻找后一个非 '0' 的词
+    next_idx = idx_in_s2 + 1
+    while next_idx < len(L) and L[next_idx] == '0':
+        next_idx += 1
 
-    for j in range(-1, lenstr2 + 1):
-        d[(-1, j)] = j + 1
+    # 确保在前后词之间插入
+    if previous_idx >= 0 and next_idx < len(L):
+        logging.debug(f"Inserting between '{L[previous_idx]}' and '{L[next_idx]}' in L.")
+        return next_idx  # 插入到后词之前
+    elif previous_idx >= 0:
+        logging.debug(f"Inserting after '{L[previous_idx]}' in L.")
+        return previous_idx + 1  # 插入到前词之后
+    else:
+        logging.debug(f"Inserting at the end of L.")
+        return len(L)  # 插入到 L 的末尾
 
-    operations = []  # Store the operations (insert, delete, replace, transpose)
+def compare_and_fill(s1, s2):
+    # 初始化与 s1 长度相同的空容器 L
+    L = ['0'] * len(s1)
+    
+    logging.info(f"Initial L: {L}")
 
-    for i in range(lenstr1):
-        for j in range(lenstr2):
-            if s1_words[i] == s2_words[j]:
-                cost = 0
-            else:
-                cost = 1
+    # 使用一个副本来跟踪 s2 中剩余未匹配的词
+    s2_remaining = s2[:]
 
-            # Initialize the table cell if not already set
-            if (i - 1, j - 1) not in d:
-                d[(i - 1, j - 1)] = float('inf')
-            if (i - 1, j) not in d:
-                d[(i - 1, j)] = float('inf')
-            if (i, j - 1) not in d:
-                d[(i, j - 1)] = float('inf')
-
-            # Calculate the minimum cost for substitution, insertion, and deletion
-            d[(i, j)] = min(
-                d[(i - 1, j)] + 1,    # Deletion
-                d[(i, j - 1)] + 1,    # Insertion
-                d[(i - 1, j - 1)] + cost  # Substitution
-            )
-
-            # Determine the operation based on minimum cost
-            if d[(i, j)] == d[(i - 1, j)] + 1:
-                operations.append(('delete', i, s1_words[i]))
-            elif d[(i, j)] == d[(i, j - 1)] + 1:
-                operations.append(('insert', j, s2_words[j]))
-            elif d[(i, j)] == d[(i - 1, j - 1)] + cost and cost == 1:
-                operations.append(('replace', i, s1_words[i], s2_words[j]))
-
-            # Check for transposition
-            if i > 0 and j > 0 and s1_words[i] == s2_words[j - 1] and s1_words[i - 1] == s2_words[j]:
-                if d[(i, j)] > d[(i - 2, j - 2)] + 1:  # If transposition is better
-                    operations.append(('transpose', i - 1, s1_words[i - 1], s1_words[i]))
-                    i += 1
-                    j += 1
-
-    # Handle any remaining insertions
-    while j < lenstr2:
-        operations.append(('insert', j, s2_words[j]))
-        j += 1
-
-    # Handle any remaining deletions
-    while i < lenstr1:
-        operations.append(('delete', i, s1_words[i]))
-        i += 1
-
-    return operations
-
-
-def edit_s2_to_s1_list(s1_words, s2_words):
-    """
-    Use Damerau-Levenshtein algorithm to show how to transform s2_words into s1_words.
-    This function assumes both inputs are already tokenized lists.
-    """
-    # 获取将 s2_words 编辑成 s1_words 的操作列表
-    operations = damerau_levenshtein_distance_with_operations(s1_words, s2_words)
-
-    # 去重操作：确保每个操作只应用一次，并避免冗余的删除或插入操作
-    filtered_operations = []
-    seen = set()
-
-    for op in operations:
-        # 基于操作和索引进行去重
-        if op not in seen:
-            filtered_operations.append(op)
-            seen.add(op)
-
-    # 初始化结果列表为 s2_words 的副本
-    result = s2_words[:]
-
-    print("编辑操作：")
-    last_action = None  # 用于避免连续的相同操作
-    for op in filtered_operations:
-        if last_action != op:  # 避免连续的相同操作
-            if op[0] == 'insert':
-                print(f"插入 '{op[2]}' 在 S2 中")
-            elif op[0] == 'delete':
-                print(f"删除 '{op[2]}' 在 S1 中")
-            elif op[0] == 'replace':
-                print(f"替换 '{op[3]}' 为 '{op[2]}'")
-            elif op[0] == 'transpose':
-                print(f"交换 '{op[2]}' 和 '{op[3]}'")
-            last_action = op
-
-    # 打印出S2与S1不同的部分，使用 `-` 标记S2中不同的部分
-    print("\nS2 和 S1 不同的部分：")
-    s2_marked = []
-    s2_index = 0
-
-    for i in range(len(s1_words)):
-        if s2_index < len(s2_words) and s1_words[i] == s2_words[s2_index]:
-            s2_marked.append(s2_words[s2_index])
+    # 逐词比较 s1 和 s2，直接匹配相同的词
+    for i, word_s1 in enumerate(s1):
+        if word_s1 in s2_remaining:
+            L[i] = word_s1  # 将相同的词放入 L 中相应的位置
+            s2_remaining.remove(word_s1)  # 从 s2_remaining 中移除已匹配的词
+            logging.debug(f"Found matching word '{word_s1}' for s1[{i}], placed in L.")
         else:
-            if s2_index < len(s2_words):
-                s2_marked.append(f"-{s2_words[s2_index]}-")  # 用 `-` 标记 S2 中不同的部分
-            else:
-                s2_marked.append("-")  # 如果 S2 缺少对应单词，用 `-` 标记
-        s2_index += 1
+            logging.debug(f"No exact match for s1[{i}]='{word_s1}'.")
 
-    print("S1:", ' '.join(s1_words))
-    print("S2:", ' '.join(s2_marked))
+    # 处理 s1 中剩余的空位，检查 s2 剩余词是否相似
+    for i, word_s1 in enumerate(s1):
+        if L[i] == '0':  # 该位置为空，尝试查找相似词
+            for word_s2 in s2_remaining:
+                if is_similar(word_s1, word_s2):
+                    L[i] = f"*{word_s2}*"  # 标记为相似词
+                    s2_remaining.remove(word_s2)  # 移除匹配的词
+                    logging.debug(f"Similar word '{word_s2}' found for s1[{i}]='{word_s1}', placed in L as '*{word_s2}*'.")
+                    break  # 找到相似词后，停止对当前空位的进一步比较
 
-    return filtered_operations
+    # 创建新容器 New，将 L 的内容复制到 New 中，不限制长度
+    New = L[:]
+
+    # 处理 s2 中剩余的词，按照它们的原始位置插入到 New 中
+    for word_s2 in s2_remaining:
+        idx_in_s2 = s2.index(word_s2)  # 获取它在 s2 中的位置
+        logging.debug(f"Attempting to insert extra word '{word_s2}' at its original position {idx_in_s2} in New.")
+
+        # 寻找在 New 中的合适插入位置
+        insert_idx = find_insertion_index(New, s2, idx_in_s2)
+
+        # 确保 New 的长度可以容纳插入位置
+        if insert_idx >= len(New):
+            New.extend(['0'] * (insert_idx - len(New) + 1))
+
+        # 将多余的词插入到 New 中
+        New.insert(insert_idx, f"-{word_s2}-")
+        logging.debug(f"Inserted extra word '{word_s2}' at position {insert_idx} in New.")
+
+    return New
 
 
-# 示例调用
-s1_list = ["<um>", "[/]", "a", "rabbit", "and", "his", "dog", "(.)", "are", "making", "a", "sandcastle", "."]
-s2_list = ["&-um", "a", "rabbit", "and", "his", "dog", "are", "making", "a", "sandcastle", "."]
+# 示例数据
+s1 = ["<um>", "[/]", "a", "rabbit", "and", "his", "dog", "(.)", "are", "making", "a", "sandcastle", "."]
+s2 = ["&-um", "a", "cogb", "rabbit", "and", "his", "dog", "are", "making", "a", "sandcastle", "."]
 
-# 调用函数，显示如何将 s2_list 编辑成 s1_list
-edit_operations = edit_s2_to_s1_list(s1_list, s2_list)
+# 调用函数
+result = compare_and_fill(s1, s2)
+
+# 输出结果
+print("s1:", s1)
+print("New: ", result)
