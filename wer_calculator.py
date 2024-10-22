@@ -57,3 +57,9 @@ class WERCalculator:
         Calculate WER using the current strategy, fixed_annotations, decimal_places, and tokenizer_model_path.
         """
         return self.strategy.calculate_wer(ground_truth, candidate, self.tokenizer_model_path, self.fixed_annotations, self.decimal_places)
+    def mark_changes(self, ground_truth, candidate):
+        """
+        Calculate WER using the current strategy, fixed_annotations, decimal_places, and tokenizer_model_path.
+        """
+        return self.strategy.mark_changes_list(ground_truth, candidate, self.tokenizer_model_path, self.fixed_annotations)
+    

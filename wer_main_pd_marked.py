@@ -1,14 +1,18 @@
 import re
 import pandas as pd
+import logging
+
 from wer_calculator import WERCalculator
 from wer_strategy import (
     WERAnnotationOnlyWholeTextStrategy, 
     WERAnnotationOnlyLineByLineStrategy, 
     WERAnnotationWholeTextStrategy, 
-    WERAnnotationLineByLineStrategy
+    WERAnnotationLineByLineStrategy,
+    WERAnnotationLineByLineStrategy_marked
 )
 from utils.anotaion_utils import extract_lines_from_file
-from mark_difference_V05 import mark_word_changes  # 引入mark_word_changes函数
+from mark_difference_V05 import mark_word_changes  # 引入compare_strings函数
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def remove_nak_to_end(line):
     """
@@ -20,7 +24,9 @@ def remove_nak_to_end(line):
     Returns:
     str: The line with content after 'NAK' removed.
     """
-    return re.sub(r'NAK.*', '', line)
+    # return re.sub(r'NAK.*', '', line)
+    return re.sub(r'\x15\d+_\d+\x15', '', line)
+
 
 if __name__ == "__main__":
     # Define file paths
@@ -35,6 +41,7 @@ if __name__ == "__main__":
     # Remove content after 'NAK' from each line in both ground truth and candidate lines
     ground_truth_lines = [remove_nak_to_end(line) for line in ground_truth_lines]
     candidate_lines = [remove_nak_to_end(line) for line in candidate_lines]
+    # logging.info(f"Initializing tokenizer from {ground_truth_lines}.")
 
     # Ensure the lengths of ground truth and candidate lines match
     min_length = min(len(ground_truth_lines), len(candidate_lines))
@@ -42,7 +49,8 @@ if __name__ == "__main__":
     candidate_lines = candidate_lines[:min_length]
 
     # 使用 mark_word_changes 函数处理每对 ground truth 和 candidate lines
-    compared_candidate_lines = [mark_word_changes(gt.split(), cand.split()) for gt, cand in zip(ground_truth_lines, candidate_lines)]
+    calculator = WERCalculator(WERAnnotationLineByLineStrategy_marked())
+    compared_candidate_lines = calculator.mark_changes(ground_truth_lines, candidate_lines)
 
     # Initialize the WERCalculator with default fixed_annotations from fix_anotation.txt and decimal_places = 2
     calculator = WERCalculator(WERAnnotationOnlyWholeTextStrategy())  # Use default tokenizer_model_path, fixed_annotations, and decimal_places
@@ -59,6 +67,7 @@ if __name__ == "__main__":
     df = pd.DataFrame({
         'Ground Truth Line': ground_truth_lines,
         'Candidate Line (Compared)': compared_candidate_lines,  # 将compare_strings处理后的结果放入
+        # 'Candidate Line': candidate_lines,  # 将compare_strings处理后的结果放入
         'Line WER': line_wer_list
     })
 
@@ -80,6 +89,7 @@ if __name__ == "__main__":
     annotation_df = pd.DataFrame({
         'Ground Truth Line': ground_truth_lines,
         'Candidate Line (Compared)': compared_candidate_lines,  # 再次使用compare_strings处理的结果
+        # 'Candidate Line': candidate_lines,  # 将compare_strings处理后的结果放入
         'Annotation Line WER': annotation_line_wer_list
     })
     annotation_df.to_csv(annotation_output_csv_path, index=False)
