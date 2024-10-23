@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>WER Calculator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 50px;
+      }
+      h1 {
+        color: #333;
+      }
+      label {
+        font-size: 16px;
+        margin-top: 10px;
+      }
+      input[type="file"] {
+        margin-top: 5px;
+      }
+      input[type="submit"] {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Upload Ground Truth and Candidate Files</h1>
+    <form method="post" enctype="multipart/form-data">
+      <label for="ground_truth_file">Upload Ground Truth File:</label><br>
+      <input type="file" name="ground_truth_file" required><br><br>
+      
+      <label for="candidate_file">Upload Candidate File:</label><br>
+      <input type="file" name="candidate_file" required><br><br>
+
+      <input type="submit" value="Calculate WER">
+    </form>
+  </body>
+</html>
