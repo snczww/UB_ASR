@@ -1,10 +1,9 @@
 from flask import Flask, request, render_template_string, send_file
 import pandas as pd
 import os
-import re
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
+import re
 from werkzeug.utils import secure_filename
 from wer_calculator import WERCalculator
 from wer_strategy import (
@@ -165,6 +164,11 @@ def display_csv(data=None):
                     {"".join([f'<li class="page-item{" active" if p == page else ""}"><a class="page-link" href="/display?page={p}&per_page={per_page}">{p}</a></li>' for p in range(1, total_pages + 1)])}
                 </ul>
             </nav>
+
+            <!-- Add a 'Back to Upload' button -->
+            <div class="mt-4">
+                <a href="/" class="btn btn-secondary">Back to Upload</a>
+            </div>
         </div>
     </body>
     </html>
