@@ -1,26 +1,7 @@
 from flask import Flask, request, render_template_string
 import pandas as pd
-import re
 
 app = Flask(__name__)
-
-def highlight_candidate_line(text):
-    """
-    处理 Candidate Line，将标记的单词替换成带有颜色的 HTML
-    *单词* -> 红色
-    +单词+ -> 蓝色
-    -单词- -> 橙色
-    """
-    # 替换 *单词* 为红色
-    text = re.sub(r'\*(\w+)\*', r'<span style="color: red;">\1</span>', text)
-    
-    # 替换 +单词+ 为蓝色
-    text = re.sub(r'\+(\w+)\+', r'<span style="color: blue;">\1</span>', text)
-    
-    # 替换 -单词- 为橙色
-    text = re.sub(r'\-(\w+)\-', r'<span style="color: orange;">\1</span>', text)
-    
-    return text
 
 @app.route('/')
 def display_csv():
@@ -44,7 +25,7 @@ def display_csv():
     total_pages = (total_rows // per_page) + (1 if total_rows % per_page else 0)
     
     # 将数据转换为HTML表格
-    table_html = page_data.to_html(classes='table table-striped', index=False, table_id='csvTable')
+    table_html = page_data.to_html(classes='table table-striped', index=False, table_id='csvTable', escape=False)
 
     # Create a basic HTML template with JavaScript for row click functionality
     html_template = '''
@@ -60,8 +41,8 @@ def display_csv():
     /* 定义 2x2 表格布局 */
     .comparison-table {
         display: grid;
-        grid-template-columns: auto 1fr;  /* 第一列自动宽度，第二列占满剩余空间 */
-        grid-gap: 10px;  /* 控制单元格之间的间距 */
+        grid-template-columns: auto 1fr;
+        grid-gap: 10px;
         margin-bottom: 20px;
     }
 
@@ -71,14 +52,13 @@ def display_csv():
 
     .label {
         font-size: 14px;
-       
-        text-align: left; /* 标签左对齐 */
+        text-align: left;
     }
 
     .content {
         font-family: monospace;
         font-size: 22px;
-        white-space: pre-wrap; /* 保留文本的空格和换行 */
+        white-space: pre-wrap;
         text-align: left;
     }
 </style>
@@ -86,32 +66,29 @@ def display_csv():
     <body>
         <div class="container">
             <h1 class="mt-5">CSV Data</h1>
-     <!-- Add a legend with horizontal layout -->
-    <div class="legend mb-3">
-        <h5>Legend:</h5>
-        <div style="display: flex; gap: 20px;">
-            <div><span style="color: red;">Insertion</span></div>
-            <div><span style="color: blue;">Omition</span></div>
-            <div><span style="color: green;">Subtitution</span></div>
-        </div>
-    </div>
+            <div class="legend mb-3">
+                <h5>Legend:</h5>
+                <div style="display: flex; gap: 20px;">
+                    <div><span style="color: red;">Insertion</span></div>
+                    <div><span style="color: blue;">Omition</span></div>
+                    <div><span style="color: green;">Subtitution</span></div>
+                </div>
+            </div>
+            
             <!-- Section to show selected rows' Ground Truth and Candidate Line -->
             <div id="comparison-display" class="mb-4">
                 <h3>Comparison:</h3>
                 <div class="comparison-table">
-    <!-- 第一行：Ground Truth -->
-    <div class="comparison-cell label">Ground Truth:</div>
-    <div class="comparison-cell content"><pre id="ground-truth">None</pre></div>
-    
-    <!-- 第二行：Candidate Line (Compared) -->
-    <div class="comparison-cell label">Candidate Line (Compared):</div>
-    <div class="comparison-cell content"><pre id="candidate-line">None</pre></div>
-</div>
+                    <div class="comparison-cell label">Ground Truth:</div>
+                    <div class="comparison-cell content"><pre id="ground-truth">None</pre></div>
+                    <div class="comparison-cell label">Candidate Line (Compared):</div>
+                    <div class="comparison-cell content"><pre id="candidate-line">None</pre></div>
+                </div>
             </div>
+            
             <div>{{ table|safe }}</div>
             
             <!-- Pagination -->
-            <!-- Section to select the number of rows per page -->
             <form method="get" class="mb-4">
                 <label for="per_page">Rows per page:</label>
                 <select name="per_page" id="per_page" onchange="this.form.submit()">
@@ -166,15 +143,14 @@ def display_csv():
             $('#csvTable tbody tr').on('click', function() {
                 // Get the data from the clicked row
                 var rowData = $(this).children("td").map(function() {
-                    return $(this).text();
+                    return $(this).html();
                 }).get();
 
                 // Assuming the columns are like [Ground Truth, Candidate Line, ...]
                 var groundTruth = rowData[0];  // Adjust index according to your CSV structure
                 var candidateLine = rowData[1]; // Adjust index according to your CSV structure
 
-                // 使用 Python 预处理后的带颜色的 HTML 内容
-                $('#ground-truth').text(groundTruth);
+                $('#ground-truth').html(groundTruth);
                 $('#candidate-line').html(candidateLine);  // 使用 .html() 渲染 HTML 而不是纯文本
             });
         });

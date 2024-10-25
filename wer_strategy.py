@@ -141,7 +141,6 @@ def mark_word_changes_onlys2(s2, s1):
 
 
 def mark_word_changes(s2, s1):
-
     """
     Highlight the operations (insert, delete, replace) needed to transform s2 into s1.
     - Replacement: <span style="color: green;"></span>
@@ -153,13 +152,17 @@ def mark_word_changes(s2, s1):
     s2 (list): Source sequence.
 
     Returns:
-    tuple: (s2modify, marked_s1)
+    tuple: (marked_s1, s2modify)
     """
     import numpy as np
+
+    # Helper function to escape < and > for HTML
+    def escape_html(word):
+        return word.replace("<", "&lt;").replace(">", "&gt;")
     
     # Preprocess s1 and s2
-    s1 = [word.replace("Ġ", "").strip() for word in s1 if word not in ['<s>', '</s>'] and word.strip()]
-    s2 = [word.replace("Ġ", "").strip() for word in s2 if word not in ['<s>', '</s>'] and word.strip()]
+    s1 = [escape_html(word.replace("Ġ", "").strip()) for word in s1 if word not in ['<s>', '</s>'] and word.strip()]
+    s2 = [escape_html(word.replace("Ġ", "").strip()) for word in s2 if word not in ['<s>', '</s>'] and word.strip()]
     s1 = list(filter(None, s1))
     s2 = list(filter(None, s2))
 
@@ -213,10 +216,11 @@ def mark_word_changes(s2, s1):
     s2modify_list.reverse()
     marked_s1_list.reverse()
 
-    s2modify = ' '.join(s2modify_list)
     marked_s1 = ' '.join(marked_s1_list)
+    s2modify = ' '.join(s2modify_list)
 
-    return  marked_s1,s2modify
+    return marked_s1, s2modify
+
 
 
 
