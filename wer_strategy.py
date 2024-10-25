@@ -72,7 +72,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
     
 #     return " ".join(result)
 
-def mark_word_changes(s2, s1):
+def mark_word_changes_onlys2(s2, s1):
     """
     Highlight the operations (insert, delete, replace) needed to transform s2 into s1.
     - Replacement: <span style="color: green;"></span>
@@ -138,6 +138,75 @@ def mark_word_changes(s2, s1):
     result.reverse()
 
     return ' '.join(result)
+
+
+def mark_word_changes(s2, s1):
+    '''
+    s2: candidate
+    s1: ground truth
+    
+    '''
+    import numpy as np
+
+    s1 = [word.replace("Ġ", "").strip() for word in s1 if word not in ['<s>', '</s>'] and word.strip()]
+    s2 = [word.replace("Ġ", "").strip() for word in s2 if word not in ['<s>', '</s>'] and word.strip()]
+    s1 = list(filter(None, s1))
+    s2 = list(filter(None, s2))
+
+    m, n = len(s1), len(s2)
+    dp = np.zeros((m + 1, n + 1), dtype=int)
+
+    # Fill the dp array
+    for i in range(1, m + 1):
+        dp[i][0] = i
+    for j in range(1, n + 1):
+        dp[0][j] = j
+
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s1[i - 1] == s2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+            else:
+                dp[i][j] = min(dp[i - 1][j] + 1,   # Deletion
+                               dp[i][j - 1] + 1,   # Insertion
+                               dp[i - 1][j - 1] + 1)  # Replacement
+
+    # Backtrack to determine operations
+    i, j = m, n
+    result_s1 = []
+    result_s2 = []
+
+    while i > 0 or j > 0:
+        if i > 0 and j > 0 and s1[i - 1] == s2[j - 1]:
+            result_s1.append(f"<span>{s1[i - 1]}</span>")
+            result_s2.append(f"<span>{s2[j - 1]}</span>")
+            i -= 1
+            j -= 1
+        elif i > 0 and j > 0 and dp[i][j] == dp[i - 1][j - 1] + 1:
+            # Replacement
+            result_s1.append(f"<span style=\"color: green;\">{s1[i - 1]}</span>")
+            result_s2.append(f"<span style=\"color: green;\">{s2[j - 1]}</span>")
+            i -= 1
+            j -= 1
+        elif j > 0 and dp[i][j] == dp[i][j - 1] + 1:
+            # Insertion
+            result_s1.append("<span></span>")  # Empty for s1
+            result_s2.append(f"<span style=\"color: blue;\">{s2[j - 1]}</span>")
+            j -= 1
+        elif i > 0 and dp[i][j] == dp[i - 1][j] + 1:
+            # Deletion
+            result_s1.append(f"<span style=\"color: red;\">{s1[i - 1]}</span>")
+            result_s2.append("<span></span>")  # Empty for s2
+            i -= 1
+
+    # Reverse the results since we built them backwards
+    result_s1.reverse()
+    result_s2.reverse()
+
+    return ' '.join(result_s1), ' '.join(result_s2)
+
+
+
 
 
 # Helper function to initialize tokenizer and add fixed annotations
@@ -376,6 +445,36 @@ class WERAnnotationLineByLineStrategy_marked(WERStrategy):
 
     # New method to mark changes
     def mark_changes_list(self, ground_truth_lines, candidate_lines, tokenizer_model_path, fixed_annotations):
+        annotations_gt = collect_all_matches(' '.join(ground_truth_lines))
+        annotations_cand = collect_all_matches(' '.join(candidate_lines))
+
+        tokenizer = initialize_tokenizer(tokenizer_model_path, fixed_annotations + annotations_gt + annotations_cand)
+        # marked_changes = []
+        marked_ground_truth = []
+        marked_candidate = []
+
+        for gt_line, cand_line in zip(ground_truth_lines, candidate_lines):
+            annotations_gt = collect_all_matches(gt_line)
+            annotations_cand = collect_all_matches(cand_line)
+            
+            ground_truth_tokens = tokenizer(gt_line, max_length=4096, truncation=True).tokens()
+            candidate_tokens = tokenizer(cand_line, max_length=4096, truncation=True).tokens()
+            
+            # 调用修改后的 mark_word_changes 函数，返回两个标记后的字符串
+            marked_gt, marked_cand = mark_word_changes(candidate_tokens, ground_truth_tokens)
+            
+            # 将标记后的字符串分别添加到两个列表中
+            marked_ground_truth.append(marked_gt)
+            marked_candidate.append(marked_cand)
+
+        return marked_ground_truth, marked_candidate
+
+
+
+
+
+
+    def mark_changes_list_old(self, ground_truth_lines, candidate_lines, tokenizer_model_path, fixed_annotations):
 
 
         annotations_gt = collect_all_matches(' '.join(ground_truth_lines))

@@ -50,7 +50,9 @@ if __name__ == "__main__":
 
     # 使用 mark_word_changes 函数处理每对 ground truth 和 candidate lines
     calculator = WERCalculator(WERAnnotationLineByLineStrategy_marked())
-    compared_candidate_lines = calculator.mark_changes(ground_truth_lines, candidate_lines)
+    # compared_candidate_lines = calculator.mark_changes(ground_truth_lines, candidate_lines)
+    compared_ground_truth_lines, compared_candidate_lines = calculator.mark_changes(ground_truth_lines, candidate_lines)
+
 
     # Initialize the WERCalculator with default fixed_annotations from fix_anotation.txt and decimal_places = 2
     calculator = WERCalculator(WERAnnotationOnlyWholeTextStrategy())  # Use default tokenizer_model_path, fixed_annotations, and decimal_places
@@ -65,9 +67,10 @@ if __name__ == "__main__":
 
     # Create a DataFrame to store the results with compared strings
     df = pd.DataFrame({
-        'Ground Truth Line': ground_truth_lines,
+        # 'Ground Truth Line': ground_truth_lines,
+        'Ground Truth Line': compared_ground_truth_lines,
         'Candidate Line (Compared)': compared_candidate_lines,  # 将compare_strings处理后的结果放入
-        # 'Candidate Line': candidate_lines,  # 将compare_strings处理后的结果放入
+        # 'Candidate Line': compared_ground_truth_lines,  # 将compare_strings处理后的结果放入
         'Line WER': line_wer_list
     })
 
