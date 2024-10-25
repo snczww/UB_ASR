@@ -174,9 +174,9 @@ def display_csv(data=None):
             <div class="legend mb-3">
                 <h5>Legend:</h5>
                 <div style="display: flex; gap: 20px;">
-                    <div><span style="color: red;">Insertion</span></div>
-                    <div><span style="color: blue;">Omission</span></div>
-                    <div><span style="color: green;">Substitution</span></div>
+                    <div><span style="color: red;">#omit</span></div>
+                    <div><span style="color: blue;">#add</span></div>
+                    <div><span style="color: green;">#dis</span></div>
                 </div>
             </div>
 
