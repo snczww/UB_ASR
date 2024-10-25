@@ -1,9 +1,12 @@
 from flask import Flask, request, render_template_string, send_file
 import pandas as pd
 import os
-import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import re
+import sys
+
+# Add parent directory to the module search path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from werkzeug.utils import secure_filename
 from wer_calculator import WERCalculator
 from wer_strategy import (
@@ -24,14 +27,13 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
 
 def remove_nak_to_end(line):
-    """Remove content starting with 'NAK' to the end of the line."""
+    if not isinstance(line, str):
+        line = str(line)
     return re.sub(r'\x15\d+_\d+\x15', '', line)
 
 def highlight_candidate_line(text):
-    """
-    Process Candidate Line to replace marked words with colored HTML:
-    *word* -> red, +word+ -> blue, -word- -> orange
-    """
+    if not isinstance(text, str):
+        text = str(text)
     text = re.sub(r'\*(\w+)\*', r'<span style="color: red;">\1</span>', text)
     text = re.sub(r'\+(\w+)\+', r'<span style="color: blue;">\1</span>', text)
     text = re.sub(r'\-(\w+)\-', r'<span style="color: orange;">\1</span>', text)
@@ -40,7 +42,6 @@ def highlight_candidate_line(text):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        # Save uploaded files
         ground_truth_file = request.files['ground_truth_file']
         candidate_file = request.files['candidate_file']
 
@@ -53,44 +54,41 @@ def index():
         ground_truth_file.save(ground_truth_path)
         candidate_file.save(candidate_path)
 
-        # Extract lines from files
         ground_truth_lines = extract_lines_from_file(ground_truth_path, '*CHI:')
         candidate_lines = extract_lines_from_file(candidate_path, '*PAR0:')
 
-        # Remove content after 'NAK' from each line in both ground truth and candidate lines
         ground_truth_lines = [remove_nak_to_end(line) for line in ground_truth_lines]
         candidate_lines = [remove_nak_to_end(line) for line in candidate_lines]
 
-        # Ensure the lengths of ground truth and candidate lines match
         min_length = min(len(ground_truth_lines), len(candidate_lines))
         ground_truth_lines = ground_truth_lines[:min_length]
         candidate_lines = candidate_lines[:min_length]
 
-        # Mark word changes
         calculator = WERCalculator(WERAnnotationLineByLineStrategy_marked())
-        compared_candidate_lines = calculator.mark_changes(ground_truth_lines, candidate_lines)
-        compared_candidate_lines = [highlight_candidate_line(line) for line in compared_candidate_lines]
+        compared_ground_truth_lines, compared_candidate_lines = calculator.mark_changes(ground_truth_lines, candidate_lines)
 
-        # Strategy 1: Calculate WER treating lists as whole texts
+        compared_candidate_lines = [' '.join(line) if isinstance(line, list) else line for line in compared_candidate_lines]
+
         calculator = WERCalculator(WERAnnotationOnlyWholeTextStrategy())
         overall_wer = calculator.calculate(ground_truth_lines, candidate_lines)
 
-        # Strategy 2: Calculate WER line by line
         calculator.set_strategy(WERAnnotationOnlyLineByLineStrategy())
         line_wer_list = calculator.calculate(ground_truth_lines, candidate_lines)
 
-        # Create a DataFrame to store the results with compared strings
+        min_length = min(len(compared_ground_truth_lines), len(compared_candidate_lines), len(line_wer_list))
+        compared_ground_truth_lines = compared_ground_truth_lines[:min_length]
+        compared_candidate_lines = compared_candidate_lines[:min_length]
+        line_wer_list = line_wer_list[:min_length]
+
         df = pd.DataFrame({
-            'Ground Truth Line': ground_truth_lines,
+            'Ground Truth Line': compared_ground_truth_lines,
             'Candidate Line (Compared)': compared_candidate_lines,
             'Line WER': line_wer_list
         })
 
-        # Save the DataFrame to a CSV file
         output_csv_path = os.path.join(app.config['OUTPUT_FOLDER'], 'wer_output.csv')
         df.to_csv(output_csv_path, index=False)
 
-        # Display the table with pagination
         return display_csv(df)
     else:
         return '''
@@ -127,24 +125,19 @@ def display_csv(data=None):
         csv_file = os.path.join(app.config['OUTPUT_FOLDER'], 'wer_output.csv')
         data = pd.read_csv(csv_file)
 
-    # Get page number and rows per page
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
 
-    # Calculate pagination
     start_row = (page - 1) * per_page
     end_row = start_row + per_page
     page_data = data[start_row:end_row]
 
-    # Calculate total pages
     total_rows = len(data)
     total_pages = (total_rows // per_page) + (1 if total_rows % per_page else 0)
 
-    # Convert the data to HTML table
-    table_html = page_data.to_html(classes='table table-striped', index=False, table_id='csvTable')
+    table_html = page_data.to_html(classes='table table-striped', index=False, table_id='csvTable', escape=False)
 
-    # Render the HTML template
-    html_template = f'''
+    html_template = '''
     <!doctype html>
     <html lang="en">
     <head>
@@ -152,29 +145,97 @@ def display_csv(data=None):
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>CSV Table</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <style>
+            .comparison-table {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                grid-gap: 10px;
+                margin-bottom: 20px;
+            }
+            .comparison-cell {
+                padding: 5px;
+            }
+            .label {
+                font-size: 14px;
+                text-align: left;
+            }
+            .content {
+                font-family: monospace;
+                font-size: 22px;
+                white-space: pre-wrap;
+                text-align: left;
+            }
+        </style>
     </head>
     <body>
-        <div class="container mt-5">
-            <h1>CSV Data</h1>
-            <div class="mb-4">{table_html}</div>
+        <div class="container">
+            <h1 class="mt-5">CSV Data</h1>
+            <div class="legend mb-3">
+                <h5>Legend:</h5>
+                <div style="display: flex; gap: 20px;">
+                    <div><span style="color: red;">Insertion</span></div>
+                    <div><span style="color: blue;">Omission</span></div>
+                    <div><span style="color: green;">Substitution</span></div>
+                </div>
+            </div>
 
-            <!-- Pagination Controls -->
+            <div id="comparison-display" class="mb-4">
+                <h3>Comparison:</h3>
+                <div class="comparison-table">
+                    <div class="comparison-cell label">Ground Truth:</div>
+                    <div class="comparison-cell content"><pre id="ground-truth">None</pre></div>
+                    <div class="comparison-cell label">Candidate Line (Compared):</div>
+                    <div class="comparison-cell content"><pre id="candidate-line">None</pre></div>
+                </div>
+            </div>
+
+            <div>{{ table|safe }}</div>
+
+            <!-- Pagination -->
+            <form method="get" class="mb-4">
+                <label for="per_page">Rows per page:</label>
+                <select name="per_page" id="per_page" onchange="this.form.submit()">
+                    <option value="5" {% if per_page == 5 %}selected{% endif %}>5</option>
+                    <option value="10" {% if per_page == 10 %}selected{% endif %}>10</option>
+                    <option value="20" {% if per_page == 20 %}selected{% endif %}>20</option>
+                    <option value="50" {% if per_page == 50 %}selected{% endif %}>50</option>
+                </select>
+                <input type="hidden" name="page" value="{{ page }}">
+            </form>
+
             <nav aria-label="Page navigation">
                 <ul class="pagination">
-                    {"".join([f'<li class="page-item{" active" if p == page else ""}"><a class="page-link" href="/display?page={p}&per_page={per_page}">{p}</a></li>' for p in range(1, total_pages + 1)])}
+                    {% for p in range(1, total_pages + 1) %}
+                        <li class="page-item {% if p == page %}active{% endif %}">
+                            <a class="page-link" href="/display?page={{ p }}&per_page={{ per_page }}">{{ p }}</a>
+                        </li>
+                    {% endfor %}
                 </ul>
             </nav>
-
-            <!-- Add a 'Back to Upload' button -->
-            <div class="mt-4">
-                <a href="/" class="btn btn-secondary">Back to Upload</a>
-            </div>
         </div>
+
+        <!-- JavaScript to handle row clicks -->
+        <script>
+        $(document).ready(function() {
+            $('#csvTable tbody tr').on('click', function() {
+                var rowData = $(this).children("td").map(function() {
+                    return $(this).html();
+                }).get();
+
+                var groundTruth = rowData[0];  // Adjust index according to CSV structure
+                var candidateLine = rowData[1]; // Adjust index accordingly
+
+                $('#ground-truth').html(groundTruth);
+                $('#candidate-line').html(candidateLine);
+            });
+        });
+        </script>
     </body>
     </html>
     '''
 
-    return render_template_string(html_template)
+    return render_template_string(html_template, table=table_html, page=page, per_page=per_page, total_pages=total_pages)
 
 if __name__ == '__main__':
     app.run(debug=True)
