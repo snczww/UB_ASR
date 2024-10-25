@@ -141,13 +141,23 @@ def mark_word_changes_onlys2(s2, s1):
 
 
 def mark_word_changes(s2, s1):
-    '''
-    s2: candidate
-    s1: ground truth
-    
-    '''
-    import numpy as np
 
+    """
+    Highlight the operations (insert, delete, replace) needed to transform s2 into s1.
+    - Replacement: <span style="color: green;"></span>
+    - Insertion: <span style="color: blue;"></span>
+    - Deletion: <span style="color: red;"></span>
+
+    Args:
+    s1 (list): Target sequence.
+    s2 (list): Source sequence.
+
+    Returns:
+    tuple: (s2modify, marked_s1)
+    """
+    import numpy as np
+    
+    # Preprocess s1 and s2
     s1 = [word.replace("Ġ", "").strip() for word in s1 if word not in ['<s>', '</s>'] and word.strip()]
     s2 = [word.replace("Ġ", "").strip() for word in s2 if word not in ['<s>', '</s>'] and word.strip()]
     s1 = list(filter(None, s1))
@@ -173,37 +183,41 @@ def mark_word_changes(s2, s1):
 
     # Backtrack to determine operations
     i, j = m, n
-    result_s1 = []
-    result_s2 = []
+    s2modify_list = []
+    marked_s1_list = []
 
     while i > 0 or j > 0:
         if i > 0 and j > 0 and s1[i - 1] == s2[j - 1]:
-            result_s1.append(f"<span>{s1[i - 1]}</span>")
-            result_s2.append(f"<span>{s2[j - 1]}</span>")
+            s2modify_list.append(s1[i - 1])
+            marked_s1_list.append(s1[i - 1])
             i -= 1
             j -= 1
         elif i > 0 and j > 0 and dp[i][j] == dp[i - 1][j - 1] + 1:
             # Replacement
-            result_s1.append(f"<span style=\"color: green;\">{s1[i - 1]}</span>")
-            result_s2.append(f"<span style=\"color: green;\">{s2[j - 1]}</span>")
+            s2modify_list.append(f"<span style=\"color: green;\">{s1[i - 1]}</span>")
+            marked_s1_list.append(f"<span style=\"color: green;\">{s1[i - 1]}</span>")
             i -= 1
             j -= 1
         elif j > 0 and dp[i][j] == dp[i][j - 1] + 1:
             # Insertion
-            result_s1.append("<span></span>")  # Empty for s1
-            result_s2.append(f"<span style=\"color: blue;\">{s2[j - 1]}</span>")
+            s2modify_list.append(f"<span style=\"color: blue;\">{s2[j - 1]}</span>")
+            marked_s1_list.append('-' * len(s2[j - 1]))  # Fill with '-' of same length
             j -= 1
         elif i > 0 and dp[i][j] == dp[i - 1][j] + 1:
             # Deletion
-            result_s1.append(f"<span style=\"color: red;\">{s1[i - 1]}</span>")
-            result_s2.append("<span></span>")  # Empty for s2
+            s2modify_list.append('-' * len(s1[i - 1]))  # Fill with '-' of same length
+            marked_s1_list.append(f"<span style=\"color: red;\">{s1[i - 1]}</span>")
             i -= 1
 
-    # Reverse the results since we built them backwards
-    result_s1.reverse()
-    result_s2.reverse()
+    # Reverse the lists since we built them backwards
+    s2modify_list.reverse()
+    marked_s1_list.reverse()
 
-    return ' '.join(result_s1), ' '.join(result_s2)
+    s2modify = ' '.join(s2modify_list)
+    marked_s1 = ' '.join(marked_s1_list)
+
+    return  marked_s1,s2modify
+
 
 
 
