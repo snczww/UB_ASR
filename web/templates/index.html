@@ -1,55 +1,30 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WER Comparison</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .ground-truth {
-            font-weight: bold;
-        }
-        .candidate-line {
-            font-style: italic;
-        }
-    </style>
+    <title>Upload Files</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>WER Comparison Tool</h1>
-
-    <h2>Overall WER: {{ overall_wer }}</h2>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Groundtruth Line</th>
-                <th>Candidate Line (with differences marked)</th>
-                <th>WER</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for gt_line, cand_line, wer in zip(ground_truth_lines, marked_candidate_lines, line_wer_list) %}
-            <tr>
-                <td class="ground-truth">{{ gt_line }}</td>
-                <td class="candidate-line">{{ cand_line|safe }}</td>
-                <td>{{ wer }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
+    <div class="container mt-5">
+        <h1>Upload Ground Truth and Candidate Files</h1>
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+        <form method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="ground_truth_file" class="form-label">Ground Truth File</label>
+                <input type="file" class="form-control" name="ground_truth_file" required>
+            </div>
+            <div class="mb-3">
+                <label for="candidate_file" class="form-label">Candidate File</label>
+                <input type="file" class="form-control" name="candidate_file" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload and Calculate WER</button>
+        </form>
+    </div>
 </body>
 </html>

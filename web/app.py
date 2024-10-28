@@ -1,165 +1,118 @@
-from flask import Flask, request, render_template_string
+from flask import Flask, request, render_template, redirect, url_for
 import pandas as pd
+import os
+import re
+import sys
+
+# Add parent directory to the module search path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from werkzeug.utils import secure_filename
+from wer_calculator import WERCalculator
+from wer_strategy import (
+    WERAnnotationOnlyWholeTextStrategy, 
+    WERAnnotationLineByLineStrategy_marked
+)
+from utils.anotaion_utils import extract_lines_from_file
 
 app = Flask(__name__)
 
-@app.route('/')
-def display_csv():
-    # Use your provided local file path
-    csv_file = '/home/victor/ASR_UB/UB_ASR/wer_output.csv'  # Your CSV file path
-    data = pd.read_csv(csv_file)
-    
-    # 获取页数和每页行数参数
-    page = request.args.get('page', 1, type=int)  # 获取当前页数，默认为第1页
-    per_page = request.args.get('per_page', 10, type=int)  # 每页显示行数，默认为10行
-    
-    # 分页计算
-    start_row = (page - 1) * per_page  # 起始行号
-    end_row = start_row + per_page  # 结束行号
-    
-    # 根据页数进行数据切片
-    page_data = data[start_row:end_row]
-    
-    # 总页数计算
-    total_rows = len(data)
+# Set upload and output folders
+UPLOAD_FOLDER = 'uploads'
+OUTPUT_FOLDER = 'outputs'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
+
+def remove_nak_to_end(line):
+    if not isinstance(line, str):
+        line = str(line)
+    return re.sub(r'\x15\d+_\d+\x15', '', line)
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        ground_truth_file = request.files.get('ground_truth_file')
+        candidate_file = request.files.get('candidate_file')
+
+        if not ground_truth_file or not candidate_file:
+            return render_template('index.html', error="Both files are required!")
+
+        ground_truth_filename = secure_filename(ground_truth_file.filename)
+        candidate_filename = secure_filename(candidate_file.filename)
+
+        ground_truth_path = os.path.join(app.config['UPLOAD_FOLDER'], ground_truth_filename)
+        candidate_path = os.path.join(app.config['UPLOAD_FOLDER'], candidate_filename)
+
+        ground_truth_file.save(ground_truth_path)
+        candidate_file.save(candidate_path)
+
+        ground_truth_lines = extract_lines_from_file(ground_truth_path, '*CHI:')
+        candidate_lines = extract_lines_from_file(candidate_path, '*PAR0:')
+
+        ground_truth_lines = [remove_nak_to_end(line) for line in ground_truth_lines]
+        candidate_lines = [remove_nak_to_end(line) for line in candidate_lines]
+
+        min_length = min(len(ground_truth_lines), len(candidate_lines))
+        ground_truth_lines = ground_truth_lines[:min_length]
+        candidate_lines = candidate_lines[:min_length]
+
+        # Calculate WER with the marked strategy
+        calculator = WERCalculator(WERAnnotationLineByLineStrategy_marked())
+        compared_ground_truth_lines, compared_candidate_lines = calculator.mark_changes(ground_truth_lines, candidate_lines)
+
+        compared_candidate_lines = [' '.join(line) if isinstance(line, list) else line for line in compared_candidate_lines]
+
+        calculator = WERCalculator(WERAnnotationOnlyWholeTextStrategy())
+        overall_wer = calculator.calculate(ground_truth_lines, candidate_lines)
+
+        calculator = WERCalculator(WERAnnotationLineByLineStrategy_marked())
+        line_wer_list = calculator.calculate(ground_truth_lines, candidate_lines)
+
+        min_length = min(len(compared_ground_truth_lines), len(compared_candidate_lines), len(line_wer_list))
+        compared_ground_truth_lines = compared_ground_truth_lines[:min_length]
+        compared_candidate_lines = compared_candidate_lines[:min_length]
+        line_wer_list = line_wer_list[:min_length]
+
+        df = pd.DataFrame({
+            'Ground Truth Line': compared_ground_truth_lines,
+            'Candidate Line (Compared)': compared_candidate_lines,
+            'Line WER': line_wer_list
+        })
+
+        output_csv_path = os.path.join(app.config['OUTPUT_FOLDER'], 'wer_output.csv')
+        df.to_csv(output_csv_path, index=False)
+
+        return redirect(url_for('display', page=1, per_page=10))
+    else:
+        return render_template('index.html')
+
+@app.route('/display')
+def display():
+    csv_file = os.path.join(app.config['OUTPUT_FOLDER'], 'wer_output.csv')
+
+    if not os.path.exists(csv_file):
+        return redirect(url_for('index'))
+
+    df = pd.read_csv(csv_file)
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+
+    total_rows = len(df)
     total_pages = (total_rows // per_page) + (1 if total_rows % per_page else 0)
-    
-    # 将数据转换为HTML表格
-    table_html = page_data.to_html(classes='table table-striped', index=False, table_id='csvTable', escape=False)
 
-    # Create a basic HTML template with JavaScript for row click functionality
-    html_template = '''
-    <!doctype html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>CSV Table</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <style>
-    /* 定义 2x2 表格布局 */
-    .comparison-table {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        grid-gap: 10px;
-        margin-bottom: 20px;
-    }
+    start_row = (page - 1) * per_page
+    end_row = start_row + per_page
+    page_data = df.iloc[start_row:end_row]
 
-    .comparison-cell {
-        padding: 5px;
-    }
-
-    .label {
-        font-size: 14px;
-        text-align: left;
-    }
-
-    .content {
-        font-family: monospace;
-        font-size: 22px;
-        white-space: pre-wrap;
-        text-align: left;
-    }
-</style>
-    </head>
-    <body>
-        <div class="container">
-            <h1 class="mt-5">CSV Data</h1>
-            <div class="legend mb-3">
-                <h5>Legend:</h5>
-                <div style="display: flex; gap: 20px;">
-                    <div><span style="color: red;">Insertion</span></div>
-                    <div><span style="color: blue;">Omition</span></div>
-                    <div><span style="color: green;">Subtitution</span></div>
-                </div>
-            </div>
-            
-            <!-- Section to show selected rows' Ground Truth and Candidate Line -->
-            <div id="comparison-display" class="mb-4">
-                <h3>Comparison:</h3>
-                <div class="comparison-table">
-                    <div class="comparison-cell label">Ground Truth:</div>
-                    <div class="comparison-cell content"><pre id="ground-truth">None</pre></div>
-                    <div class="comparison-cell label">Candidate Line (Compared):</div>
-                    <div class="comparison-cell content"><pre id="candidate-line">None</pre></div>
-                </div>
-            </div>
-            
-            <div>{{ table|safe }}</div>
-            
-            <!-- Pagination -->
-            <form method="get" class="mb-4">
-                <label for="per_page">Rows per page:</label>
-                <select name="per_page" id="per_page" onchange="this.form.submit()">
-                    <option value="5" {% if per_page == 5 %}selected{% endif %}>5</option>
-                    <option value="10" {% if per_page == 10 %}selected{% endif %}>10</option>
-                    <option value="20" {% if per_page == 20 %}selected{% endif %}>20</option>
-                    <option value="50" {% if per_page == 50 %}selected{% endif %}>50</option>
-                </select>
-                <input type="hidden" name="page" value="{{ page }}">
-            </form>
-            
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    {% if page > 1 %}
-                    <li class="page-item">
-                        <a class="page-link" href="/?page=1&per_page={{ per_page }}" aria-label="First">
-                            <span aria-hidden="true">&laquo;&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="/?page={{ page - 1 }}&per_page={{ per_page }}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    {% endif %}
-                    
-                    {% for p in range(1, total_pages + 1) %}
-                        <li class="page-item {% if p == page %}active{% endif %}">
-                            <a class="page-link" href="/?page={{ p }}&per_page={{ per_page }}">{{ p }}</a>
-                        </li>
-                    {% endfor %}
-                    
-                    {% if page < total_pages %}
-                    <li class="page-item">
-                        <a class="page-link" href="/?page={{ page + 1 }}&per_page={{ per_page }}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="/?page={{ total_pages }}&per_page={{ per_page }}" aria-label="Last">
-                            <span aria-hidden="true">&raquo;&raquo;</span>
-                        </a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </nav>
-        </div>
-
-        <!-- JavaScript to handle row clicks -->
-        <script>
-        $(document).ready(function() {
-            $('#csvTable tbody tr').on('click', function() {
-                // Get the data from the clicked row
-                var rowData = $(this).children("td").map(function() {
-                    return $(this).html();
-                }).get();
-
-                // Assuming the columns are like [Ground Truth, Candidate Line, ...]
-                var groundTruth = rowData[0];  // Adjust index according to your CSV structure
-                var candidateLine = rowData[1]; // Adjust index according to your CSV structure
-
-                $('#ground-truth').html(groundTruth);
-                $('#candidate-line').html(candidateLine);  // 使用 .html() 渲染 HTML 而不是纯文本
-            });
-        });
-        </script>
-    </body>
-    </html>
-    '''
-    
-    return render_template_string(html_template, table=table_html, page=page, per_page=per_page, end_row=end_row, total_rows=total_rows, total_pages=total_pages)
+    return render_template(
+        'display.html',
+        table=page_data,
+        page=page,
+        per_page=per_page,
+        total_pages=total_pages
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)
