@@ -197,7 +197,7 @@ def mark_word_changes(s2, s1):
             j -= 1
         elif i > 0 and j > 0 and dp[i][j] == dp[i - 1][j - 1] + 1:
             # Replacement
-            s2modify_list.append(f"<span style=\"color: green;\">{s1[i - 1]}</span>")
+            s2modify_list.append(f"<span style=\"color: green;\">{s2[j - 1]}</span>")
             marked_s1_list.append(f"<span style=\"color: green;\">{s1[i - 1]}</span>")
             i -= 1
             j -= 1
@@ -241,7 +241,7 @@ def initialize_tokenizer(tokenizer_model_path, fixed_annotations):
     """
     # logging.info(f"Initializing tokenizer from {fixed_annotations}.")
 
-    tokenizer = AutoTokenizer.from_pretrained(tokenizer_model_path)
+    tokenizer = AutoTokenizer.from_pretrained(tokenizer_model_path,use_fast=False)
     tokenizer.add_tokens(fixed_annotations, special_tokens=True)
     return tokenizer
 
@@ -293,8 +293,17 @@ class WERWholeTextStrategy(WERStrategy):
         candidate_text = ' '.join(candidate_lines)
 
         tokenizer = initialize_tokenizer(tokenizer_model_path, fixed_annotations)
-        ground_truth_tokens = tokenizer(ground_truth_text, max_length=4096, truncation=True).tokens()
-        candidate_tokens = tokenizer(candidate_text, max_length=4096, truncation=True).tokens()
+        # ground_truth_tokens = tokenizer(ground_truth_text, max_length=4096, truncation=True).tokens()
+        # candidate_tokens = tokenizer(candidate_text, max_length=4096, truncation=True).tokens()
+
+
+        # 对 ground truth 和 candidate 进行 tokenization
+        ground_truth_ids = tokenizer.encode(ground_truth_text, max_length=4096, truncation=True)
+        candidate_ids = tokenizer.encode(candidate_text, max_length=4096, truncation=True)
+
+        # 解码成 tokens
+        ground_truth_tokens = tokenizer.convert_ids_to_tokens(ground_truth_ids)
+        candidate_tokens = tokenizer.convert_ids_to_tokens(candidate_ids)
 
         wer = word_list_error_rate(ground_truth_tokens, candidate_tokens)
         return round(wer, decimal_places)
@@ -310,8 +319,12 @@ class WERLineByLineStrategy(WERStrategy):
         wer_list = []
 
         for gt_line, cand_line in zip(ground_truth_lines, candidate_lines):
-            ground_truth_tokens = tokenizer(gt_line, max_length=4096, truncation=True).tokens()
-            candidate_tokens = tokenizer(cand_line, max_length=4096, truncation=True).tokens()
+            ground_truth_ids = tokenizer.encode(gt_line, max_length=4096, truncation=True)
+            candidate_ids = tokenizer.encode(cand_line, max_length=4096, truncation=True)
+
+            # 解码成 tokens
+            ground_truth_tokens = tokenizer.convert_ids_to_tokens(ground_truth_ids)
+            candidate_tokens = tokenizer.convert_ids_to_tokens(candidate_ids)
             wer = word_list_error_rate(ground_truth_tokens, candidate_tokens)
             wer_list.append(round(wer, decimal_places))
 
@@ -328,8 +341,12 @@ class WERAnnotationWholeTextStrategy(WERStrategy):
         annotations_cand = collect_all_matches(candidate_text)
 
         tokenizer = initialize_tokenizer(tokenizer_model_path, fixed_annotations + annotations_gt + annotations_cand)
-        ground_truth_tokens = tokenizer(ground_truth_text, max_length=4096, truncation=True).tokens()
-        candidate_tokens = tokenizer(candidate_text, max_length=4096, truncation=True).tokens()
+        ground_truth_ids = tokenizer.encode(ground_truth_lines, max_length=4096, truncation=True)
+        candidate_ids = tokenizer.encode(candidate_lines, max_length=4096, truncation=True)
+
+        # 解码成 tokens
+        ground_truth_tokens = tokenizer.convert_ids_to_tokens(ground_truth_ids)
+        candidate_tokens = tokenizer.convert_ids_to_tokens(candidate_ids)
 
         wer = word_list_error_rate(ground_truth_tokens, candidate_tokens)
         return round(wer, decimal_places)
@@ -350,10 +367,15 @@ class WERAnnotationLineByLineStrategy(WERStrategy):
         wer_list = []
 
         for gt_line, cand_line in zip(ground_truth_lines, candidate_lines):
-            annotations_gt = collect_all_matches(gt_line)
-            annotations_cand = collect_all_matches(cand_line)
-            ground_truth_tokens = tokenizer(gt_line, max_length=4096, truncation=True).tokens()
-            candidate_tokens = tokenizer(cand_line, max_length=4096, truncation=True).tokens()
+            # annotations_gt = collect_all_matches(gt_line)
+            # annotations_cand = collect_all_matches(cand_line)
+            # tokenizer = initialize_tokenizer(tokenizer_model_path, fixed_annotations + annotations_gt + annotations_cand)
+            ground_truth_ids = tokenizer.encode(gt_line, max_length=4096, truncation=True)
+            candidate_ids = tokenizer.encode(cand_line, max_length=4096, truncation=True)
+
+            # 解码成 tokens
+            ground_truth_tokens = tokenizer.convert_ids_to_tokens(ground_truth_ids)
+            candidate_tokens = tokenizer.convert_ids_to_tokens(candidate_ids)
 
             wer = word_list_error_rate(ground_truth_tokens, candidate_tokens)
             wer_list.append(round(wer, decimal_places))
@@ -371,8 +393,12 @@ class WERAnnotationOnlyWholeTextStrategy(WERStrategy):
         candidate_text = ' '.join(filtered_candidate)
 
         tokenizer = initialize_tokenizer(tokenizer_model_path, fixed_annotations)
-        ground_truth_tokens = tokenizer(ground_truth_text, max_length=4096, truncation=True).tokens()
-        candidate_tokens = tokenizer(candidate_text, max_length=4096, truncation=True).tokens()
+        ground_truth_ids = tokenizer.encode(ground_truth_text, max_length=4096, truncation=True)
+        candidate_ids = tokenizer.encode(candidate_text, max_length=4096, truncation=True)
+
+        # 解码成 tokens
+        ground_truth_tokens = tokenizer.convert_ids_to_tokens(ground_truth_ids)
+        candidate_tokens = tokenizer.convert_ids_to_tokens(candidate_ids)
 
         wer = word_list_error_rate(ground_truth_tokens, candidate_tokens)
         return round(wer, decimal_places)
@@ -391,8 +417,12 @@ class WERAnnotationOnlyLineByLineStrategy(WERStrategy):
         wer_list = []
 
         for gt_line, cand_line in zip(filtered_ground_truth, filtered_candidate):
-            ground_truth_tokens = tokenizer(gt_line, max_length=4096, truncation=True).tokens()
-            candidate_tokens = tokenizer(cand_line, max_length=4096, truncation=True).tokens()
+            ground_truth_ids = tokenizer.encode(gt_line, max_length=4096, truncation=True)
+            candidate_ids = tokenizer.encode(cand_line, max_length=4096, truncation=True)
+
+            # 解码成 tokens
+            ground_truth_tokens = tokenizer.convert_ids_to_tokens(ground_truth_ids)
+            candidate_tokens = tokenizer.convert_ids_to_tokens(candidate_ids)
             wer = word_list_error_rate(ground_truth_tokens, candidate_tokens)
             wer_list.append(round(wer, decimal_places))
 
@@ -410,8 +440,12 @@ class WERAnnotationOnlyLineByLineStrategy_marked(WERStrategy):
         wer_list = []
 
         for gt_line, cand_line in zip(filtered_ground_truth, filtered_candidate):
-            ground_truth_tokens = tokenizer(gt_line, max_length=4096, truncation=True).tokens()
-            candidate_tokens = tokenizer(cand_line, max_length=4096, truncation=True).tokens()
+            ground_truth_ids = tokenizer.encode(gt_line, max_length=4096, truncation=True)
+            candidate_ids = tokenizer.encode(cand_line, max_length=4096, truncation=True)
+
+            # 解码成 tokens
+            ground_truth_tokens = tokenizer.convert_ids_to_tokens(ground_truth_ids)
+            candidate_tokens = tokenizer.convert_ids_to_tokens(candidate_ids)
             wer = word_list_error_rate(ground_truth_tokens, candidate_tokens)
             wer_list.append(round(wer, decimal_places))
 
@@ -429,8 +463,17 @@ class WERAnnotationOnlyLineByLineStrategy_marked(WERStrategy):
         marked_changes = []
 
         for gt_line, cand_line in zip(filtered_ground_truth, filtered_candidate):
-            ground_truth_tokens = tokenizer(gt_line, max_length=4096, truncation=True).tokens()
-            candidate_tokens = tokenizer(cand_line, max_length=4096, truncation=True).tokens()
+        #     ground_truth_tokens = tokenizer(gt_line, max_length=4096, truncation=True).tokens()
+        #     candidate_tokens = tokenizer(cand_line, max_length=4096, truncation=True).tokens()
+        # # 对 ground truth 和 candidate 进行 tokenization
+            ground_truth_ids = tokenizer.encode(gt_line, max_length=4096, truncation=True)
+            candidate_ids = tokenizer.encode(cand_line, max_length=4096, truncation=True)
+
+            # 解码成 tokens
+            ground_truth_tokens = tokenizer.convert_ids_to_tokens(ground_truth_ids)
+            candidate_tokens = tokenizer.convert_ids_to_tokens(candidate_ids)
+
+
             marked_changes.append(mark_word_changes(ground_truth_tokens, candidate_tokens))
 
         return marked_changes
@@ -451,10 +494,21 @@ class WERAnnotationLineByLineStrategy_marked(WERStrategy):
         wer_list = []
 
         for gt_line, cand_line in zip(ground_truth_lines, candidate_lines):
-            annotations_gt = collect_all_matches(gt_line)
-            annotations_cand = collect_all_matches(cand_line)
-            ground_truth_tokens = tokenizer(gt_line, max_length=4096, truncation=True).tokens()
-            candidate_tokens = tokenizer(cand_line, max_length=4096, truncation=True).tokens()
+            # annotations_gt = collect_all_matches(gt_line)
+            # annotations_cand = collect_all_matches(cand_line)
+
+            # ground_truth_tokens = tokenizer(gt_line, max_length=4096, truncation=True).tokens()
+            # candidate_tokens = tokenizer(cand_line, max_length=4096, truncation=True).tokens()
+
+                    # 对 ground truth 和 candidate 进行 tokenization
+            ground_truth_ids = tokenizer.encode(gt_line, max_length=4096, truncation=True)
+            candidate_ids = tokenizer.encode(cand_line, max_length=4096, truncation=True)
+
+            # 解码成 tokens
+            ground_truth_tokens = tokenizer.convert_ids_to_tokens(ground_truth_ids)
+            candidate_tokens = tokenizer.convert_ids_to_tokens(candidate_ids)
+            # print(f'ground_truth_tokens:{ground_truth_tokens}')
+            # print(f'candidate_tokens:{candidate_tokens}')
 
             wer = word_list_error_rate(ground_truth_tokens, candidate_tokens)
             wer_list.append(round(wer, decimal_places))
@@ -465,6 +519,7 @@ class WERAnnotationLineByLineStrategy_marked(WERStrategy):
     def mark_changes_list(self, ground_truth_lines, candidate_lines, tokenizer_model_path, fixed_annotations):
         annotations_gt = collect_all_matches(' '.join(ground_truth_lines))
         annotations_cand = collect_all_matches(' '.join(candidate_lines))
+        # print(f'annotations_gt:{annotations_gt}')
 
         tokenizer = initialize_tokenizer(tokenizer_model_path, fixed_annotations + annotations_gt + annotations_cand)
         # marked_changes = []
@@ -475,8 +530,15 @@ class WERAnnotationLineByLineStrategy_marked(WERStrategy):
             annotations_gt = collect_all_matches(gt_line)
             annotations_cand = collect_all_matches(cand_line)
             
-            ground_truth_tokens = tokenizer(gt_line, max_length=4096, truncation=True).tokens()
-            candidate_tokens = tokenizer(cand_line, max_length=4096, truncation=True).tokens()
+            ground_truth_ids = tokenizer.encode(gt_line, max_length=4096, truncation=True)
+            candidate_ids = tokenizer.encode(cand_line, max_length=4096, truncation=True)
+
+            # 解码成 tokens
+            ground_truth_tokens = tokenizer.convert_ids_to_tokens(ground_truth_ids)
+            candidate_tokens = tokenizer.convert_ids_to_tokens(candidate_ids)
+            
+
+
             
             # 调用修改后的 mark_word_changes 函数，返回两个标记后的字符串
             marked_gt, marked_cand = mark_word_changes(candidate_tokens, ground_truth_tokens)
@@ -504,13 +566,19 @@ class WERAnnotationLineByLineStrategy_marked(WERStrategy):
 
         for gt_line, cand_line in zip(ground_truth_lines, candidate_lines):
             # logging.info(f"gt_line is {gt_line}.")
-            annotations_gt = collect_all_matches(gt_line)
-            annotations_cand = collect_all_matches(cand_line)
-            ground_truth_tokens = tokenizer(gt_line, max_length=4096, truncation=True).tokens()
+            # annotations_gt = collect_all_matches(gt_line)
+            # annotations_cand = collect_all_matches(cand_line)
+            # ground_truth_tokens = tokenizer(gt_line, max_length=4096, truncation=True).tokens()
 
-            candidate_tokens = tokenizer(cand_line, max_length=4096, truncation=True).tokens()
+            # candidate_tokens = tokenizer(cand_line, max_length=4096, truncation=True).tokens()
             
             # logging.info(f"ground_truth_tokens is {ground_truth_tokens}.")
+            ground_truth_ids = tokenizer.encode(gt_line, max_length=4096, truncation=True)
+            candidate_ids = tokenizer.encode(cand_line, max_length=4096, truncation=True)
+
+            # 解码成 tokens
+            ground_truth_tokens = tokenizer.convert_ids_to_tokens(ground_truth_ids)
+            candidate_tokens = tokenizer.convert_ids_to_tokens(candidate_ids)
             
             marked_changes.append(mark_word_changes(ground_truth_tokens, candidate_tokens))
 

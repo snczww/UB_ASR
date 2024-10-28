@@ -72,7 +72,8 @@ def index():
         calculator = WERCalculator(WERAnnotationOnlyWholeTextStrategy())
         overall_wer = calculator.calculate(ground_truth_lines, candidate_lines)
 
-        calculator.set_strategy(WERAnnotationOnlyLineByLineStrategy())
+        # calculator.set_strategy(WERAnnotationOnlyLineByLineStrategy())
+        calculator = WERCalculator(WERAnnotationLineByLineStrategy_marked())
         line_wer_list = calculator.calculate(ground_truth_lines, candidate_lines)
 
         min_length = min(len(compared_ground_truth_lines), len(compared_candidate_lines), len(line_wer_list))
@@ -174,9 +175,9 @@ def display_csv(data=None):
             <div class="legend mb-3">
                 <h5>Legend:</h5>
                 <div style="display: flex; gap: 20px;">
-                    <div><span style="color: red;">#omit</span></div>
-                    <div><span style="color: blue;">#add</span></div>
-                    <div><span style="color: green;">#dis</span></div>
+                    <div><span style="color: red;">omittion</span></div>
+                    <div><span style="color: blue;">addtion</span></div>
+                    <div><span style="color: green;">subtitution</span></div>
                 </div>
             </div>
 

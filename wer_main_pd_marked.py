@@ -62,8 +62,9 @@ if __name__ == "__main__":
     print(f"Overall AnnotationOnlyWER (Whole Text): {overall_wer}")
 
     # Strategy 2: Calculate WER line by line and save results to CSV
-    calculator.set_strategy(WERAnnotationOnlyLineByLineStrategy())
+    calculator.set_strategy(WERAnnotationLineByLineStrategy_marked())
     line_wer_list = calculator.calculate(ground_truth_lines, candidate_lines)
+    print(f'WERAnnotationLineByLineStrategy_marked{line_wer_list}')
 
     # Create a DataFrame to store the results with compared strings
     df = pd.DataFrame({
@@ -79,7 +80,9 @@ if __name__ == "__main__":
     print(f"WER results saved to {output_csv_path}")
 
     # Strategy 3: Calculate WER on annotations (whole text)
-    calculator.set_strategy(WERAnnotationWholeTextStrategy())
+    # calculator.set_strategy(WERAnnotationWholeTextStrategy())
+    calculator = WERCalculator(WERAnnotationWholeTextStrategy())
+
     overall_annotation_wer = calculator.calculate(ground_truth_lines, candidate_lines)
     print(f"Overall Annotation WER (Whole Text): {overall_annotation_wer}")
 
