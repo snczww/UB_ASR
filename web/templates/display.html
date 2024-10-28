@@ -15,17 +15,14 @@
         }
         .comparison-cell {
             padding: 5px;
-        }
-        .label {
-            font-size: 14px;
-            font-weight: bold;
-            text-align: left;
-        }
-        .content {
             font-family: monospace;
             font-size: 16px;
             white-space: pre-wrap;
             text-align: left;
+        }
+        .label {
+            font-size: 14px;
+            font-weight: bold;
         }
         .legend span {
             padding: 2px 6px;
@@ -37,6 +34,10 @@
         .legend .addition { color: blue; }
         .legend .substitution { color: orange; }
         tr.selected { background-color: #f0f0f0; }
+        .counter {
+            font-weight: bold;
+            margin-right: 15px;
+        }
     </style>
 </head>
 <body>
@@ -56,9 +57,15 @@
             <h3>Comparison:</h3>
             <div class="comparison-table">
                 <div class="comparison-cell label">Ground Truth:</div>
-                <div class="comparison-cell content"><pre id="ground-truth">None</pre></div>
+                <div class="comparison-cell content" id="ground-truth">None</div>
                 <div class="comparison-cell label">Candidate Line (Compared):</div>
-                <div class="comparison-cell content"><pre id="candidate-line">None</pre></div>
+                <div class="comparison-cell content" id="candidate-line">None</div>
+            </div>
+            <!-- Display the counts of omissions, additions, and substitutions -->
+            <div class="mt-3">
+                <span class="counter omission">Omissions: <span id="omission-count">0</span></span>
+                <span class="counter addition">Additions: <span id="addition-count">0</span></span>
+                <span class="counter substitution">Substitutions: <span id="substitution-count">0</span></span>
             </div>
         </div>
 
@@ -110,7 +117,7 @@
         </nav>
     </div>
 
-    <!-- JavaScript to handle row clicks -->
+    <!-- JavaScript to handle row clicks and count calculation -->
     <script>
         $(document).ready(function() {
             // Add click event to table rows
@@ -132,6 +139,15 @@
 
                 $('#ground-truth').html(groundTruth);
                 $('#candidate-line').html(candidateLine);
+
+                // Calculate and display counts of omission, addition, and substitution
+                var omissionCount = (groundTruth.match(/<span class="omission">/g) || []).length;
+                var additionCount = (groundTruth.match(/<span class="addition">/g) || []).length;
+                var substitutionCount = (groundTruth.match(/<span class="substitution">/g) || []).length;
+
+                $('#omission-count').text(omissionCount);
+                $('#addition-count').text(additionCount);
+                $('#substitution-count').text(substitutionCount);
 
                 // Scroll to the comparison display smoothly
                 $('html, body').animate({

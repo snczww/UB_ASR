@@ -57,9 +57,21 @@ class WERCalculator:
         Calculate WER using the current strategy, fixed_annotations, decimal_places, and tokenizer_model_path.
         """
         return self.strategy.calculate_wer(ground_truth, candidate, self.tokenizer_model_path, self.fixed_annotations, self.decimal_places)
-    def mark_changes(self, ground_truth, candidate):
-        """
-        Calculate WER using the current strategy, fixed_annotations, decimal_places, and tokenizer_model_path.
-        """
+def mark_changes(self, ground_truth, candidate, return_type='string'):
+    """
+    计算 WER 并标记更改，使用当前的 strategy、fixed_annotations、decimal_places 和 tokenizer_model_path。
+
+    Args:
+    - ground_truth (list): Ground truth 文本行列表。
+    - candidate (list): Candidate 文本行列表。
+    - return_type (str): 指定返回类型，'list' 表示返回 token 列表，'string' 表示返回标记后的字符串。
+
+    Returns:
+    - tuple: (marked_ground_truth, marked_candidate)，可以是 token 列表或标记后的字符串列表。
+    """
+    if return_type == 'list':
+        # 调用 strategy 的 mark_changes_list 方法
         return self.strategy.mark_changes_list(ground_truth, candidate, self.tokenizer_model_path, self.fixed_annotations)
-    
+    else:
+        # 调用 strategy 的 mark_changes_line 方法
+        return self.strategy.mark_changes_line(ground_truth, candidate, self.tokenizer_model_path, self.fixed_annotations)

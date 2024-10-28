@@ -60,7 +60,7 @@ def index():
 
         # Calculate WER with the marked strategy
         calculator = WERCalculator(WERAnnotationLineByLineStrategy_marked())
-        compared_ground_truth_lines, compared_candidate_lines = calculator.mark_changes(ground_truth_lines, candidate_lines)
+        compared_ground_truth_lines, compared_candidate_lines = calculator.mark_changes(ground_truth_lines, candidate_lines,return_type='string')
 
         compared_candidate_lines = [' '.join(line) if isinstance(line, list) else line for line in compared_candidate_lines]
 
