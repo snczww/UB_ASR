@@ -51,7 +51,7 @@ if __name__ == "__main__":
     # 使用 mark_word_changes 函数处理每对 ground truth 和 candidate lines
     calculator = WERCalculator(WERAnnotationLineByLineStrategy_marked())
     # compared_candidate_lines = calculator.mark_changes(ground_truth_lines, candidate_lines)
-    compared_ground_truth_lines, compared_candidate_lines = calculator.mark_changes(ground_truth_lines, candidate_lines)
+    compared_ground_truth_lines, compared_candidate_lines = calculator.mark_changes(ground_truth_lines, candidate_lines,'list')
 
 
     # Initialize the WERCalculator with default fixed_annotations from fix_anotation.txt and decimal_places = 2

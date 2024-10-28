@@ -457,31 +457,58 @@ class WERAnnotationOnlyLineByLineStrategy_marked(WERStrategy):
         return wer_list
 
     # New method to mark changes
-    def mark_changes_line(self, ground_truth_lines, candidate_lines, tokenizer_model_path, fixed_annotations):
-        min_length = min(len(ground_truth_lines), len(candidate_lines))
-        ground_truth_lines, candidate_lines = ground_truth_lines[:min_length], candidate_lines[:min_length]
+    def mark_changes_line(self, ground_truth_lines, candidate_lines, tokenizer_model_path, fixed_annotations, return_type='string'):
+        """
+        统一的标记函数，用于标记字符串或 token 列表中的更改。
+        
+        Args:
+        - ground_truth_lines (list): Ground truth 的文本行列表。
+        - candidate_lines (list): Candidate 的文本行列表。
+        - tokenizer_model_path (str): 用于初始化标记的 tokenizer 模型路径。
+        - fixed_annotations (list): 固定的注释列表。
+        - return_type (str): 指定返回类型，'list' 表示返回 token 列表，'string' 表示返回标记后的字符串。
 
-        filtered_ground_truth = filter_text_by_annotations(ground_truth_lines, fixed_annotations, tokenizer_model_path)
-        filtered_candidate = filter_text_by_annotations(candidate_lines, fixed_annotations, tokenizer_model_path)
+        Returns:
+        - tuple: (marked_ground_truth, marked_candidate)，可以是 token 列表或标记后的字符串列表。
+        """
+        # 收集所有的注释
+        annotations_gt = collect_all_matches(' '.join(ground_truth_lines))
+        annotations_cand = collect_all_matches(' '.join(candidate_lines))
 
-        tokenizer = initialize_tokenizer(tokenizer_model_path, fixed_annotations)
-        marked_changes = []
+        # 初始化 tokenizer
+        tokenizer = initialize_tokenizer(tokenizer_model_path, fixed_annotations + annotations_gt + annotations_cand)
 
-        for gt_line, cand_line in zip(filtered_ground_truth, filtered_candidate):
-        #     ground_truth_tokens = tokenizer(gt_line, max_length=4096, truncation=True).tokens()
-        #     candidate_tokens = tokenizer(cand_line, max_length=4096, truncation=True).tokens()
-        # # 对 ground truth 和 candidate 进行 tokenization
+        # 存储标记后的结果
+        marked_ground_truth = []
+        marked_candidate = []
+
+        # 遍历每一对 gt_line 和 cand_line
+        for gt_line, cand_line in zip(ground_truth_lines, candidate_lines):
+            # 收集行内注释
+            annotations_gt = collect_all_matches(gt_line)
+            annotations_cand = collect_all_matches(cand_line)
+            
+            # 编码为 ID
             ground_truth_ids = tokenizer.encode(gt_line, max_length=4096, truncation=True)
             candidate_ids = tokenizer.encode(cand_line, max_length=4096, truncation=True)
 
-            # 解码成 tokens
+            # 解码为 tokens
             ground_truth_tokens = tokenizer.convert_ids_to_tokens(ground_truth_ids)
             candidate_tokens = tokenizer.convert_ids_to_tokens(candidate_ids)
 
+            # 调用 mark_word_changes_list 或 mark_word_changes 函数
+            if return_type == 'list':
+                # 返回 token 列表
+                marked_gt, marked_cand = mark_word_changes_list(candidate_tokens, ground_truth_tokens)
+            else:
+                # 返回标记后的字符串
+                marked_gt, marked_cand = mark_word_changes(candidate_tokens, ground_truth_tokens)
 
-            marked_changes.append(mark_word_changes(ground_truth_tokens, candidate_tokens))
+            # 添加到结果列表中
+            marked_ground_truth.append(marked_gt)
+            marked_candidate.append(marked_cand)
 
-        return marked_changes
+        return marked_ground_truth, marked_candidate
 
 
 # Concrete strategy to calculate WER on annotations line by line
@@ -522,84 +549,56 @@ class WERAnnotationLineByLineStrategy_marked(WERStrategy):
 
 
 
-    def mark_changes_line_old(self, ground_truth_lines, candidate_lines, tokenizer_model_path, fixed_annotations):
+  
+    def mark_changes_line(self, ground_truth_lines, candidate_lines, tokenizer_model_path, fixed_annotations, return_type='string'):
+        """
+        统一的标记函数，用于标记字符串或 token 列表中的更改。
+        
+        Args:
+        - ground_truth_lines (list): Ground truth 的文本行列表。
+        - candidate_lines (list): Candidate 的文本行列表。
+        - tokenizer_model_path (str): 用于初始化标记的 tokenizer 模型路径。
+        - fixed_annotations (list): 固定的注释列表。
+        - return_type (str): 指定返回类型，'list' 表示返回 token 列表，'string' 表示返回标记后的字符串。
 
-
+        Returns:
+        - tuple: (marked_ground_truth, marked_candidate)，可以是 token 列表或标记后的字符串列表。
+        """
+        # 收集所有的注释
         annotations_gt = collect_all_matches(' '.join(ground_truth_lines))
         annotations_cand = collect_all_matches(' '.join(candidate_lines))
 
+        # 初始化 tokenizer
         tokenizer = initialize_tokenizer(tokenizer_model_path, fixed_annotations + annotations_gt + annotations_cand)
-        # logging.info(f"Initializing tokenizer from {fixed_annotations + annotations_gt + annotations_cand}.")
-        marked_changes = []
 
+        # 存储标记后的结果
+        marked_ground_truth = []
+        marked_candidate = []
+
+        # 遍历每一对 gt_line 和 cand_line
         for gt_line, cand_line in zip(ground_truth_lines, candidate_lines):
-            # logging.info(f"gt_line is {gt_line}.")
-            # annotations_gt = collect_all_matches(gt_line)
-            # annotations_cand = collect_all_matches(cand_line)
-            # ground_truth_tokens = tokenizer(gt_line, max_length=4096, truncation=True).tokens()
-
-            # candidate_tokens = tokenizer(cand_line, max_length=4096, truncation=True).tokens()
+            # 收集行内注释
+            annotations_gt = collect_all_matches(gt_line)
+            annotations_cand = collect_all_matches(cand_line)
             
-            # logging.info(f"ground_truth_tokens is {ground_truth_tokens}.")
+            # 编码为 ID
             ground_truth_ids = tokenizer.encode(gt_line, max_length=4096, truncation=True)
             candidate_ids = tokenizer.encode(cand_line, max_length=4096, truncation=True)
 
-            # 解码成 tokens
+            # 解码为 tokens
             ground_truth_tokens = tokenizer.convert_ids_to_tokens(ground_truth_ids)
             candidate_tokens = tokenizer.convert_ids_to_tokens(candidate_ids)
-            
-            marked_changes.append(mark_word_changes(ground_truth_tokens, candidate_tokens))
 
-        return marked_changes
-def mark_changes(self, ground_truth_lines, candidate_lines, tokenizer_model_path, fixed_annotations, return_type='string'):
-    """
-    统一的标记函数，用于标记字符串或 token 列表中的更改。
-    
-    Args:
-    - ground_truth_lines (list): Ground truth 的文本行列表。
-    - candidate_lines (list): Candidate 的文本行列表。
-    - tokenizer_model_path (str): 用于初始化标记的 tokenizer 模型路径。
-    - fixed_annotations (list): 固定的注释列表。
-    - return_type (str): 指定返回类型，'list' 表示返回 token 列表，'string' 表示返回标记后的字符串。
+            # 调用 mark_word_changes_list 或 mark_word_changes 函数
+            if return_type == 'list':
+                # 返回 token 列表
+                marked_gt, marked_cand = mark_word_changes_list(candidate_tokens, ground_truth_tokens)
+            else:
+                # 返回标记后的字符串
+                marked_gt, marked_cand = mark_word_changes(candidate_tokens, ground_truth_tokens)
 
-    Returns:
-    - tuple: (marked_ground_truth, marked_candidate)，可以是 token 列表或标记后的字符串列表。
-    """
-    # 收集所有的注释
-    annotations_gt = collect_all_matches(' '.join(ground_truth_lines))
-    annotations_cand = collect_all_matches(' '.join(candidate_lines))
+            # 添加到结果列表中
+            marked_ground_truth.append(marked_gt)
+            marked_candidate.append(marked_cand)
 
-    # 初始化 tokenizer
-    tokenizer = initialize_tokenizer(tokenizer_model_path, fixed_annotations + annotations_gt + annotations_cand)
-
-    # 存储标记后的结果
-    marked_ground_truth = []
-    marked_candidate = []
-
-    # 遍历每一对 gt_line 和 cand_line
-    for gt_line, cand_line in zip(ground_truth_lines, candidate_lines):
-        # 收集行内注释
-        annotations_gt = collect_all_matches(gt_line)
-        annotations_cand = collect_all_matches(cand_line)
-        
-        # 编码为 ID
-        ground_truth_ids = tokenizer.encode(gt_line, max_length=4096, truncation=True)
-        candidate_ids = tokenizer.encode(cand_line, max_length=4096, truncation=True)
-
-        # 解码为 tokens
-        ground_truth_tokens = tokenizer.convert_ids_to_tokens(ground_truth_ids)
-        candidate_tokens = tokenizer.convert_ids_to_tokens(candidate_ids)
-
-        # 调用 mark_word_changes_list 或 mark_word_changes 函数
-        if return_type == 'list':
-            # 返回 token 列表
-            marked_gt, marked_cand = mark_word_changes_list(candidate_tokens, ground_truth_tokens)
-        else:
-            # 返回标记后的字符串
-            marked_gt, marked_cand = mark_word_changes(candidate_tokens, ground_truth_tokens)
-
-        # 添加到结果列表中
-        marked_ground_truth.append(marked_gt)
-        marked_candidate.append(marked_cand)
-
-    return marked_ground_truth, marked_candidate
+        return marked_ground_truth, marked_candidate
