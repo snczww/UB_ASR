@@ -7,23 +7,31 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        .comparison-table {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            grid-gap: 10px;
+        .comparison-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             margin-bottom: 20px;
-        }
-        .comparison-cell {
-            padding: 5px;
             font-family: monospace;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+            gap: 5px;
+            width: 100%;
+        }
+        .word-box {
+            padding: 5px;
+            text-align: center;
             font-size: 16px;
-            white-space: pre-wrap;
-            text-align: left;
+            min-width: 50px;
+            white-space: nowrap;
+            display: inline-block;
+            border: 1px solid #ccc;
         }
-        .label {
-            font-size: 14px;
-            font-weight: bold;
-        }
+        .omission { color: red; }
+        .addition { color: blue; }
+        .substitution { color: orange; }
         .legend span {
             padding: 2px 6px;
             border-radius: 3px;
@@ -33,16 +41,11 @@
         .legend .omission { color: red; }
         .legend .addition { color: blue; }
         .legend .substitution { color: orange; }
-        tr.selected { background-color: #f0f0f0; }
-        .counter {
-            font-weight: bold;
-            margin-right: 15px;
-        }
     </style>
 </head>
 <body>
     <div class="container mt-5">
-        <h1>CSV Data</h1>
+        <h1>Comparison:</h1>
 
         <!-- Legend for color coding -->
         <div class="legend mb-4">
@@ -53,19 +56,14 @@
         </div>
 
         <!-- Comparison display section -->
-        <div id="comparison-display" class="mb-4">
-            <h3>Comparison:</h3>
-            <div class="comparison-table">
-                <div class="comparison-cell label">Ground Truth:</div>
-                <div class="comparison-cell content" id="ground-truth">None</div>
-                <div class="comparison-cell label">Candidate Line (Compared):</div>
-                <div class="comparison-cell content" id="candidate-line">None</div>
+        <div id="comparison-display" class="comparison-container mb-4">
+            <!-- Ground Truth Row -->
+            <div class="comparison-grid" id="ground-truth-grid">
+                <strong>Ground Truth: </strong>
             </div>
-            <!-- Display the counts of omissions, additions, and substitutions -->
-            <div class="mt-3">
-                <span class="counter omission">Omissions: <span id="omission-count">0</span></span>
-                <span class="counter addition">Additions: <span id="addition-count">0</span></span>
-                <span class="counter substitution">Substitutions: <span id="substitution-count">0</span></span>
+            <!-- Candidate Line Row -->
+            <div class="comparison-grid" id="candidate-line-grid">
+                <strong>Candidate Line (Compared): </strong>
             </div>
         </div>
 
@@ -117,7 +115,7 @@
         </nav>
     </div>
 
-    <!-- JavaScript to handle row clicks and count calculation -->
+    <!-- JavaScript to handle row clicks and display comparison -->
     <script>
         $(document).ready(function() {
             // Add click event to table rows
@@ -134,26 +132,33 @@
                 }).get();
 
                 // Set ground truth and candidate line display
-                var groundTruth = rowData[0];
-                var candidateLine = rowData[1];
+                var groundTruthList = eval(rowData[0]);
+                var candidateLineList = eval(rowData[1]);
 
-                $('#ground-truth').html(groundTruth);
-                $('#candidate-line').html(candidateLine);
-
-                // Calculate and display counts of omission, addition, and substitution
-                var omissionCount = (groundTruth.match(/<span class="omission">/g) || []).length;
-                var additionCount = (groundTruth.match(/<span class="addition">/g) || []).length;
-                var substitutionCount = (groundTruth.match(/<span class="substitution">/g) || []).length;
-
-                $('#omission-count').text(omissionCount);
-                $('#addition-count').text(additionCount);
-                $('#substitution-count').text(substitutionCount);
-
-                // Scroll to the comparison display smoothly
-                $('html, body').animate({
-                    scrollTop: $('#comparison-display').offset().top - 20
-                }, 500);
+                // Display words in grid
+                displayWordsInGrid(groundTruthList, candidateLineList);
             });
+
+            // Function to display words in the grid layout
+            function displayWordsInGrid(groundTruthList, candidateLineList) {
+                $('#ground-truth-grid').empty().append('<strong>Ground Truth: </strong>');
+                $('#candidate-line-grid').empty().append('<strong>Candidate Line (Compared): </strong>');
+
+                // Ensure equal number of words in both rows
+                var maxLength = Math.max(groundTruthList.length, candidateLineList.length);
+
+                // Add words to the ground truth grid
+                for (var i = 0; i < maxLength; i++) {
+                    var word = groundTruthList[i] || '';  // Handle unequal lengths
+                    $('#ground-truth-grid').append('<span class="word-box">' + word + '</span>');
+                }
+
+                // Add words to the candidate line grid
+                for (var i = 0; i < maxLength; i++) {
+                    var word = candidateLineList[i] || '';  // Handle unequal lengths
+                    $('#candidate-line-grid').append('<span class="word-box">' + word + '</span>');
+                }
+            }
         });
     </script>
 </body>

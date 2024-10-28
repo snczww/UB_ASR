@@ -58,13 +58,22 @@ def index():
         ground_truth_lines = ground_truth_lines[:min_length]
         candidate_lines = candidate_lines[:min_length]
 
-        # Calculate WER with the marked strategy and return lists of lists
+        # Calculate WER with the marked strategy
         calculator = WERCalculator(WERAnnotationLineByLineStrategy_marked())
-        compared_ground_truth_lines, compared_candidate_lines = calculator.mark_changes(ground_truth_lines, candidate_lines, 'list')
+        compared_ground_truth_lines, compared_candidate_lines = calculator.mark_changes(ground_truth_lines, candidate_lines,'list')
 
-        # Calculate WER again for line-by-line results
+        # compared_candidate_lines = [' '.join(line) if isinstance(line, list) else line for line in compared_candidate_lines]
+
         calculator = WERCalculator(WERAnnotationOnlyWholeTextStrategy())
+        overall_wer = calculator.calculate(ground_truth_lines, candidate_lines)
+
+        calculator = WERCalculator(WERAnnotationLineByLineStrategy_marked())
         line_wer_list = calculator.calculate(ground_truth_lines, candidate_lines)
+
+        min_length = min(len(compared_ground_truth_lines), len(compared_candidate_lines), len(line_wer_list))
+        compared_ground_truth_lines = compared_ground_truth_lines[:min_length]
+        compared_candidate_lines = compared_candidate_lines[:min_length]
+        line_wer_list = line_wer_list[:min_length]
 
         df = pd.DataFrame({
             'Ground Truth Line': compared_ground_truth_lines,
@@ -86,7 +95,7 @@ def display():
     if not os.path.exists(csv_file):
         return redirect(url_for('index'))
 
-    df = pd.read_csv(csv_file, converters={'Ground Truth Line': eval, 'Candidate Line (Compared)': eval})
+    df = pd.read_csv(csv_file)
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
 
