@@ -8,26 +8,29 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         .comparison-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: table;
+            width: 100%;
             margin-bottom: 20px;
             font-family: monospace;
         }
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-            gap: 5px;
-            width: 100%;
+        .comparison-row {
+            display: table-row;
         }
-        .word-box {
-            padding: 5px;
-            text-align: center;
-            font-size: 16px;
-            min-width: 50px;
-            white-space: nowrap;
+        .label-cell {
+            display: table-cell;
+            width: 150px;  /* Adjust this width as needed */
+            padding-right: 10px;
+            vertical-align: top;
+            font-weight: bold;
+        }
+        .content-cell {
+            display: table-cell;
+            padding-left: 5px;
+        }
+        .word {
             display: inline-block;
-            border: 1px solid #ccc;
+            margin-right: 5px;
+            white-space: nowrap;
         }
         .omission { color: red; }
         .addition { color: blue; }
@@ -41,6 +44,13 @@
         .legend .omission { color: red; }
         .legend .addition { color: blue; }
         .legend .substitution { color: orange; }
+
+        /* New styles for scrolling */
+        .scrollable {
+            width: calc(100% - 160px); /* Adjust according to label-cell width */
+            overflow-x: auto;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
@@ -56,14 +66,16 @@
         </div>
 
         <!-- Comparison display section -->
-        <div id="comparison-display" class="comparison-container mb-4">
+        <div class="comparison-container">
             <!-- Ground Truth Row -->
-            <div class="comparison-grid" id="ground-truth-grid">
-                <strong>Ground Truth: </strong>
+            <div class="comparison-row">
+                <div class="label-cell">Ground Truth:</div>
+                <div class="content-cell" id="ground-truth-row"></div>
             </div>
-            <!-- Candidate Line Row -->
-            <div class="comparison-grid" id="candidate-line-grid">
-                <strong>Candidate Line (Compared): </strong>
+            <!-- Candidate Line Row with scrolling -->
+            <div class="comparison-row">
+                <div class="label-cell">Candidate Line (Compared):</div>
+                <div class="content-cell scrollable" id="candidate-line-row"></div>
             </div>
         </div>
 
@@ -135,28 +147,27 @@
                 var groundTruthList = eval(rowData[0]);
                 var candidateLineList = eval(rowData[1]);
 
-                // Display words in grid
-                displayWordsInGrid(groundTruthList, candidateLineList);
+                // Display words horizontally
+                displayWords(groundTruthList, candidateLineList);
             });
 
-            // Function to display words in the grid layout
-            function displayWordsInGrid(groundTruthList, candidateLineList) {
-                $('#ground-truth-grid').empty().append('<strong>Ground Truth: </strong>');
-                $('#candidate-line-grid').empty().append('<strong>Candidate Line (Compared): </strong>');
+            // Function to align and display words in the comparison rows
+            function displayWords(groundTruthList, candidateLineList) {
+                $('#ground-truth-row').empty();
+                $('#candidate-line-row').empty();
 
-                // Ensure equal number of words in both rows
-                var maxLength = Math.max(groundTruthList.length, candidateLineList.length);
-
-                // Add words to the ground truth grid
-                for (var i = 0; i < maxLength; i++) {
-                    var word = groundTruthList[i] || '';  // Handle unequal lengths
-                    $('#ground-truth-grid').append('<span class="word-box">' + word + '</span>');
-                }
-
-                // Add words to the candidate line grid
-                for (var i = 0; i < maxLength; i++) {
-                    var word = candidateLineList[i] || '';  // Handle unequal lengths
-                    $('#candidate-line-grid').append('<span class="word-box">' + word + '</span>');
+                let maxLength = Math.max(groundTruthList.length, candidateLineList.length);
+                
+                for (let i = 0; i < maxLength; i++) {
+                    // Get the words or empty string for alignment
+                    let groundTruthWord = groundTruthList[i] || '';
+                    let candidateWord = candidateLineList[i] || '';
+                    
+                    // Add words to the ground truth row
+                    $('#ground-truth-row').append('<span class="word">' + groundTruthWord + '</span>');
+                    
+                    // Add words to the candidate line row
+                    $('#candidate-line-row').append('<span class="word">' + candidateWord + '</span>');
                 }
             }
         });

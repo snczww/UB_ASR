@@ -15,6 +15,8 @@ from abc import ABC, abstractmethod
 from transformers import AutoTokenizer
 from utils.wer_by_tokens import word_list_error_rate
 from utils.find_all_anotations import collect_all_matches
+import re  # Regular expressions for removing HTML tags
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
@@ -155,10 +157,17 @@ def mark_word_changes_list(s2, s1):
     tuple: (marked_s1, s2modify)
     """
     import numpy as np
-
     # Helper function to escape < and > for HTML
     def escape_html(word):
         return word.replace("<", "&lt;").replace(">", "&gt;")
+    
+    # Helper function to remove HTML tags
+    def remove_html_tags(text):
+        return re.sub(r'<[^>]+>', '', text)
+
+    # Helper function to escape < and > for HTML
+    # def escape_html(word):
+    #     return word.replace("<", "&lt;").replace(">", "&gt;")
     
     # Preprocess s1 and s2
     s1 = [escape_html(word.replace("Ġ", "").strip()) for word in s1 if word not in ['<s>', '</s>'] and word.strip()]
@@ -204,17 +213,40 @@ def mark_word_changes_list(s2, s1):
         elif j > 0 and dp[i][j] == dp[i][j - 1] + 1:
             # Insertion
             s2modify_list.append(f"<span style=\"color: blue;\">{s2[j - 1]}</span>")
-            marked_s1_list.append('-' * len(s2[j - 1]))  # Fill with '-' of same length
+            marked_s1_list.append('-' * len(remove_html_tags(s2[j - 1])))  # Fill with '-' of same length
             j -= 1
         elif i > 0 and dp[i][j] == dp[i - 1][j] + 1:
             # Deletion
-            s2modify_list.append('-' * len(s1[i - 1]))  # Fill with '-' of same length
+            s2modify_list.append('-' * len(remove_html_tags(s1[i - 1])))  # Fill with '-' of same length
             marked_s1_list.append(f"<span style=\"color: red;\">{s1[i - 1]}</span>")
             i -= 1
 
     # Reverse the lists since we built them backwards
     s2modify_list.reverse()
     marked_s1_list.reverse()
+    
+    for i in range(len(marked_s1_list)):
+        marked_length = len(remove_html_tags(marked_s1_list[i]))  # Remove HTML tags for length
+        s2modify_length = len(remove_html_tags(s2modify_list[i]))  # Remove HTML tags for length
+        # print(f'remove_html_tags(s2modify_list[i]):{remove_html_tags(s2modify_list[i])}')
+        if marked_length > s2modify_length:
+            s2modify_list[i] += '#' * (marked_length - s2modify_length)
+        elif s2modify_length > marked_length:
+            marked_s1_list[i] += '#' * (s2modify_length - marked_length)
+
+
+
+     # Balance lengths of marked_s1_list and s2modify_list
+    # for i in range(len(marked_s1_list)):
+    #     marked_length = len(marked_s1_list[i])
+    #     s2modify_length = len(s2modify_list[i])
+    #     print(f's2modify_list:{s2modify_list}')
+    #     print(f'marked_length:{marked_length},s2modify_length:{s2modify_length}')
+        
+    #     if marked_length > s2modify_length:
+    #         s2modify_list[i] += '#' * (marked_length - s2modify_length)
+    #     elif s2modify_length > marked_length:
+    #         marked_s1_list[i] += '#' * (s2modify_length - marked_length)
 
     # marked_s1 = ' '.join(marked_s1_list)
     # s2modify = ' '.join(s2modify_list)
