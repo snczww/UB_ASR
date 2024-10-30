@@ -18,7 +18,7 @@
         }
         .label-cell {
             display: table-cell;
-            width: 150px;  /* Adjust this width as needed */
+            width: 150px;
             padding-right: 10px;
             vertical-align: top;
             font-weight: bold;
@@ -34,7 +34,7 @@
         }
         .omission { color: red; }
         .addition { color: blue; }
-        .substitution { color: orange; }
+        .substitution { color: green; }
         .legend span {
             padding: 2px 6px;
             border-radius: 3px;
@@ -43,14 +43,25 @@
         }
         .legend .omission { color: red; }
         .legend .addition { color: blue; }
-        .legend .substitution { color: orange; }
+        .legend .substitution { color: green; }
 
-        /* New styles for scrolling */
-        .scrollable {
-            width: calc(100% - 160px); /* Adjust according to label-cell width */
-            overflow-x: auto;
-            white-space: nowrap;
+        /* Error count display styles */
+        .error-count {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
         }
+        .error-label {
+            display: inline-block;
+            padding: 5px 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: white;
+        }
+        .omission-count { background-color: red; }
+        .addition-count { background-color: blue; }
+        .substitution-count { background-color: green; }
     </style>
 </head>
 <body>
@@ -77,6 +88,19 @@
                 <div class="label-cell">Candidate Line (Compared):</div>
                 <div class="content-cell scrollable" id="candidate-line-row"></div>
             </div>
+        </div>
+
+        <!-- Error count display with white-colored numbers -->
+        <div class="error-count">
+            <span class="error-label omission-count">
+                Omissions: <span id="omission-count" style="color: white;">0</span>
+            </span>
+            <span class="error-label addition-count">
+                Additions: <span id="addition-count" style="color: white;">0</span>
+            </span>
+            <span class="error-label substitution-count">
+                Substitutions: <span id="substitution-count" style="color: white;">0</span>
+            </span>
         </div>
 
         <!-- Table displaying the WER results -->
@@ -125,52 +149,99 @@
                 {% endfor %}
             </ul>
         </nav>
-    </div>
 
-    <!-- JavaScript to handle row clicks and display comparison -->
-    <script>
-        $(document).ready(function() {
-            // Add click event to table rows
-            $('#csvTable tbody tr').on('click', function() {
-                // Remove 'selected' class from all rows
-                $('#csvTable tbody tr').removeClass('selected');
-                
-                // Add 'selected' class to the clicked row
-                $(this).addClass('selected');
-
-                // Get the content of the clicked row
-                var rowData = $(this).children("td").map(function() {
-                    return $(this).html();
-                }).get();
-
-                // Set ground truth and candidate line display
-                var groundTruthList = eval(rowData[0]);
-                var candidateLineList = eval(rowData[1]);
-
-                // Display words horizontally
-                displayWords(groundTruthList, candidateLineList);
-            });
-
-            // Function to align and display words in the comparison rows
-            function displayWords(groundTruthList, candidateLineList) {
-                $('#ground-truth-row').empty();
-                $('#candidate-line-row').empty();
-
-                let maxLength = Math.max(groundTruthList.length, candidateLineList.length);
-                
-                for (let i = 0; i < maxLength; i++) {
-                    // Get the words or empty string for alignment
-                    let groundTruthWord = groundTruthList[i] || '';
-                    let candidateWord = candidateLineList[i] || '';
+        <!-- JavaScript to handle row clicks and display comparison -->
+        <script>
+            $(document).ready(function() {
+                // Add click event to table rows
+                $('#csvTable tbody tr').on('click', function() {
+                    // Remove 'selected' class from all rows
+                    $('#csvTable tbody tr').removeClass('selected');
                     
-                    // Add words to the ground truth row
-                    $('#ground-truth-row').append('<span class="word">' + groundTruthWord + '</span>');
+                    // Add 'selected' class to the clicked row
+                    $(this).addClass('selected');
+
+                    // Get the content of the clicked row
+                    var rowData = $(this).children("td").map(function() {
+                        return $(this).html();
+                    }).get();
+
+                    // Set ground truth and candidate line display
+                    var groundTruthList = eval(rowData[0]);
+                    var candidateLineList = eval(rowData[1]);
+
+                    // Display words horizontally
+                    displayWords(groundTruthList, candidateLineList);
+
+                    // Count errors and display
+                    countErrors(groundTruthList, candidateLineList);
+                });
+
+                // Function to align and display words in the comparison rows
+                function displayWords(groundTruthList, candidateLineList) {
+                    $('#ground-truth-row').empty();
+                    $('#candidate-line-row').empty();
+
+                    let maxLength = Math.max(groundTruthList.length, candidateLineList.length);
                     
-                    // Add words to the candidate line row
-                    $('#candidate-line-row').append('<span class="word">' + candidateWord + '</span>');
+                    for (let i = 0; i < maxLength; i++) {
+                        // Get the words or empty string for alignment
+                        let groundTruthWord = groundTruthList[i] || '';
+                        let candidateWord = candidateLineList[i] || '';
+                        
+                        // Add words to the ground truth row
+                        $('#ground-truth-row').append('<span class="word">' + groundTruthWord + '</span>');
+                        
+                        // Add words to the candidate line row
+                        $('#candidate-line-row').append('<span class="word">' + candidateWord + '</span>');
+                    }
                 }
-            }
-        });
-    </script>
+
+                // Function to count errors based on span color
+                function countErrors(groundTruthList, candidateLineList) {
+                    let omissionCount = 0;
+                    let additionCount = 0;
+                    let substitutionCount = 0;
+
+                    // Function to count errors by span color
+                    function countByColor(word) {
+                        // Create a temporary DOM element to parse HTML string
+                        let tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = word;
+
+                        // Find all span elements in the word
+                        let spans = tempDiv.getElementsByTagName('span');
+                        for (let span of spans) {
+                            // Get the color style of the span
+                            let color = span.style.color;
+
+                            // Increment corresponding count based on color
+                            if (color === 'red') {
+                                omissionCount++;
+                            } else if (color === 'blue') {
+                                additionCount++;
+                            } else if (color === 'green') {
+                                substitutionCount++;
+                            }
+                        }
+                    }
+
+                    // Count errors in ground truth
+                    groundTruthList.forEach(word => countByColor(word));
+
+                    // Count errors in candidate line
+                    candidateLineList.forEach(word => countByColor(word));
+
+                    // Adjust substitution count (divide by 2, since substitutions are marked twice)
+                    substitutionCount = Math.floor(substitutionCount / 2);
+
+                    // Update error count display in HTML with white-colored numbers
+                    $('#omission-count').html('<span style="color: white;">' + omissionCount + '</span>');
+                    $('#addition-count').html('<span style="color: white;">' + additionCount + '</span>');
+                    $('#substitution-count').html('<span style="color: white;">' + substitutionCount + '</span>');
+                }
+            });
+        </script>
+    </div>
 </body>
 </html>

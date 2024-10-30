@@ -63,7 +63,7 @@ def index():
         compared_ground_truth_lines, compared_candidate_lines = calculator.mark_changes(ground_truth_lines, candidate_lines, 'list')
 
         # Calculate WER again for line-by-line results
-        calculator = WERCalculator(WERAnnotationOnlyWholeTextStrategy())
+        calculator = WERCalculator(WERAnnotationLineByLineStrategy_marked())
         line_wer_list = calculator.calculate(ground_truth_lines, candidate_lines)
 
         df = pd.DataFrame({
