@@ -6,23 +6,30 @@
 @Author  :   Victor Z 
 @Version :   1.0
 @Contact :   snczww@gmail.com
-@Desc    :   None
+@Desc    :   Word Error Rate (WER) calculator class implementation
 '''
 
-# here put the import lib
-
+# Import necessary libraries and modules
 from wer_strategy import WERStrategy
 from utils.ASR_utils import read_file
 
 class WERCalculator:
     def __init__(self, strategy: WERStrategy, fixed_annotations=None, decimal_places=2, tokenizer_model_path='allenai/longformer-base-4096'):
         """
-        Initialize the WERCalculator with a strategy, default fixed_annotations, and decimal_places.
+        Initializes the WERCalculator with a specified WER calculation strategy, fixed annotations, 
+        decimal precision for rounding results, and a tokenizer model path.
+
+        Args:
+        - strategy (WERStrategy): A strategy instance that defines the specific WER calculation method.
+        - fixed_annotations (list or None): A list of pre-defined annotations for accuracy adjustments in WER calculation. 
+          If None, the default 'fix_anotation.txt' file is loaded.
+        - decimal_places (int): Number of decimal places to round the WER result to (default is 2).
+        - tokenizer_model_path (str): The file path to the tokenizer model used for tokenizing text in WER calculation.
         """
         self.strategy = strategy
-        # If no fixed_annotations are provided, load the default fix_anotation.txt file
+        # Load default fixed annotations if none are provided
         if fixed_annotations is None:
-            self.fixed_annotations = read_file('utils/fix_anotation.txt')  # Default file
+            self.fixed_annotations = read_file('utils/fix_anotation.txt')  # Default annotation file
         else:
             self.fixed_annotations = fixed_annotations
         self.decimal_places = decimal_places
@@ -30,45 +37,64 @@ class WERCalculator:
 
     def set_strategy(self, strategy: WERStrategy):
         """
-        Set a different WER calculation strategy
+        Updates the WER calculation strategy.
+
+        Args:
+        - strategy (WERStrategy): The new strategy to use for WER calculation.
         """
         self.strategy = strategy
 
     def set_fixed_annotations(self, fixed_annotations):
         """
-        Update the fixed annotations list
+        Updates the list of fixed annotations used in WER calculation.
+
+        Args:
+        - fixed_annotations (list): New list of annotations to be fixed during calculation.
         """
         self.fixed_annotations = fixed_annotations
 
     def set_decimal_places(self, decimal_places):
         """
-        Update the decimal places for WER calculation
+        Updates the decimal precision for WER result rounding.
+
+        Args:
+        - decimal_places (int): Number of decimal places for rounding the WER result.
         """
         self.decimal_places = decimal_places
 
     def set_tokenizer_model_path(self, tokenizer_model_path):
         """
-        Update the tokenizer model path
+        Updates the tokenizer model path for tokenizing text in WER calculation.
+
+        Args:
+        - tokenizer_model_path (str): File path of the tokenizer model.
         """
         self.tokenizer_model_path = tokenizer_model_path
 
     def calculate(self, ground_truth, candidate):
         """
-        Calculate WER using the current strategy, fixed_annotations, decimal_places, and tokenizer_model_path.
-        """
-        return self.strategy.calculate_wer(ground_truth, candidate, self.tokenizer_model_path, self.fixed_annotations, self.decimal_places)
-    def mark_changes(self, ground_truth, candidate, return_type):
-        """
-        计算 WER 并标记更改，使用当前的 strategy、fixed_annotations、decimal_places 和 tokenizer_model_path。
+        Calculates the Word Error Rate (WER) between ground truth and candidate texts.
 
         Args:
-        - ground_truth (list): Ground truth 文本行列表。
-        - candidate (list): Candidate 文本行列表。
-        - return_type (str): 指定返回类型，'list' 表示返回 token 列表，'string' 表示返回标记后的字符串。
+        - ground_truth (str): The ground truth text.
+        - candidate (str): The candidate text to compare against the ground truth.
 
         Returns:
-        - tuple: (marked_ground_truth, marked_candidate)，可以是 token 列表或标记后的字符串列表。
+        - float: The calculated WER value, rounded to the specified decimal precision.
         """
+        return self.strategy.calculate_wer(ground_truth, candidate, self.tokenizer_model_path, self.fixed_annotations, self.decimal_places)
 
-        return self.strategy.mark_changes_line(ground_truth, candidate, self.tokenizer_model_path, self.fixed_annotations,return_type)
+    def mark_changes(self, ground_truth, candidate, return_type):
+        """
+        Calculates WER and marks the changes between ground truth and candidate texts.
 
+        Args:
+        - ground_truth (list): A list of lines containing the ground truth text.
+        - candidate (list): A list of lines containing the candidate text.
+        - return_type (str): Specifies the return format, either 'list' for tokens or 'string' for marked text.
+
+        Returns:
+        - tuple: A tuple (marked_ground_truth, marked_candidate) where each element is either a list of tokens 
+          or a marked-up string, depending on the specified return_type.
+        """
+        return self.strategy.mark_changes_line(ground_truth, candidate, self.tokenizer_model_path, self.fixed_annotations, return_type)
