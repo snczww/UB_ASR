@@ -25,3 +25,8 @@ old_codes/
 .gitignore
 .DS_Store
 atest.py
+/workcodes
+/output
+/outputs
+/.vscode
+/ abandon_codes
