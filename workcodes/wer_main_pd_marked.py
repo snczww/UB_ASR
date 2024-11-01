@@ -11,7 +11,7 @@ from wer_strategy import (
     WERAnnotationLineByLineStrategy_marked
 )
 from utils.anotaion_utils import extract_lines_from_file
-from mark_difference_V05 import mark_word_changes  # 引入compare_strings函数
+from workcodes.mark_difference_V05 import mark_word_changes  # 引入compare_strings函数
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def remove_nak_to_end(line):
