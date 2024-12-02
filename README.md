@@ -18,6 +18,12 @@ This project provides a set of scripts for calculating Word Error Rate (WER) on 
 
 This project calculates the WER for two transcription files (ground truth and candidate) using different WER strategies. The main script reads the files, processes the lines, removes unwanted content, and then applies WER calculations through multiple methods, including annotation-based comparisons. The results are saved in CSV files for easy review and analysis.
 
+### Web result demo
+
+Watch this demo of the web:
+
+![WER Calculation Demo](result.gif)
+
 ## Files Overview
 
 - **`wer_strategy.py`**: Defines the different strategies for WER calculation.
