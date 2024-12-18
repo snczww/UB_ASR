@@ -1,0 +1,98 @@
+nohup: ignoring input
+ * Serving Flask app 'app'
+ * Debug mode: on
+2024-12-03 21:50:03,345 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5860
+ * Running on http://128.205.39.140:5860
+2024-12-03 21:50:03,346 - INFO - [33mPress CTRL+C to quit[0m
+2024-12-03 21:50:03,346 - INFO -  * Restarting with stat
+2024-12-03 21:50:04,492 - WARNING -  * Debugger is active!
+2024-12-03 21:50:04,492 - INFO -  * Debugger PIN: 686-715-674
+2024-12-03 21:50:12,988 - INFO - 10.20.240.151 - - [03/Dec/2024 21:50:12] "GET / HTTP/1.1" 200 -
+2024-12-03 21:51:40,171 - INFO - 69.12.17.238 - - [03/Dec/2024 21:51:40] "GET / HTTP/1.1" 200 -
+2024-12-03 22:01:46,972 - INFO - 69.12.17.238 - - [03/Dec/2024 22:01:46] "GET / HTTP/1.1" 200 -
+2024-12-04 04:40:26,192 - INFO - 38.95.240.99 - - [04/Dec/2024 04:40:26] "GET / HTTP/1.1" 200 -
+2024-12-13 17:28:28,991 - INFO - 38.95.243.188 - - [13/Dec/2024 17:28:28] "GET / HTTP/1.1" 200 -
+2024-12-13 23:43:34,299 - ERROR - 38.95.241.117 - - [13/Dec/2024 23:43:34] code 400, message Bad request version ('\x02h2\x08http/1.1\x00\x1b\x00\x03\x02\x00\x02\x00')
+2024-12-13 23:43:34,300 - INFO - 38.95.241.117 - - [13/Dec/2024 23:43:34] "[35m[1m\x16\x03\x01\x06À\x01\x00\x06¼\x03\x03K7y4\x8fÐñ\x19\x88\x8fÆM:\x07wGsFå$Ó.ûWµo\x98­\x8eåö# é3U\x91(\x8aþô·\x06|)\x16±©Hú\x16>s?±2¾¿f´oÙå\x03T\x00 ºº\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06S\x9a\x9a\x00\x00\x00#\x00\x00\x00\x0b\x00\x02\x01\x00\x00\x12\x00\x00\x00-\x00\x02\x01\x01\x00\x17\x00\x00\x00+\x00\x07\x06ÊÊ\x03\x04\x03\x03\x00\x10\x00\x0e\x00\x0c\x02h2\x08http/1.1\x00\x1b\x00\x03\x02\x00\x02\x00[0m" HTTPStatus.BAD_REQUEST -
+2024-12-13 23:43:34,311 - ERROR - 38.95.241.117 - - [13/Dec/2024 23:43:34] code 400, message Bad request version ('\x1bþ¬\x9fB\x00°\x98rº±F')
+2024-12-13 23:43:34,312 - INFO - 38.95.241.117 - - [13/Dec/2024 23:43:34] "[35m[1m\x16\x03\x01\x06À\x01\x00\x06¼\x03\x03ÀGÖ[)m0©!jBSI<Rã1ä\x00ª\x96\x0d\x1bçv1-í|È\x037 MÏàd\x9d}\x90\x11íRU\x05<\x836Ð\x9fðº1±×\x0e1-\x83Û»a²\x9f{\x00 jj\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06S::\x00\x00þ\x0d\x00Ú\x00\x00\x01\x00\x01\x89\x00 \\\x99AÓg\x9b\\:¬ÙBè\x88øÛ¥å\x10\x0c g\x879ºïQ\x09\x1bþ¬\x9fB\x00°\x98rº±F[0m" HTTPStatus.BAD_REQUEST -
+2024-12-13 23:43:34,318 - INFO - 38.95.241.117 - - [13/Dec/2024 23:43:34] "GET / HTTP/1.1" 200 -
+2024-12-13 23:43:34,588 - INFO - 38.95.241.117 - - [13/Dec/2024 23:43:34] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-12-13 23:44:03,299 - INFO - 38.95.241.117 - - [13/Dec/2024 23:44:03] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/home/victor/miniconda3/envs/whisperx/lib/python3.10/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/home/victor/miniconda3/envs/whisperx/lib/python3.10/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+  File "/home/victor/miniconda3/envs/whisperx/lib/python3.10/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/victor/miniconda3/envs/whisperx/lib/python3.10/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/victor/miniconda3/envs/whisperx/lib/python3.10/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/victor/miniconda3/envs/whisperx/lib/python3.10/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/victor/ASR_UB/UB_ASR/web/app.py", line 62, in index
+    calculator = WERCalculator(WERAnnotationLineByLineStrategy_marked())
+  File "/home/victor/ASR_UB/UB_ASR/wer_calculator.py", line 32, in __init__
+    self.fixed_annotations = read_file('utils/fix_anotation.txt')  # Default annotation file
+  File "/home/victor/ASR_UB/UB_ASR/utils/ASR_utils.py", line 18, in read_file
+    with open(file_path, 'r', encoding='utf-8') as file:
+FileNotFoundError: [Errno 2] No such file or directory: 'utils/fix_anotation.txt'
+2024-12-13 23:44:03,345 - INFO - 38.95.241.117 - - [13/Dec/2024 23:44:03] "GET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2024-12-13 23:44:03,346 - INFO - 38.95.241.117 - - [13/Dec/2024 23:44:03] "GET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2024-12-13 23:44:03,548 - INFO - 38.95.241.117 - - [13/Dec/2024 23:44:03] "GET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2024-12-16 06:15:25,916 - INFO - 38.95.241.117 - - [16/Dec/2024 06:15:25] "GET / HTTP/1.1" 200 -
+2024-12-16 06:15:26,180 - INFO - 38.95.241.117 - - [16/Dec/2024 06:15:26] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-12-16 06:15:50,323 - INFO - 38.95.241.117 - - [16/Dec/2024 06:15:50] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/home/victor/miniconda3/envs/whisperx/lib/python3.10/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/home/victor/miniconda3/envs/whisperx/lib/python3.10/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+  File "/home/victor/miniconda3/envs/whisperx/lib/python3.10/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/victor/miniconda3/envs/whisperx/lib/python3.10/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/victor/miniconda3/envs/whisperx/lib/python3.10/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/victor/miniconda3/envs/whisperx/lib/python3.10/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/victor/ASR_UB/UB_ASR/web/app.py", line 62, in index
+    calculator = WERCalculator(WERAnnotationLineByLineStrategy_marked())
+  File "/home/victor/ASR_UB/UB_ASR/wer_calculator.py", line 32, in __init__
+    self.fixed_annotations = read_file('utils/fix_anotation.txt')  # Default annotation file
+  File "/home/victor/ASR_UB/UB_ASR/utils/ASR_utils.py", line 18, in read_file
+    with open(file_path, 'r', encoding='utf-8') as file:
+FileNotFoundError: [Errno 2] No such file or directory: 'utils/fix_anotation.txt'
+2024-12-16 06:15:50,336 - INFO - 38.95.241.117 - - [16/Dec/2024 06:15:50] "GET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2024-12-16 06:15:50,340 - INFO - 38.95.241.117 - - [16/Dec/2024 06:15:50] "GET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2024-12-16 06:15:50,467 - INFO - 38.95.241.117 - - [16/Dec/2024 06:15:50] "GET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2024-12-18 16:26:38,900 - INFO - 10.20.243.117 - - [18/Dec/2024 16:26:38] "GET / HTTP/1.1" 200 -
+2024-12-18 16:26:39,299 - INFO - 10.20.243.117 - - [18/Dec/2024 16:26:39] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-12-18 16:27:05,071 - INFO - 10.20.243.117 - - [18/Dec/2024 16:27:05] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/home/victor/miniconda3/envs/whisperx/lib/python3.10/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/home/victor/miniconda3/envs/whisperx/lib/python3.10/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+  File "/home/victor/miniconda3/envs/whisperx/lib/python3.10/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/victor/miniconda3/envs/whisperx/lib/python3.10/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/victor/miniconda3/envs/whisperx/lib/python3.10/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/victor/miniconda3/envs/whisperx/lib/python3.10/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/victor/ASR_UB/UB_ASR/web/app.py", line 62, in index
+    calculator = WERCalculator(WERAnnotationLineByLineStrategy_marked())
+  File "/home/victor/ASR_UB/UB_ASR/wer_calculator.py", line 32, in __init__
+    self.fixed_annotations = read_file('utils/fix_anotation.txt')  # Default annotation file
+  File "/home/victor/ASR_UB/UB_ASR/utils/ASR_utils.py", line 18, in read_file
+    with open(file_path, 'r', encoding='utf-8') as file:
+FileNotFoundError: [Errno 2] No such file or directory: 'utils/fix_anotation.txt'
+2024-12-18 16:27:05,391 - INFO - 10.20.243.117 - - [18/Dec/2024 16:27:05] "GET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2024-12-18 16:27:05,393 - INFO - 10.20.243.117 - - [18/Dec/2024 16:27:05] "GET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2024-12-18 16:27:05,551 - INFO - 10.20.243.117 - - [18/Dec/2024 16:27:05] "GET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -

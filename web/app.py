@@ -68,7 +68,9 @@ def index():
 
         df = pd.DataFrame({
             'Ground Truth Line': compared_ground_truth_lines,
+            # 'Ground Truth Line': " ".join(compared_ground_truth_lines),
             'Candidate Line (Compared)': compared_candidate_lines,
+            # 'Candidate Line (Compared)': " ".join(compared_candidate_lines),
             'Line WER': line_wer_list
         })
 
@@ -106,4 +108,4 @@ def display():
     )
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5860)

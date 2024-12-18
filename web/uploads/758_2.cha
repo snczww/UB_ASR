@@ -1,0 +1,99 @@
+
+*CHI:	<um> [/] a rabbit and his dog (.) are making a sandcastle . 35815_40435
+%wor:	um 35815_36295 a 36295_36895 rabbit 36895_37235 and 37235_37535 his 37535_37815 dog 37815_38235 are 38235_38835 making 38835_39215 a 39215_39435 sandcastle 39435_40435 .
+%mor:	det:art|a n|rabbit coord|and det:poss|his n|dog aux|be&PRES part|make-PRESP det:art|a n|+n|sand+n|castle .
+%gra:	1|2|DET 2|7|SUBJ 3|2|CONJ 4|5|DET 5|3|COORD 6|7|AUX 7|0|ROOT 8|9|DET 9|7|OBJ 10|7|PUNCT
+*CHI:	and now the rabbit gots [: has got] a shovel and his bucket . 40595_46375
+%wor:	and 40595_42555 now 42555_42975 the 42975_43195 rabbit 43195_43875 has 43875_44135 got 44135_44195 a 44195_44475 shovel 44475_44915 and 44915_45155 his 45155_45375 bucket 45375_46375 .
+%mor:	coord|and adv:tem|now det:art|the n|rabbit aux|have&3S part|get&PASTP det:art|a n|shovel coord|and det:poss|his n|bucket .
+%gra:	1|6|LINK 2|6|JCT 3|4|DET 4|6|SUBJ 5|6|AUX 6|0|ROOT 7|8|DET 8|6|OBJ 9|8|CONJ 10|11|DET 11|9|COORD 12|6|PUNCT
+*CHI:	and now (.) the rabbit (i)s going to [?] dump the sand from the bucket onto the sandcastle . 47095_52875
+%wor:	and 47095_47775 now 47775_47955 the 47955_49015 rabbit 49015_49355 is 49355_49535 going 49535_49675 to 49675_49795 dump 49795_50015 the 50015_50195 sand 50195_50495 from 50495_50715 the 50715_50935 bucket 50935_51175 onto 51175_51635 the 51635_51875 sandcastle 51875_52875 .
+%mor:	coord|and adv:tem|now det:art|the n|rabbit aux|be&3S part|go-PRESP inf|to v|dump det:art|the n|sand prep|from det:art|the n|bucket prep|onto det:art|the n|+n|sand+n|castle .
+%gra:	1|6|LINK 2|6|JCT 3|4|DET 4|6|SUBJ 5|6|AUX 6|0|ROOT 7|8|INF 8|6|COMP 9|10|DET 10|8|OBJ 11|8|JCT 12|13|DET 13|11|POBJ 14|8|JCT 15|16|DET 16|14|POBJ 17|6|PUNCT
+*CHI:	and the sandcastle (i)s all mushed with a big pile of sand on top of it . 54075_59495
+%wor:	and 54075_54155 the 54155_54375 sandcastle 54375_55135 is 55135_55415 all 55415_55775 mushed 55775_56315 with 56315_56535 a 56535_56675 big 56675_56915 pile 56915_57375 of 57375_57555 sand 57555_57835 on 57835_58055 top 58055_58315 of 58315_58495 it 58495_59495 .
+%mor:	coord|and det:art|the n|+n|sand+n|castle aux|be&3S adv|all part|mush-PASTP prep|with det:art|a adj|big n|pile prep|of n|sand prep|on n|top prep|of pro:per|it .
+%gra:	1|6|LINK 2|3|DET 3|6|SUBJ 4|6|AUX 5|6|JCT 6|0|ROOT 7|6|JCT 8|10|DET 9|10|MOD 10|7|POBJ 11|10|NJCT 12|11|POBJ 13|10|NJCT 14|13|POBJ 15|14|NJCT 16|15|POBJ 17|6|PUNCT
+*CHI:	and now they (a)re trying to put it back together . 60315_64035
+%wor:	and 60315_60975 now 60975_61535 they 61535_62035 are trying 62035_62375 to 62375_62515 put 62515_62695 it 62695_62795 back 62795_63035 together 63035_64035 .
+%mor:	coord|and adv:tem|now pro:sub|they aux|be&PRES part|try-PRESP inf|to v|put&ZERO pro:per|it adv|back adv|together .
+%gra:	1|5|LINK 2|5|JCT 3|5|SUBJ 4|5|AUX 5|0|ROOT 6|7|INF 7|5|COMP 8|7|OBJ 9|7|JCT 10|7|JCT 11|5|PUNCT
+*CHI:	and the rabbit (i)s like standing <like> [//] (.) something like this . 63495_67555
+%wor:	and 63495_63795 the 63795_63815 rabbit 63815_64075 is 64075_64255 like 64255_64475 standing 64475_64895 like 64895_65355 something 65355_66215 like 66215_66555 this 66555_67555 .
+%mor:	coord|and det:art|the n|rabbit cop|be&3S co|like part|stand-PRESP pro:indef|something prep|like pro:dem|this .
+%gra:	1|4|LINK 2|3|DET 3|4|SUBJ 4|0|ROOT 5|4|COM 6|4|XJCT 7|6|OBJ 8|7|NJCT 9|8|POBJ 10|4|PUNCT
+@G:	B2
+*CHI:	<um> [/] a rabbit and this (.) dog are walking down the road with these picnic baskets . 69995_77755
+%wor:	um 69995_72555 a 72555_73055 rabbit 73055_73375 and 73375_73695 this 73695_73995 dog 73995_74775 are 74775_74915 walking 74915_75255 down 75255_75635 the 75635_75815 road 75815_76015 with 76015_76235 these 76235_76395 picnic 76395_76755 baskets 76755_77755 .
+%mor:	det:art|a n|rabbit coord|and det:dem|this n|dog aux|be&PRES part|walk-PRESP prep|down det:art|the n|road prep|with det:dem|these n|picnic n|basket-PL .
+%gra:	1|2|DET 2|7|SUBJ 3|2|CONJ 4|5|DET 5|3|COORD 6|7|AUX 7|0|ROOT 8|7|JCT 9|10|DET 10|8|POBJ 11|7|JCT 12|14|DET 13|14|MOD 14|11|POBJ 15|7|PUNCT
+*CHI:	and now they (a)re eating . 78635_80755
+%wor:	and 78635_79395 now 79395_79595 they 79595_79695 are 79695_79755 eating 79755_80755 .
+%mor:	coord|and adv:tem|now pro:sub|they aux|be&PRES part|eat-PRESP .
+%gra:	1|5|LINK 2|5|JCT 3|5|SUBJ 4|5|AUX 5|0|ROOT 6|5|PUNCT
+*CHI:	and now the rabbit (i)s stuffed . 81435_84875
+%wor:	and 81435_83135 now 83135_83295 the 83295_83455 rabbit 83455_83695 is 83695_83875 stuffed 83875_84875 .
+%mor:	coord|and adv:tem|now det:art|the n|rabbit aux|be&3S part|stuff-PASTP .
+%gra:	1|6|LINK 2|6|JCT 3|4|DET 4|6|SUBJ 5|6|AUX 6|0|ROOT 7|6|PUNCT
+*CHI:	and he (i)s lying down . 84255_85835
+%wor:	and 84255_84355 he 84355_84535 is lying 84535_84835 down 84835_85835 .
+%mor:	coord|and pro:sub|he aux|be&3S part|lie-PRESP adv|down .
+%gra:	1|4|LINK 2|4|SUBJ 3|4|AUX 4|0|ROOT 5|4|JCT 6|4|PUNCT
+*CHI:	and the dog (i)s still eating (.) with a juice box in his hand . 85475_89315
+%wor:	and 85475_85555 the 85555_85795 dog 85795_86075 is 86075_86215 still 86215_86415 eating 86415_86795 with 86795_87355 a 87355_87455 juice 87455_87655 box 87655_87935 in 87935_88135 his 88135_88315 hand 88315_89315 .
+%mor:	coord|and det:art|the n|dog aux|be&3S adv|still part|eat-PRESP prep|with det:art|a n|juice n|box prep|in det:poss|his n|hand .
+%gra:	1|6|LINK 2|3|DET 3|6|SUBJ 4|6|AUX 5|6|JCT 6|0|ROOT 7|6|JCT 8|10|DET 9|10|MOD 10|7|POBJ 11|10|NJCT 12|13|DET 13|11|POBJ 14|6|PUNCT
+*CHI:	and now the juice box is is still in his hand . 90345_94205
+%wor:	and 90345_90645 now the 90645_90825 juice 90825_91065 box 91065_91385 is 91385_91705 is 91705_92745 still 92745_92765 in 92765_93005 his 93005_93205 hand 93205_94205 .
+%mor:	coord|and adv:tem|now det:art|the n|juice n|box cop|be&3S cop|be&3S adv|still prep|in det:poss|his n|hand .
+%gra:	1|6|LINK 2|6|JCT 3|5|DET 4|5|MOD 5|6|SUBJ 6|7|SUBJ 7|0|ROOT 8|7|JCT 9|7|JCT 10|11|DET 11|9|POBJ 12|7|PUNCT
+*CHI:	and now the rabbit is still doing what <he> [/] he was doing before . 93565_97465
+%wor:	and 93565_93685 now 93685_93905 the 93905_94405 rabbit 94405_94645 is 94645_94885 still 94885_95185 doing 95185_95485 what 95485_95705 he 95705_95845 he 95845_96085 was 96085_96205 doing 96205_96465 before 96465_97465 .
+%mor:	coord|and adv:tem|now det:art|the n|rabbit aux|be&3S adv|still part|do-PRESP pro:int|what pro:sub|he aux|be&PAST&13S part|do-PRESP adv|before .
+%gra:	1|7|LINK 2|7|JCT 3|4|DET 4|7|SUBJ 5|7|AUX 6|7|JCT 7|0|ROOT 8|11|LINK 9|11|SUBJ 10|11|AUX 11|7|COMP 12|11|JCT 13|7|PUNCT
+*CHI:	and now (.) he (ha)s gots [: got] his hands on his tummy . 97185_100625
+%wor:	and 97185_97225 now 97225_97505 he 97505_98085 has 98085_98365 got 98365_98505 his 98505_98705 hands 98705_99105 on 99105_99445 his 99445_99625 tummy 99625_100625 .
+%mor:	coord|and adv:tem|now pro:sub|he aux|have&3S part|get&PASTP det:poss|his n|hand-PL prep|on det:poss|his n|tum-DIM .
+%gra:	1|5|LINK 2|5|JCT 3|5|SUBJ 4|5|AUX 5|0|ROOT 6|7|DET 7|5|OBJ 8|5|JCT 9|10|DET 10|8|POBJ 11|5|PUNCT
+*CHI:	and he (i)s going pluck[/] pluck [/] pluck (.) something like that . 100005_103505
+%wor:	and 100005_100045 he 100045_100165 is 100165_100225 going 100225_100465 pluck 100465_101025 pluck 101025_101225 pluck 101225_101565 something 101565_102205 like 102205_102505 that 102505_103505 .
+%mor:	coord|and pro:sub|he aux|be&3S part|go-PRESP n|pluck pro:indef|something prep|like pro:dem|that .
+%gra:	1|4|LINK 2|4|SUBJ 3|4|AUX 4|0|ROOT 5|4|OBJ 6|5|POSTMOD 7|6|NJCT 8|7|POBJ 9|4|PUNCT
+*CHI:	and now (.) <the dog> [//] <the> [/] the dog (i)s running to (.) a doctor that (i)s walking down the road (.) and pulls the doctor to the rabbit . 103665_117245
+%wor:	and 103665_105285 now 105285_105605 the 105605_106205 dog 106205_106605 the 106605_108005 the 108005_108165 dog 108165_108365 is 108365_108505 running 108505_108805 to 108805_109325 a 109325_109965 doctor 109965_110365 that 110365_111025 is 111025_111125 walking 111125_111445 down 111445_111725 the 111725_111865 road 111865_112145 and 112145_114225 pulls 114225_114605 the 114605_115045 doctor 115045_115385 to 115385_115845 the 115845_116245 rabbit 116245_117245 .
+%mor:	coord|and adv:tem|now det:art|the n|dog aux|be&3S part|run-PRESP prep|to det:art|a n|doctor pro:rel|that aux|be&3S part|walk-PRESP prep|down det:art|the n|road coord|and v|pull-3S det:art|the n|doctor prep|to det:art|the n|rabbit .
+%gra:	1|6|LINK 2|6|JCT 3|4|DET 4|6|SUBJ 5|6|AUX 6|0|ROOT 7|6|JCT 8|9|DET 9|7|POBJ 10|12|LINK 11|12|AUX 12|9|CMOD 13|12|JCT 14|15|DET 15|13|POBJ 16|12|CONJ 17|16|COORD 18|19|DET 19|17|OBJ 20|17|JCT 21|22|DET 22|20|POBJ 23|6|PUNCT
+*CHI:	and now (.) the doctor is fixing up the rabbit . 119385_122965
+%wor:	and 119385_119585 now the 119585_120265 doctor 120265_120605 is 120605_121005 fixing 121005_121385 up 121385_121745 the 121745_121965 rabbit 121965_122965 .
+%mor:	coord|and adv:tem|now det:art|the n|doctor aux|be&3S part|fix-PRESP prep|up det:art|the n|rabbit .
+%gra:	1|6|LINK 2|6|JCT 3|4|DET 4|6|SUBJ 5|6|AUX 6|0|ROOT 7|6|JCT 8|9|DET 9|7|POBJ 10|6|PUNCT
+*CHI:	and now <the r> [//] the doctor rabbit is taking (.) <the> [/] the little rabbit home (.) I think . 123125_132425
+%wor:	and 123125_124885 now 124885_125065 the 125065_125465 r the 125465_125765 doctor 125765_126545 rabbit 126545_127005 is 127005_127345 taking 127345_127725 the 127725_128605 the 128605_129485 little 129485_129965 rabbit 129965_130485 home 130485_131085 I 131085_131425 think 131425_132425 .
+%mor:	coord|and adv:tem|now det:art|the n|doctor n|rabbit aux|be&3S part|take-PRESP det:art|the adj|little n|rabbit adv|home pro:sub|I v|think .
+%gra:	1|7|LINK 2|7|JCT 3|5|DET 4|5|MOD 5|7|SUBJ 6|7|AUX 7|0|ROOT 8|10|DET 9|10|MOD 10|7|OBJ 11|7|JCT 12|13|SUBJ 13|7|CJCT 14|7|PUNCT
+@G:	B3
+*CHI:	this dog has a balloon tied up to his wagon . 134465_139785
+%wor:	this 134465_136805 dog 136805_137105 has 137105_137365 a 137365_137565 balloon 137565_137805 tied 137805_138105 up 138105_138385 to 138385_138605 his 138605_138785 wagon 138785_139785 .
+%mor:	det:dem|this n|dog v|have&3S det:art|a n|balloon v|tie-PAST adv|up prep|to det:poss|his n|wagon .
+%gra:	1|2|DET 2|3|SUBJ 3|0|ROOT 4|5|DET 5|6|SUBJ 6|3|COMP 7|6|JCT 8|6|JCT 9|10|DET 10|8|POBJ 11|3|PUNCT
+*CHI:	<and the ra> [//] and the rabbit (i)s walking by . 139325_142005
+%wor:	and 139325_139345 the 139345_139525 ra 139525_139705 and 139705_140105 the 140105_140285 rabbit 140285_140565 is 140565_140725 walking 140725_141005 by 141005_142005 .
+%mor:	coord|and det:art|the n|rabbit aux|be&3S part|walk-PRESP adv|by .
+%gra:	1|5|LINK 2|3|DET 3|5|SUBJ 4|5|AUX 5|0|ROOT 6|5|JCT 7|5|PUNCT
+*CHI:	and now the rabbit (i)s going to [^ gonna] grab the balloon and untie it I guess . 142485_146985
+%wor:	and 142485_142985 now 142985_143165 the 143165_143325 rabbit 143325_143565 is 143565_143745 going 143745_143925 to 143925_144045 grab 144045_144325 the 144325_144485 balloon 144485_144765 and 144765_145025 untie 145025_145685 it 145685_145845 I 145845_145985 guess 145985_146985 .
+%mor:	coord|and adv:tem|now det:art|the n|rabbit aux|be&3S part|go-PRESP inf|to v|grab det:art|the n|balloon coord|and un#v|tie pro:per|it pro:sub|I v|guess .
+%gra:	1|6|LINK 2|6|JCT 3|4|DET 4|6|SUBJ 5|6|AUX 6|0|ROOT 7|8|INF 8|6|COMP 9|10|DET 10|8|OBJ 11|10|CONJ 12|11|COORD 13|8|OBJ 14|15|SUBJ 15|13|CMOD 16|6|PUNCT
+*CHI:	and now he (i)s untying it . 147785_150845
+%wor:	and 147785_148565 now he 148565_149005 is 149005_149205 untying 149205_149845 it 149845_150845 .
+%mor:	coord|and adv:tem|now pro:sub|he cop|be&3S un#n:gerund|tie-GERUND pro:per|it .
+%gra:	1|4|LINK 2|4|JCT 3|4|SUBJ 4|0|ROOT 5|4|PRED 6|5|OBJ 7|4|PUNCT
+*CHI:	and now the balloon (i)s floating up into the air . 151505_154345
+%wor:	and 151505_151565 now 151565_151725 the 151725_151885 balloon 151885_152125 is 152125_152265 floating 152265_152625 up 152625_152885 into 152885_153185 the 153185_153345 air 153345_154345 .
+%mor:	coord|and adv:tem|now det:art|the n|balloon aux|be&3S part|float-PRESP adv|up prep|into det:art|the n|air .
+%gra:	1|6|LINK 2|6|JCT 3|4|DET 4|6|SUBJ 5|6|AUX 6|0|ROOT 7|6|JCT 8|6|JCT 9|10|DET 10|8|POBJ 11|6|PUNCT
+*CHI:	and now the string is all that they can see . 154825_157465
+%wor:	and 154825_154965 now 154965_155085 the 155085_155225 string 155225_155565 is 155565_155785 all 155785_155965 that 155965_156165 they 156165_156325 can 156325_156465 see 156465_157465 .
+%mor:	coord|and adv:tem|now det:art|the n|string cop|be&3S adv|all comp|that pro:sub|they mod|can v|see .
+%gra:	1|5|LINK 2|5|JCT 3|4|DET 4|5|SUBJ 5|0|ROOT 6|10|JCT 7|10|LINK 8|10|SUBJ 9|10|AUX 10|5|CPRED 11|5|PUNCT
