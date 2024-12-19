@@ -337,6 +337,8 @@ class WERWholeTextStrategy(WERStrategy):
     def calculate_wer(self, ground_truth_lines, candidate_lines, tokenizer_model_path, fixed_annotations, decimal_places):
         ground_truth_text = ' '.join(ground_truth_lines)
         candidate_text = ' '.join(candidate_lines)
+        # filtered_ground_truth = filter_text_by_annotations(ground_truth_lines, fixed_annotations, tokenizer_model_path)
+        # filtered_candidate = filter_text_by_annotations(candidate_lines, fixed_annotations, tokenizer_model_path)
 
         tokenizer = initialize_tokenizer(tokenizer_model_path, fixed_annotations)
         # ground_truth_tokens = tokenizer(ground_truth_text, max_length=4096, truncation=True).tokens()
@@ -387,8 +389,8 @@ class WERAnnotationWholeTextStrategy(WERStrategy):
         annotations_cand = collect_all_matches(candidate_text)
 
         tokenizer = initialize_tokenizer(tokenizer_model_path, fixed_annotations + annotations_gt + annotations_cand)
-        ground_truth_ids = tokenizer.encode(ground_truth_lines, max_length=4096, truncation=True)
-        candidate_ids = tokenizer.encode(candidate_lines, max_length=4096, truncation=True)
+        ground_truth_ids = tokenizer.encode(ground_truth_text, max_length=4096, truncation=True)
+        candidate_ids = tokenizer.encode(candidate_text, max_length=4096, truncation=True)
 
         # 解码成 tokens
         ground_truth_tokens = tokenizer.convert_ids_to_tokens(ground_truth_ids)

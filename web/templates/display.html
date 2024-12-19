@@ -68,13 +68,14 @@
     <div class="container mt-5">
         <h1>Comparison:</h1>
 
-        <!-- Legend for color coding -->
-        <div class="legend mb-4">
-            <h5>Legend:</h5>
-            <span class="omission">omission</span>
-            <span class="addition">addition</span>
-            <span class="substitution">substitution</span>
-        </div>
+       <!-- Legend for color coding -->
+<div class="legend mb-4">
+    <h5>Total Errors:</h5>
+    <span class="omission">omission: {{ total_omission }}</span>
+    <span class="addition">addition: {{ total_addition }}</span>
+    <span class="substitution">substitution: {{ total_substitution }}</span>
+    <span class="text-dark ms-3">Overall WER: <strong>{{ overall_annotation_wer }}</strong></span>
+</div>
 
         <!-- Comparison display section -->
         <div class="comparison-container">
@@ -103,7 +104,10 @@
             </span>
         </div>
 
+        
+
         <!-- Table displaying the WER results -->
+         
         <div class="table-responsive mb-4">
             <table class="table table-striped" id="csvTable">
                 <thead>

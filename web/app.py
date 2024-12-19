@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for,session
 import pandas as pd
 import os
 import re
@@ -11,7 +11,8 @@ from werkzeug.utils import secure_filename
 from wer_calculator import WERCalculator
 from wer_strategy import (
     WERAnnotationOnlyWholeTextStrategy, 
-    WERAnnotationLineByLineStrategy_marked
+    WERAnnotationLineByLineStrategy_marked,
+    WERAnnotationWholeTextStrategy
 )
 from utils.anotaion_utils import extract_lines_from_file
 
@@ -66,6 +67,12 @@ def index():
         calculator = WERCalculator(WERAnnotationLineByLineStrategy_marked())
         line_wer_list = calculator.calculate(ground_truth_lines, candidate_lines)
 
+        # Calculate WER again for overall results
+        calculator = WERCalculator(WERAnnotationWholeTextStrategy())
+        overall_annotation_wer = calculator.calculate(ground_truth_lines, candidate_lines)
+
+
+
         df = pd.DataFrame({
             'Ground Truth Line': compared_ground_truth_lines,
             # 'Ground Truth Line': " ".join(compared_ground_truth_lines),
@@ -74,10 +81,31 @@ def index():
             'Line WER': line_wer_list
         })
 
+        # 统计 "substitution" (绿色) 的个数
+        green_count = sum(
+            str(line).count('<span style="color: green;">') 
+            for line in compared_ground_truth_lines + compared_candidate_lines
+        )
+        blue_count = sum(
+            str(line).count('<span style="color: blue;">') 
+            for line in compared_ground_truth_lines + compared_candidate_lines
+        )
+        red_count = sum(
+            str(line).count('<span style="color: red;">') 
+            for line in compared_ground_truth_lines + compared_candidate_lines
+        )
+        print(compared_ground_truth_lines[0])
+
         output_csv_path = os.path.join(app.config['OUTPUT_FOLDER'], 'wer_output.csv')
         df.to_csv(output_csv_path, index=False)
+        #deliver WER score 
+        # session['overall_annotation_wer'] = overall_annotation_wer
 
-        return redirect(url_for('display', page=1, per_page=10))
+
+        return redirect(url_for('display', page=1, 
+                                per_page=10,overall_wer=overall_annotation_wer,
+                                green_count=int(green_count/2),red_count=red_count,
+                                blue_count=blue_count))
     else:
         return render_template('index.html')
 
@@ -89,8 +117,13 @@ def display():
         return redirect(url_for('index'))
 
     df = pd.read_csv(csv_file, converters={'Ground Truth Line': eval, 'Candidate Line (Compared)': eval})
+
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
+    overall_wer = request.args.get('overall_wer', 'N/A')
+    green_count = request.args.get('green_count', 'N/A',)
+    red_count = request.args.get('red_count', 'N/A')
+    blue_count = request.args.get('blue_count', 'N/A')
 
     total_rows = len(df)
     total_pages = (total_rows // per_page) + (1 if total_rows % per_page else 0)
@@ -104,8 +137,43 @@ def display():
         table=page_data,
         page=page,
         per_page=per_page,
-        total_pages=total_pages
+        total_pages=total_pages,
+        overall_annotation_wer=overall_wer,
+        total_substitution=green_count,
+        total_omission=red_count,
+        total_addition=blue_count
+
     )
+
+
+# def display():
+#     csv_file = os.path.join(app.config['OUTPUT_FOLDER'], 'wer_output.csv')
+
+#     if not os.path.exists(csv_file):
+#         return redirect(url_for('index'))
+
+#     df = pd.read_csv(csv_file, converters={'Ground Truth Line': eval, 'Candidate Line (Compared)': eval})
+    
+#     # df['Ground Truth Line'] = df['Ground Truth Line'].apply(lambda x: ' '.join(x))
+#     # df['Candidate Line (Compared)'] = df['Candidate Line (Compared)'].apply(lambda x: ' '.join(x))
+
+#     page = request.args.get('page', 1, type=int)
+#     per_page = request.args.get('per_page', 10, type=int)
+
+#     total_rows = len(df)
+#     total_pages = (total_rows // per_page) + (1 if total_rows % per_page else 0)
+
+#     start_row = (page - 1) * per_page
+#     end_row = start_row + per_page
+#     page_data = df.iloc[start_row:end_row]
+
+#     return render_template(
+#         'display.html',
+#         table=page_data,
+#         page=page,
+#         per_page=per_page,
+#         total_pages=total_pages
+#     )
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5860)
