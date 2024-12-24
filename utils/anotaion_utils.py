@@ -50,17 +50,20 @@ def extract_lines_from_file(file_path, prefix='*CHI:'):
     list: A list containing all lines that start with the specified prefix, 
           with the prefix removed and lines stripped of leading/trailing whitespace.
     """
+    print(prefix)
     try:
         # Open the file and read all lines
         with open(file_path, 'r', encoding='utf-8') as file:
             lines = file.readlines()
+        print(lines)
         if prefix is None:
             # Return all lines, stripped of leading/trailing whitespace
-            return [line.strip() for line in lines]
+            filtered_lines= [line.strip() for line in lines]
         else:
+            print(prefix,len(prefix))
             # Filter lines that start with the specified prefix and remove the prefix
             prefix_length = len(prefix)
-            return [line.strip()[prefix_length:].strip() for line in lines if line.startswith(prefix)]
+            filtered_lines= [line.strip()[prefix_length:].strip() for line in lines if line.startswith(prefix)]
 
 
         # # Filter lines that start with the specified prefix and remove the prefix

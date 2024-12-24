@@ -35,12 +35,18 @@ def remove_nak_to_end(line):
 def index():
     if request.method == 'POST':
         ground_truth_file = request.files.get('ground_truth_file')
+        # print(type(ground_truth_file))
         candidate_file = request.files.get('candidate_file')
+
+        # get prefix value
+        ground_truth_prefix = request.form.get('ground_truth_prefix', None) or None
+        candidate_prefix = request.form.get('candidate_prefix', None) or None
 
         if not ground_truth_file or not candidate_file:
             return render_template('index.html', error="Both files are required!")
 
         ground_truth_filename = secure_filename(ground_truth_file.filename)
+        # print(ground_truth_filename)
         candidate_filename = secure_filename(candidate_file.filename)
 
         ground_truth_path = os.path.join(app.config['UPLOAD_FOLDER'], ground_truth_filename)
@@ -49,8 +55,16 @@ def index():
         ground_truth_file.save(ground_truth_path)
         candidate_file.save(candidate_path)
 
-        ground_truth_lines = extract_lines_from_file(ground_truth_path, '*CHI:')
-        candidate_lines = extract_lines_from_file(candidate_path, '*PAR0:')
+        # test for values
+        # print(f"Ground Truth Prefix: {ground_truth_prefix}")
+        # print(type(ground_truth_prefix))
+        # print(f"Candidate Prefix: {candidate_prefix}")
+
+
+
+        ground_truth_lines = extract_lines_from_file(ground_truth_path, prefix=ground_truth_prefix)#'*CHI:'
+        # print(ground_truth_prefix)
+        candidate_lines = extract_lines_from_file(candidate_path, prefix=candidate_prefix) # '*PAR0:'
 
         ground_truth_lines = [remove_nak_to_end(line) for line in ground_truth_lines]
         candidate_lines = [remove_nak_to_end(line) for line in candidate_lines]
@@ -94,7 +108,7 @@ def index():
             str(line).count('<span style="color: red;">') 
             for line in compared_ground_truth_lines + compared_candidate_lines
         )
-        print(compared_ground_truth_lines[0])
+        # print(compared_ground_truth_lines[0])
 
         output_csv_path = os.path.join(app.config['OUTPUT_FOLDER'], 'wer_output.csv')
         df.to_csv(output_csv_path, index=False)
